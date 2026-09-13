@@ -27,7 +27,14 @@ export default function App() {
   
   const [bookingService, setBookingService] = useState(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [showIntro, setShowIntro] = useState(true);
+  const [showIntro, setShowIntro] = useState(() => {
+    return !sessionStorage.getItem('petshop_intro_seen');
+  });
+
+  const handleEnterIntro = () => {
+    sessionStorage.setItem('petshop_intro_seen', 'true');
+    setShowIntro(false);
+  };
 
   // Lock body scroll while door intro is showing
   useEffect(() => {
@@ -55,7 +62,7 @@ export default function App() {
       style={{ backgroundColor: 'var(--pine-dark)', color: 'var(--ink)' }}
     >
       {/* Shop Door Intro — shown once on load, hides when door is opened */}
-      {showIntro && <ShopDoorIntro onEnter={() => setShowIntro(false)} />}
+      {showIntro && <ShopDoorIntro onEnter={handleEnterIntro} />}
 
       {/* Subtle wood-plank floor texture (fixed, behind content) */}
       <div className="floor-planks" aria-hidden="true" />
