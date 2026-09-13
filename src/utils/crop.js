@@ -1,31 +1,11 @@
-// src/utils/crop.js
-
-/**
- * Creates an HTML Image element from a source URL
- */
-export const createImage = (url) =>
-  new Promise((resolve, reject) => {
-    const image = new Image();
-    image.addEventListener('load', () => resolve(image));
-    image.addEventListener('error', (error) => reject(error));
-    image.setAttribute('crossOrigin', 'anonymous');
-    image.src = url;
-  });
-
-/**
- * Returns cropped image Data URL using HTML5 Canvas based on pixel crop coordinates
- */
+// small helper to create cropped image dataURL using canvas
 export async function getCroppedImg(imageSrc, pixelCrop) {
+  if (!imageSrc) return null;
   const image = await createImage(imageSrc);
   const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-
-  if (!pixelCrop || !pixelCrop.width || !pixelCrop.height) {
-    return imageSrc;
-  }
-
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
+  const ctx = canvas.getContext('2d');
 
   ctx.drawImage(
     image,
@@ -39,5 +19,23 @@ export async function getCroppedImg(imageSrc, pixelCrop) {
     pixelCrop.height
   );
 
-  return canvas.toDataURL('image/jpeg');
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      const fileUrl = URL.createObjectURL(blob);
+      // also create base64 if you prefer:
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(blob);
+    }, 'image/jpeg');
+  });
+}
+
+function createImage(url) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.onload = () => resolve(image);
+    image.onerror = (err) => reject(err);
+    image.src = url;
+  });
 }

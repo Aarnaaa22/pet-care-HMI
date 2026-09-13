@@ -1,85 +1,37 @@
-// src/components/Grooming/GroomerCard.jsx
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 
-export default function GroomerCard({ groomer, onSelect, onBook }) {
+/**
+ * GroomerCard - summary card used in list
+ */
+export default function GroomerCard({ groomer, onView }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-ww-paper border border-ww-paper-dark rounded-3xl p-5 shadow-warm-md hover:border-ww-brass transition group flex flex-col justify-between space-y-4"
+      whileHover={{ scale: 1.01 }}
+      className="bg-white rounded-lg shadow p-4 flex gap-4 items-start"
     >
-      <div className="space-y-3">
-        {/* Top Header & Avatar */}
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <img
-              src={groomer.avatar}
-              alt={groomer.name}
-              className="w-14 h-14 rounded-2xl object-cover border-2 border-ww-brass shadow-sm shrink-0"
-            />
-            <div>
-              <div className="flex items-center gap-1.5">
-                <h3 className="font-extrabold text-base text-ww-ink group-hover:text-ww-brass transition">
-                  {groomer.name}
-                </h3>
-                {groomer.verified && (
-                  <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 shrink-0">
-                    ✓ Verified
-                  </span>
-                )}
-              </div>
-              <p className="text-xs font-semibold text-ww-wood">
-                {groomer.specialty || 'Feline & Canine Specialist'}
-              </p>
-            </div>
+      <img src={groomer.hero} alt={groomer.name} className="w-28 h-20 object-cover rounded" />
+      <div className="flex-1">
+        <div className="flex items-center justify-between">
+          <div>
+            <h4 className="font-semibold text-gray-900">{groomer.name} {groomer.certified && (<span className="ml-2 text-xs text-green-600 bg-green-50 px-2 py-0.5 rounded font-medium">Certified</span>)}</h4>
+            <div className="text-sm text-gray-500">{groomer.services[0]?.name} • {groomer.distanceKm} km</div>
           </div>
-
-          <span className="text-xs font-extrabold text-amber-600 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-xl shrink-0">
-            ★ {groomer.rating} <span className="text-[10px] text-ww-wood font-bold">({groomer.reviewsCount})</span>
-          </span>
+          <div className="text-right">
+            <div className="text-sm font-semibold text-gray-900">{groomer.priceEstimate}</div>
+            <div className="text-xs text-yellow-700 font-medium">{groomer.rating} ★</div>
+          </div>
         </div>
 
-        {/* Info Pills */}
-        <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-ww-wood-dark">
-          <span className="px-2.5 py-1 rounded-xl bg-ww-paper-dark/60 border border-ww-paper-dark">
-            📍 {groomer.distanceKm} km away
-          </span>
-          <span className="px-2.5 py-1 rounded-xl bg-ww-paper-dark/60 border border-ww-paper-dark">
-            💵 {groomer.priceEstimate}
-          </span>
-          {groomer.openNow && (
-            <span className="px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-700 font-bold border border-emerald-200">
-              ● Open Now
-            </span>
-          )}
+        <p className="text-sm text-gray-600 mt-2 line-clamp-2">Experienced groomers, breed-specific cuts, gentle handling and calming techniques. Portfolio & reviews available.</p>
+
+        <div className="mt-3 flex gap-3">
+          <button className="px-3 py-1 rounded border text-sm hover:bg-gray-50" onClick={onView}>View</button>
+          <button className="px-3 py-1 rounded bg-green-500 hover:bg-green-600 text-white text-sm font-medium" onClick={onView}>Book</button>
+          <button className="px-3 py-1 rounded border text-sm hover:bg-gray-50">Message</button>
         </div>
-
-        {/* Service Chips */}
-        <div className="flex flex-wrap gap-1.5 pt-1">
-          {groomer.servicesList?.map((svc, i) => (
-            <span key={i} className="text-[10px] font-bold px-2 py-0.5 rounded-lg bg-ww-paper-dark text-ww-wood-dark">
-              {svc}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex items-center justify-between gap-2 pt-3 border-t border-ww-paper-dark">
-        <button
-          onClick={() => onSelect && onSelect(groomer)}
-          className="flex-1 py-2 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-ink font-bold text-xs rounded-xl transition"
-        >
-          View Profile &amp; Portfolio
-        </button>
-
-        <button
-          onClick={() => onBook && onBook(groomer)}
-          className="px-4 py-2 bg-gradient-to-r from-ww-brass to-emerald-500 text-white font-extrabold text-xs rounded-xl shadow hover:brightness-105 transition"
-        >
-          Book Now
-        </button>
       </div>
     </motion.div>
   );
