@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
 export default function BusinessDetail({ service, isOpen, onClose, onBook }) {
   const [activeTab, setActiveTab] = useState('services'); // 'services' | 'reviews' | 'about'
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
+  const [reviewFilter, setReviewFilter] = useState('recent'); // 'recent' | 'helpful' | 'highest'
 
   if (!isOpen || !service) return null;
 
   const images = service.images && service.images.length > 0 ? service.images : ['/assets/petshop.png'];
+
+  const handleShareClinic = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: service.name,
+        text: `Check out ${service.name} on PetCare!`,
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      alert(`Copied link for ${service.name}!`);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#111827]/60 backdrop-blur-sm p-0 sm:p-4 overflow-y-auto">
@@ -23,6 +36,9 @@ export default function BusinessDetail({ service, isOpen, onClose, onBook }) {
             src={images[currentImgIndex]}
             alt={service.name}
             className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.style.display = 'none';
+            }}
           />
 
           {/* Carousel Arrows if multiple images */}
@@ -43,17 +59,28 @@ export default function BusinessDetail({ service, isOpen, onClose, onBook }) {
             </div>
           )}
 
-          {/* Close Button Overlay */}
-          <button
-            onClick={onClose}
-            className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm z-10"
-          >
-            ✕
-          </button>
+          {/* Close & Share Overlay */}
+          <div className="absolute top-3 right-3 flex items-center gap-2 z-10">
+            <button
+              onClick={handleShareClinic}
+              className="w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm"
+              title="Share Clinic"
+            >
+              🔗
+            </button>
+            <button
+              onClick={onClose}
+              className="w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm"
+            >
+              ✕
+            </button>
+          </div>
 
           {/* Badge Overlay */}
-          <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md border border-[#DCEBE0] px-3 py-1 rounded-pill text-xs font-extrabold text-[#7BD389]">
-            🟢 Open Now • {service.distance} km away
+          <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md border border-[#DCEBE0] px-3 py-1 rounded-pill text-xs font-extrabold text-[#7BD389] flex items-center gap-1.5">
+            <span>🟢 Open Now</span>
+            <span>•</span>
+            <span>🛡️ Verified Provider</span>
           </div>
         </div>
 
@@ -61,9 +88,15 @@ export default function BusinessDetail({ service, isOpen, onClose, onBook }) {
         <div className="p-5 border-b border-[#DCEBE0] bg-white flex-shrink-0">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="font-extrabold text-xl sm:text-2xl text-[#111827]">{service.name}</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="font-extrabold text-xl sm:text-2xl text-[#111827]">{service.name}</h2>
+                <span className="bg-[#EBF8EE] text-[#7BD389] border border-[#7BD389]/30 text-[10px] font-extrabold px-2 py-0.5 rounded-pill">
+                  ✓ Licensed Clinic
+                </span>
+              </div>
               <p className="text-xs text-[#525C54] mt-0.5">{service.type} • 📍 {service.address}</p>
             </div>
+
             <div className="text-right flex-shrink-0">
               <div className="bg-[#EBF8EE] border border-[#7BD389]/30 px-3 py-1 rounded-pill inline-flex items-center gap-1 text-xs font-extrabold text-[#7BD389]">
                 <span>★ {service.rating}</span>
@@ -75,8 +108,16 @@ export default function BusinessDetail({ service, isOpen, onClose, onBook }) {
           {/* Teleconsult Banner if supported */}
           {service.teleconsult && (
             <div className="mt-3 bg-[#EBF8EE] border border-[#7BD389]/40 rounded-xl p-2.5 text-xs font-bold text-[#111827] flex items-center justify-between">
-              <span>📹 Video Teleconsultation Available</span>
-              <span className="text-[#7BD389]">Starts ₹349</span>
+              <span>📹 1-on-1 Video Teleconsultation Available</span>
+              <button
+                onClick={() => {
+                  if (onBook) onBook(service);
+                  onClose();
+                }}
+                className="bg-[#7BD389] text-white px-3 py-1 rounded-pill text-xs font-extrabold"
+              >
+                Book Video Call (₹349)
+              </button>
             </div>
           )}
         </div>
@@ -134,17 +175,36 @@ export default function BusinessDetail({ service, isOpen, onClose, onBook }) {
             </div>
           )}
 
-          {/* TAB 2: REVIEWS */}
+          {/* TAB 2: REVIEWS WITH FILTER DROPDOWN */}
           {activeTab === 'reviews' && (
             <div className="space-y-3">
+              
+              {/* Review Filter Selector */}
+              <div className="flex justify-between items-center bg-[#FAF9F6] p-2.5 rounded-xl border border-[#EBF8EE]">
+                <span className="font-bold text-[#111827]">Filter Reviews By:</span>
+                <select
+                  value={reviewFilter}
+                  onChange={(e) => setReviewFilter(e.target.value)}
+                  className="bg-white border border-[#DCEBE0] rounded-lg px-2.5 py-1 text-xs font-bold text-[#111827]"
+                >
+                  <option value="recent">Most Recent</option>
+                  <option value="helpful">Most Helpful</option>
+                  <option value="highest">★ 5 Stars Only</option>
+                </select>
+              </div>
+
               {(service.reviews || [
-                { id: 1, author: 'Ananya Sharma', avatar: '👩', rating: 5, date: '2 days ago', comment: 'Excellent clinic! Silver loved the calm atmosphere.' }
+                { id: 1, author: 'Ananya Sharma', avatar: '👩', rating: 5, date: '2 days ago', comment: 'Excellent clinic! Silver loved the calm atmosphere.' },
+                { id: 2, author: 'Rohan Gupta', avatar: '👨', rating: 5, date: '1 week ago', comment: 'Saved Milo in an emergency situation. Highly recommend their 24/7 care.' }
               ]).map((rev) => (
                 <div key={rev.id} className="bg-[#FAF9F6] border border-[#EBF8EE] p-3.5 rounded-2xl space-y-1.5">
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
                       <span className="text-xl">{rev.avatar}</span>
-                      <strong className="text-xs text-[#111827]">{rev.author}</strong>
+                      <div>
+                        <strong className="text-xs text-[#111827] block">{rev.author}</strong>
+                        <span className="text-[10px] text-[#8E9890]">{rev.date}</span>
+                      </div>
                     </div>
                     <span className="text-amber-400 font-bold">★ {rev.rating}.0</span>
                   </div>
@@ -162,6 +222,7 @@ export default function BusinessDetail({ service, isOpen, onClose, onBook }) {
                 <div className="flex justify-between"><span>Phone Number:</span><strong className="text-[#111827]">{service.phone}</strong></div>
                 <div className="flex justify-between"><span>Address:</span><strong className="text-[#111827]">{service.address}</strong></div>
                 <div className="flex justify-between"><span>Operating Hours:</span><strong className="text-[#7BD389]">Mon - Sun (8:00 AM - 9:00 PM)</strong></div>
+                <div className="flex justify-between"><span>License Certification:</span><strong className="text-[#7BD389]">ISO 9001 Certified Vet</strong></div>
               </div>
             </div>
           )}

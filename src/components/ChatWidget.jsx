@@ -4,19 +4,27 @@ import { motion } from 'framer-motion';
 export default function ChatWidget({ onSendMessage }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { id: 1, sender: 'bot', text: 'Hello! How can we assist you with your pet today? 🐾', time: 'Just now' }
+    { id: 1, sender: 'bot', text: 'Hello! How can we assist you with Silver or your pets today? 🐾', time: 'Just now' }
   ]);
   const [inputMsg, setInputMsg] = useState('');
+  const [attachedPhoto, setAttachedPhoto] = useState(null);
+
+  const handleAttachPhoto = () => {
+    setAttachedPhoto('pet_photo_attached.jpg');
+    alert("Simulated photo attachment (e.g. skin rash or prescription image) added to message!");
+  };
 
   const handleSend = (textToSend) => {
     const text = textToSend || inputMsg;
-    if (!text.trim()) return;
+    if (!text.trim() && !attachedPhoto) return;
 
-    const userMsg = { id: Date.now(), sender: 'user', text, time: 'Just now' };
+    const fullText = attachedPhoto ? `📷 [Attached Image] ${text}` : text;
+    const userMsg = { id: Date.now(), sender: 'user', text: fullText, time: 'Just now' };
     setMessages((prev) => [...prev, userMsg]);
     setInputMsg('');
+    setAttachedPhoto(null);
 
-    if (onSendMessage) onSendMessage(text);
+    if (onSendMessage) onSendMessage(fullText);
 
     // Simulated Bot Reply
     setTimeout(() => {
@@ -53,7 +61,7 @@ export default function ChatWidget({ onSendMessage }) {
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          className="w-[320px] sm:w-[360px] bg-white border border-[#DCEBE0] rounded-card shadow-soft-lg overflow-hidden flex flex-col h-[450px]"
+          className="w-[320px] sm:w-[360px] bg-white border border-[#DCEBE0] rounded-card shadow-soft-lg overflow-hidden flex flex-col h-[460px]"
         >
           {/* Header */}
           <div className="bg-[#7BD389] text-white p-3.5 flex items-center justify-between">
@@ -82,7 +90,7 @@ export default function ChatWidget({ onSendMessage }) {
                 className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'}`}
               >
                 <div
-                  className={`max-w-[80%] p-3 rounded-2xl ${
+                  className={`max-w-[85%] p-3 rounded-2xl ${
                     m.sender === 'user'
                       ? 'bg-[#7BD389] text-white rounded-br-none'
                       : 'bg-white border border-[#DCEBE0] text-[#111827] rounded-bl-none shadow-soft-sm'
@@ -95,16 +103,27 @@ export default function ChatWidget({ onSendMessage }) {
             ))}
           </div>
 
+          {/* Photo Attachment Preview Bar if attached */}
+          {attachedPhoto && (
+            <div className="bg-[#FFF0F5] px-3 py-1.5 border-t border-[#F7C6D7] text-[11px] font-bold text-[#111827] flex justify-between items-center">
+              <span>📷 Attached: {attachedPhoto}</span>
+              <button onClick={() => setAttachedPhoto(null)} className="text-[#E63946] text-xs">✕</button>
+            </div>
+          )}
+
           {/* Quick Reply Chips */}
           <div className="p-2 bg-white border-t border-[#DCEBE0] flex gap-1.5 overflow-x-auto text-[10px] font-bold text-[#525C54] whitespace-nowrap">
             {[
               "🚑 Emergency Vet Info",
               "🛁 Spa Package Rates",
-              "🏠 Home Pickup Service"
+              "📷 Attach Prescription"
             ].map((chip, idx) => (
               <button
                 key={idx}
-                onClick={() => handleSend(chip)}
+                onClick={() => {
+                  if (chip.includes("Attach")) handleAttachPhoto();
+                  else handleSend(chip);
+                }}
                 className="bg-[#FAF9F6] hover:bg-[#EBF8EE] border border-[#DCEBE0] text-[#111827] px-2.5 py-1 rounded-pill"
               >
                 {chip}
@@ -120,6 +139,14 @@ export default function ChatWidget({ onSendMessage }) {
             }}
             className="p-2.5 bg-white border-t border-[#DCEBE0] flex items-center gap-2"
           >
+            <button
+              type="button"
+              onClick={handleAttachPhoto}
+              className="text-base text-[#8E9890] hover:text-[#7BD389] p-1.5"
+              title="Attach photo/prescription"
+            >
+              📷
+            </button>
             <input
               type="text"
               value={inputMsg}

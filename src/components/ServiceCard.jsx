@@ -9,6 +9,7 @@ export default function ServiceCard({
   onToggleFavorite
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const handleCall = (e) => {
     e.stopPropagation();
@@ -29,13 +30,14 @@ export default function ServiceCard({
         url: window.location.href,
       }).catch(() => {});
     } else {
-      alert(`Copied link to ${service.name}!`);
+      alert(`Copied share link for ${service.name}!`);
     }
   };
 
   return (
     <motion.div
       layout
+      whileHover={{ y: -2 }}
       onClick={() => setExpanded(!expanded)}
       className="bg-white border border-[#DCEBE0] hover:border-[#7BD389] rounded-card p-4 sm:p-5 shadow-soft-sm hover:shadow-soft-md transition-all cursor-pointer space-y-3 relative group"
     >
@@ -45,16 +47,14 @@ export default function ServiceCard({
         {/* Avatar + Info */}
         <div className="flex items-center gap-3.5 flex-1 min-w-0">
           
-          {/* 60x60 Avatar Box */}
-          <div className="w-14 h-14 sm:w-[60px] sm:h-[60px] rounded-2xl overflow-hidden flex-shrink-0 relative border border-[#DCEBE0] bg-[#FAF9F6]">
-            {service.images && service.images[0] ? (
+          {/* 60x60 Avatar Box with Fallback */}
+          <div className="w-14 h-14 sm:w-[60px] sm:h-[60px] rounded-2xl overflow-hidden flex-shrink-0 relative border border-[#DCEBE0] bg-[#EBF8EE] flex items-center justify-center">
+            {service.images && service.images[0] && !imgError ? (
               <img
                 src={service.images[0]}
                 alt={service.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
+                onError={() => setImgError(true)}
               />
             ) : (
               <div className={`w-full h-full flex items-center justify-center text-2xl font-bold ${service.logoBg || 'bg-[#EBF8EE] text-[#7BD389]'}`}>
@@ -63,19 +63,24 @@ export default function ServiceCard({
             )}
           </div>
 
-          {/* Business Name & Tagline */}
+          {/* Business Name & Verification Tag */}
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 flex-wrap">
               <h3 className="font-extrabold text-base text-[#111827] truncate group-hover:text-[#7BD389] transition">
                 {service.name}
               </h3>
+              {/* Verified Badge */}
+              <span className="bg-[#EBF8EE] text-[#7BD389] border border-[#7BD389]/30 text-[10px] font-extrabold px-2 py-0.5 rounded-pill flex items-center gap-1 flex-shrink-0">
+                <span>🛡️</span>
+                <span>Verified</span>
+              </span>
             </div>
             
             {/* Tagline & Distance */}
             <div className="flex items-center gap-2 text-xs font-semibold text-[#525C54] mt-0.5">
               <span>{service.type}</span>
               <span>•</span>
-              <span className="text-[#7BD389] font-bold">{service.distance} km</span>
+              <span className="text-[#7BD389] font-bold">{service.distance} km away</span>
             </div>
 
             {/* Rating Stars & Count */}
@@ -138,8 +143,10 @@ export default function ServiceCard({
       {/* Price Estimate Line & Quick Action Buttons */}
       <div className="pt-2 border-t border-[#EBF8EE] flex items-center justify-between gap-2">
         <div>
-          <span className="text-[10px] font-bold text-[#8E9890] uppercase block">Price Estimate</span>
-          <span className="font-extrabold text-sm text-[#111827]">{service.price} <span className="text-[11px] font-normal text-[#525C54]">{service.priceDetail}</span></span>
+          <span className="text-[10px] font-bold text-[#8E9890] uppercase block">Price Estimator</span>
+          <span className="font-extrabold text-sm text-[#111827]">
+            {service.price} <span className="text-[11px] font-normal text-[#525C54]">{service.priceDetail}</span>
+          </span>
         </div>
 
         {/* Action Button Row */}

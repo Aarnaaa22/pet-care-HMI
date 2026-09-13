@@ -6,17 +6,20 @@ import FilterModal from '../components/FilterModal';
 import BookingSheet from '../components/BookingSheet';
 import BusinessDetail from '../components/BusinessDetail';
 import ChatWidget from '../components/ChatWidget';
-import { SERVICES_MOCK } from '../mockData';
+import { SERVICES_MOCK, PETS_MOCK, COUPONS_MOCK } from '../mockData';
 
-export default function ServicesPage({ searchQuery = '', onBookService, pet = { name: 'Silver' } }) {
+export default function ServicesPage({ searchQuery = '', onBookService, pet = PETS_MOCK.silver }) {
   // Local Search & Filter State
   const [term, setTerm] = useState(searchQuery);
   const [autosuggestOpen, setAutosuggestOpen] = useState(false);
   const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [mobileViewMode, setMobileViewMode] = useState('list'); // 'list' | 'map'
+  const [heroImgError, setHeroImgError] = useState(false);
   
   const [favorites, setFavorites] = useState([1]); // Saved favorite IDs
-  
+  const [activeCollection, setActiveCollection] = useState('all'); // 'all' | 'vets' | 'spas'
+  const [emergencyModalOpen, setEmergencyModalOpen] = useState(false);
+
   const [filters, setFilters] = useState({
     category: 'all',
     maxDistance: 20,
@@ -118,7 +121,7 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
             </h1>
 
             <p className="text-xs sm:text-sm text-[#525C54]">
-              Top-rated care for <strong>{pet.name}</strong>. Compare consultation fees, read authentic reviews, and book instant appointments.
+              Top-rated care for <strong>{pet.name} ({pet.breed || 'Silver Tabby Cat'})</strong>. Compare consultation fees, read authentic reviews, and book instant appointments.
             </p>
 
             {/* Autosuggest Search Bar */}
@@ -174,7 +177,7 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
                 Find Nearby Vets 📍
               </button>
               <button
-                onClick={() => alert("Partner portal coming soon! Contact support to list your business.")}
+                onClick={() => alert("Partner portal: Fill form to register your clinic or pet shop.")}
                 className="bg-white hover:bg-[#EBF8EE] border border-[#DCEBE0] text-[#111827] font-extrabold text-xs px-5 py-2.5 rounded-pill shadow-soft-sm min-h-[40px]"
               >
                 List Your Business 🏪
@@ -183,14 +186,23 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
 
           </div>
 
-          {/* Right Hero Thumbnail Asset (5 cols on desktop, stacked on mobile) */}
+          {/* Right Hero Thumbnail Asset (5 cols on desktop) with SVG Fallback */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="w-full max-w-sm rounded-2xl overflow-hidden border border-[#DCEBE0] shadow-soft-md bg-white aspect-[4/3] relative">
-              <img
-                src="/assets/petshop.png"
-                alt="PetShop Local Storefront Thumbnail"
-                className="w-full h-full object-cover"
-              />
+            <div className="w-full max-w-sm rounded-2xl overflow-hidden border border-[#DCEBE0] shadow-soft-md bg-white aspect-[4/3] relative flex items-center justify-center">
+              {!heroImgError ? (
+                <img
+                  src="/assets/petshop.png"
+                  alt="PetShop Local Storefront Thumbnail"
+                  className="w-full h-full object-cover"
+                  onError={() => setHeroImgError(true)}
+                />
+              ) : (
+                <div className="w-full h-full bg-[#EBF8EE] p-6 flex flex-col items-center justify-center text-center space-y-2">
+                  <span className="text-5xl">🏪</span>
+                  <strong className="text-sm text-[#111827] font-extrabold">PetShop Local Sanctuary</strong>
+                  <span className="text-xs text-[#525C54]">Verified Vets & Spas</span>
+                </div>
+              )}
               <div className="absolute bottom-2 right-2 bg-white/90 backdrop-blur-sm border border-[#DCEBE0] px-3 py-1 rounded-pill text-[11px] font-extrabold text-[#7BD389]">
                 🟢 100+ Verified Partners
               </div>
@@ -200,15 +212,78 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
         </div>
       </section>
 
-      {/* ================= 2. SAVED FAVORITES CAROUSEL ================= */}
+      {/* ================= 2. NEARBY EMERGENCY STICKY BANNER & OFFERS CARDS ================= */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+        
+        {/* Sticky Emergency Banner (6 cols) */}
+        <div className="md:col-span-6 bg-[#FFE8E8] border border-[#FCA5A5] rounded-card p-4 sm:p-5 flex items-center justify-between shadow-soft-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#EF4444] text-white text-2xl flex items-center justify-center flex-shrink-0 font-extrabold animate-pulse">
+              🚑
+            </div>
+            <div>
+              <span className="text-[10px] font-extrabold uppercase text-[#EF4444] tracking-wider block">Urgent Trauma Care</span>
+              <h3 className="font-extrabold text-sm text-[#111827]">24/7 Nearby Pet Emergency</h3>
+              <p className="text-[11px] text-[#525C54]">Trauma ICU • Pet Ambulance • Immediate Triage</p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setEmergencyModalOpen(true)}
+            className="bg-[#EF4444] hover:bg-[#DC2626] text-white font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm flex-shrink-0 min-h-[40px]"
+          >
+            Emergency Help
+          </button>
+        </div>
+
+        {/* Offers & Deals Card (6 cols) */}
+        <div className="md:col-span-6 bg-[#FFF0F5] border border-[#F7C6D7] rounded-card p-4 sm:p-5 flex items-center justify-between shadow-soft-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-2xl bg-[#FF85A1] text-white text-2xl flex items-center justify-center flex-shrink-0 font-extrabold">
+              🏷️
+            </div>
+            <div>
+              <span className="text-[10px] font-extrabold uppercase text-[#FF85A1] tracking-wider block">Exclusive Deals</span>
+              <h3 className="font-extrabold text-sm text-[#111827]">Coupon PAWS20: 20% OFF</h3>
+              <p className="text-[11px] text-[#525C54]">Save 20% on all Spa Grooming & Vet Checkups</p>
+            </div>
+          </div>
+
+          <button
+            onClick={() => alert("Applied promo coupon code PAWS20! 20% discount will be calculated at checkout.")}
+            className="bg-[#FF85A1] hover:bg-[#E26D87] text-white font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm flex-shrink-0 min-h-[40px]"
+          >
+            Apply Deal
+          </button>
+        </div>
+
+      </div>
+
+      {/* ================= 3. SAVED FAVORITES & CUSTOM COLLECTIONS ================= */}
       {favoriteServices.length > 0 && (
-        <section className="bg-white border border-[#DCEBE0] rounded-card p-4 shadow-soft-sm space-y-3">
-          <div className="flex items-center justify-between">
-            <h3 className="font-extrabold text-sm text-[#111827] flex items-center gap-2">
-              <span>❤️ Saved Favorites</span>
-              <span className="text-xs text-[#8E9890] font-normal">({favoriteServices.length})</span>
-            </h3>
-            <span className="text-[11px] font-bold text-[#7BD389]">Quick Access</span>
+        <section className="bg-white border border-[#DCEBE0] rounded-card p-4 sm:p-5 shadow-soft-sm space-y-3">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h3 className="font-extrabold text-sm text-[#111827] flex items-center gap-2">
+                <span>❤️ Saved Favorites & Collections</span>
+                <span className="text-xs text-[#8E9890] font-normal">({favoriteServices.length})</span>
+              </h3>
+            </div>
+
+            {/* Collection Filter Chips */}
+            <div className="flex items-center gap-1.5 text-xs font-bold">
+              {['all', 'vets', 'spas'].map((col) => (
+                <button
+                  key={col}
+                  onClick={() => setActiveCollection(col)}
+                  className={`px-3 py-1 rounded-pill transition ${
+                    activeCollection === col ? 'bg-[#7BD389] text-white' : 'bg-[#FAF9F6] text-[#525C54]'
+                  }`}
+                >
+                  {col === 'all' ? 'All Saved' : col === 'vets' ? 'Favorite Vets' : 'Weekend Spas'}
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none">
@@ -238,7 +313,7 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
         </section>
       )}
 
-      {/* ================= 3. ACTIVE FILTERS CHIPS BAR ================= */}
+      {/* ================= 4. ACTIVE FILTERS CHIPS BAR ================= */}
       <div className="flex items-center justify-between gap-3 flex-wrap bg-white border border-[#DCEBE0] p-3 rounded-card text-xs font-bold">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[#525C54]">Active Filters:</span>
@@ -259,7 +334,7 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
 
           {filters.offersOnly && (
             <span className="bg-[#FFF0F5] text-[#FF85A1] px-3 py-1 rounded-pill border border-[#F7C6D7]">
-              🏷️ Offers Only
+              🏷️ Deals Only
             </span>
           )}
         </div>
@@ -285,7 +360,7 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
         </div>
       </div>
 
-      {/* ================= 4. RESPONSIVE LIST + MAP TOGGLE SECTION ================= */}
+      {/* ================= 5. RESPONSIVE LIST + MAP TOGGLE SECTION ================= */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* LEFT COLUMN: SCROLLABLE LIST OF SERVICE CARDS (7 cols on desktop) */}
@@ -360,7 +435,7 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
         })}
       />
 
-      {/* 2. QUICK BOOKING BOTTOM SHEET */}
+      {/* 2. QUICK BOOKING BOTTOM SHEET WITH MULTI-PET */}
       <BookingSheet
         service={bookingService}
         pet={pet}
@@ -376,7 +451,42 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = { 
         onBook={handleOpenBooking}
       />
 
-      {/* 4. LIVE IN-APP CHAT WIDGET */}
+      {/* 4. EMERGENCY TRIAGE MODAL */}
+      {emergencyModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#111827]/60 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md bg-white rounded-card p-6 shadow-soft-lg border border-[#FCA5A5] space-y-4">
+            <div className="flex justify-between items-center pb-3 border-b border-[#DCEBE0]">
+              <h3 className="font-extrabold text-base text-[#EF4444] flex items-center gap-2">
+                <span>🚑 Emergency Pet Dispatch</span>
+              </h3>
+              <button onClick={() => setEmergencyModalOpen(false)} className="text-lg text-[#8E9890]">✕</button>
+            </div>
+
+            <div className="bg-[#FFE8E8] p-4 rounded-2xl text-xs space-y-2 text-[#111827]">
+              <span className="font-extrabold block text-sm text-[#EF4444]">City Emergency Vet Hospital (5.2 km)</span>
+              <p>Ambulance Hotline: <strong>+91 98765 43213</strong> (24/7 Active)</p>
+              <p className="text-[11px] text-[#525C54]">Equipped for respiratory distress, trauma, toxin ingestion, and emergency surgery.</p>
+            </div>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => alert("Dispatching emergency pet ambulance to your saved address!")}
+                className="flex-1 bg-[#EF4444] text-white font-extrabold text-xs py-3 rounded-pill shadow-soft-sm"
+              >
+                Dispatch Ambulance
+              </button>
+              <button
+                onClick={() => alert("Connecting 1-tap call to Dr. Vikram Rao (ICU Chief)...")}
+                className="flex-1 bg-[#FAF9F6] border border-[#DCEBE0] text-[#111827] font-extrabold text-xs py-3 rounded-pill"
+              >
+                Call ICU Doctor 📞
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5. LIVE IN-APP CHAT WIDGET */}
       <ChatWidget onSendMessage={(msg) => console.log('Chat Sent:', msg)} />
 
     </div>

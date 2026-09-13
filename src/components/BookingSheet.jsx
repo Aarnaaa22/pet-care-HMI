@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { PETS_MOCK } from '../mockData';
 
-export default function BookingSheet({ service, pet = { name: 'Silver' }, isOpen, onClose }) {
+export default function BookingSheet({ service, pet = PETS_MOCK.silver, isOpen, onClose }) {
+  const [selectedPet, setSelectedPet] = useState(pet || PETS_MOCK.silver);
   const [selectedService, setSelectedService] = useState('Wellness Checkup & Consultation');
   const [selectedDoctor, setSelectedDoctor] = useState('Dr. Sarah Smith (DVM)');
   const [selectedSlot, setSelectedSlot] = useState('11:30 AM');
   const [selectedDate, setSelectedDate] = useState('Tomorrow, Sep 15');
+  const [sendSmsReminder, setSendSmsReminder] = useState(true);
   const [notes, setNotes] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(false);
@@ -62,14 +65,15 @@ export default function BookingSheet({ service, pet = { name: 'Silver' }, isOpen
               <span className="text-xs font-bold text-[#7BD389] uppercase block">Booking Confirmed!</span>
               <h4 className="font-extrabold text-xl text-[#111827] mt-1">See You {selectedDate}!</h4>
               <p className="text-xs text-[#525C54] mt-1">
-                Appointment for <strong>{pet.name}</strong> with <strong>{selectedDoctor}</strong> at <strong>{selectedSlot}</strong>.
+                Appointment for <strong>{selectedPet.name}</strong> with <strong>{selectedDoctor}</strong> at <strong>{selectedSlot}</strong>.
               </p>
             </div>
 
             <div className="bg-[#FAF9F6] border border-[#EBF8EE] p-4 rounded-2xl text-xs space-y-1.5 text-left font-semibold text-[#525C54]">
+              <div className="flex justify-between"><span>Patient Pet:</span><strong className="text-[#111827]">{selectedPet.name} ({selectedPet.species})</strong></div>
               <div className="flex justify-between"><span>Provider:</span><strong className="text-[#111827]">{service.name}</strong></div>
-              <div className="flex justify-between"><span>Service:</span><strong className="text-[#111827]">{selectedService}</strong></div>
-              <div className="flex justify-between"><span>Fee Payable at Clinic:</span><strong className="text-[#7BD389]">{service.price}</strong></div>
+              <div className="flex justify-between"><span>SMS Reminder:</span><strong className="text-[#7BD389]">{sendSmsReminder ? 'Enabled (2h before)' : 'Disabled'}</strong></div>
+              <div className="flex justify-between pt-1 border-t border-[#EBF8EE]"><span>Fee Payable at Clinic:</span><strong className="text-[#7BD389] text-sm">{service.price}</strong></div>
             </div>
 
             <div className="flex flex-col gap-2 pt-2">
@@ -77,7 +81,7 @@ export default function BookingSheet({ service, pet = { name: 'Silver' }, isOpen
                 onClick={() => alert("Added to your Google & Apple Calendar! 📅")}
                 className="w-full bg-[#FAF9F6] hover:bg-[#EBF8EE] border border-[#DCEBE0] text-[#111827] font-extrabold text-xs py-3 rounded-pill min-h-[44px] flex items-center justify-center gap-2"
               >
-                <span>📅 Add to Calendar</span>
+                <span>📅 Add to Calendar & Set Reminders</span>
               </button>
               <button
                 onClick={onClose}
@@ -91,16 +95,29 @@ export default function BookingSheet({ service, pet = { name: 'Silver' }, isOpen
           /* BOOKING FORM */
           <form onSubmit={handleConfirm} className="space-y-4 text-xs font-semibold">
             
-            {/* Active Pet Card */}
-            <div className="bg-[#EBF8EE] border border-[#7BD389]/30 rounded-2xl p-3 flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <span className="text-2xl">🐱</span>
-                <div>
-                  <span className="font-extrabold text-xs text-[#111827] block">Patient: {pet.name}</span>
-                  <span className="text-[10px] text-[#525C54] font-bold">{pet.breed || 'Silver Tabby Cat'}</span>
-                </div>
+            {/* MULTI-PET SELECTOR CHIP BAR */}
+            <div>
+              <label className="font-bold text-[#525C54] block mb-1.5">Select Patient Profile</label>
+              <div className="grid grid-cols-2 gap-2">
+                {Object.values(PETS_MOCK).map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => setSelectedPet(p)}
+                    className={`p-2.5 rounded-2xl border flex items-center gap-2 transition ${
+                      selectedPet.id === p.id
+                        ? 'bg-[#EBF8EE] border-[#7BD389] shadow-soft-sm text-[#7BD389]'
+                        : 'bg-[#FAF9F6] border-[#DCEBE0] text-[#525C54]'
+                    }`}
+                  >
+                    <span className="text-xl">{p.species.split(' ')[1]}</span>
+                    <div className="text-left min-w-0">
+                      <span className="font-extrabold text-xs text-[#111827] block truncate">{p.name}</span>
+                      <span className="text-[10px] text-[#8E9890] block truncate">{p.breed}</span>
+                    </div>
+                  </button>
+                ))}
               </div>
-              <span className="text-[10px] font-bold bg-white text-[#7BD389] px-2.5 py-1 rounded-pill">Active Pet</span>
             </div>
 
             {/* Select Doctor / Staff */}
@@ -138,6 +155,20 @@ export default function BookingSheet({ service, pet = { name: 'Silver' }, isOpen
               </div>
             </div>
 
+            {/* SMS Reminders Toggle */}
+            <div className="bg-[#FAF9F6] p-3 rounded-xl border border-[#EBF8EE] flex items-center justify-between">
+              <div>
+                <span className="font-extrabold text-xs text-[#111827] block">📲 SMS Appointment Reminders</span>
+                <span className="text-[10px] text-[#8E9890]">Send SMS alert 2 hours before appointment</span>
+              </div>
+              <input
+                type="checkbox"
+                checked={sendSmsReminder}
+                onChange={(e) => setSendSmsReminder(e.target.checked)}
+                className="w-4 h-4 accent-[#7BD389] rounded cursor-pointer"
+              />
+            </div>
+
             {/* Optional Notes */}
             <div>
               <label className="font-bold text-[#525C54] block mb-1">Notes for Clinic (Optional)</label>
@@ -145,7 +176,7 @@ export default function BookingSheet({ service, pet = { name: 'Silver' }, isOpen
                 type="text"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                placeholder="e.g. Silver is timid with strangers..."
+                placeholder={`e.g. ${selectedPet.name} is timid with strangers...`}
                 className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-2.5 font-medium text-[#111827]"
               />
             </div>
