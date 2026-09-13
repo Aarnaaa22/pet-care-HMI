@@ -22,7 +22,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewportMode, setViewportMode] = useState('fluid'); // 'fluid' | 'desktop' | 'tablet' | 'mobile'
   
-  const [activePetKey, setActivePetKey] = useState('luna');
+  const [activePetKey, setActivePetKey] = useState('silver');
   const [pets, setPets] = useState(PETS_MOCK);
   
   const [bookingService, setBookingService] = useState(null);
@@ -35,7 +35,7 @@ export default function App() {
     return () => { document.body.style.overflow = 'auto'; };
   }, [showIntro]);
 
-  const activePet = pets[activePetKey] || pets.luna;
+  const activePet = pets[activePetKey] || pets.silver;
 
   const handleUpdatePet = (updatedPet) => {
     setPets((prev) => ({

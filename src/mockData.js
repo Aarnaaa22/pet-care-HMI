@@ -1,11 +1,31 @@
 export const PETS_MOCK = {
+  silver: {
+    id: 'silver',
+    name: 'Silver',
+    species: 'Cat 🐱',
+    breed: 'Silver Tabby • 2.5 yrs',
+    age: '2.5 yrs',
+    avatar: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=300&q=80',
+    mood: 'Playful & Curious',
+    moodIcon: '✨',
+    happiness: 96,
+    energy: 90,
+    weight: '4.5 kg',
+    lastFed: '3 hrs ago (9:15 AM)',
+    calGoal: 520,
+    calCurrent: 350,
+    mealsCompleted: 2,
+    mealsTotal: 3,
+    nextVaccine: 'Nov 10 (Rabies & FVRCP Booster)',
+    nextVaccineDays: 20,
+  },
   luna: {
     id: 'luna',
     name: 'Luna',
     species: 'Cat 🐱',
     breed: 'Ragdoll • 2 yrs',
     age: '2 yrs',
-    avatar: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=300&q=80',
+    avatar: 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=300&q=80',
     mood: 'Joyful & Purring',
     moodIcon: '💖',
     happiness: 92,
@@ -61,6 +81,149 @@ export const PETS_MOCK = {
   }
 };
 
+export const SERVICES_MOCK = [
+  {
+    id: 1,
+    name: 'Paws & Care Vet Clinic',
+    category: 'vet',
+    type: 'Veterinary Clinic',
+    distance: 2.1,
+    rating: 4.9,
+    reviewsCount: 142,
+    price: '₹499',
+    priceDetail: 'Consultation Fee',
+    openNow: true,
+    homeVisits: true,
+    teleconsult: true,
+    address: '14 Parkside Enclave, Green Avenue, New Delhi',
+    phone: '+91 98765 43210',
+    offers: ['15% OFF First Checkup', 'Free Dental Screening'],
+    badge: 'Open Now • 15% OFF',
+    coordinates: { lat: 28.6139, lng: 77.2090 },
+    logoBg: 'bg-[#EBF8EE] text-[#7BD389]',
+    icon: '🩺',
+    images: [
+      '/assets/petshop.png',
+      'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=600&q=80',
+      'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?auto=format&fit=crop&w=600&q=80'
+    ],
+    doctors: ['Dr. Sarah Smith (DVM)', 'Dr. Rahul Patel (Surgeon)'],
+    availableServices: [
+      { name: 'General Wellness Checkup', price: '₹499', duration: '30 mins' },
+      { name: 'Vaccination & Parasite Control', price: '₹699', duration: '20 mins' },
+      { name: 'Dental Scaling & Polish', price: '₹1,299', duration: '45 mins' },
+      { name: 'Video Teleconsultation', price: '₹349', duration: '15 mins' }
+    ],
+    reviews: [
+      { id: 1, author: 'Ananya Sharma', avatar: '👩', rating: 5, date: '2 days ago', comment: 'Dr. Smith was so gentle with Silver! Very clean clinic and zero waiting time.' },
+      { id: 2, author: 'Rohan Gupta', avatar: '👨', rating: 5, date: '1 week ago', comment: 'Saved Milo in an emergency situation. Highly recommend their 24/7 care.' }
+    ],
+    excerpt: 'Certified fear-free veterinary facility offering general checkups, surgery, dental scaling, and emergency trauma care.'
+  },
+  {
+    id: 2,
+    name: 'Fluffy Bubbles Pet Spa & Grooming',
+    category: 'groomer',
+    type: 'Pet Spa & Groomer',
+    distance: 3.4,
+    rating: 4.8,
+    reviewsCount: 96,
+    price: '₹899',
+    priceDetail: 'Basic Spa Package',
+    openNow: true,
+    homeVisits: true,
+    teleconsult: false,
+    address: '88 Sunshine Arcade, Vasant Kunj, New Delhi',
+    phone: '+91 98765 43211',
+    offers: ['20% OFF Full Grooming'],
+    badge: 'Open Now • 20% OFF',
+    coordinates: { lat: 28.6239, lng: 77.2190 },
+    logoBg: 'bg-[#FFF0F5] text-[#FF85A1]',
+    icon: '🛁',
+    images: [
+      'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=600&q=80',
+      'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=600&q=80'
+    ],
+    doctors: ['Master Groomer Maya', 'Stylist Alex'],
+    availableServices: [
+      { name: 'Full Spa Bath & Styling', price: '₹899', duration: '60 mins' },
+      { name: 'De-shedding Fur Treatment', price: '₹599', duration: '45 mins' },
+      { name: 'Nail Clipping & Paw Butter', price: '₹299', duration: '20 mins' }
+    ],
+    reviews: [
+      { id: 1, author: 'Kavita Roy', avatar: '👩‍🦰', rating: 5, date: '3 days ago', comment: 'Luna smells like lavender and looks like a fluffy cloud! Amazing groomers.' }
+    ],
+    excerpt: 'Luxury organic grooming spa specializing in coat de-shedding, medicated baths, and cat-friendly stress-free styling.'
+  },
+  {
+    id: 3,
+    name: 'Happy Tails Superstore',
+    category: 'store',
+    type: 'Supplies & Nutrition Store',
+    distance: 1.5,
+    rating: 4.7,
+    reviewsCount: 342,
+    price: '₹299+',
+    priceDetail: 'Food & Toys',
+    openNow: true,
+    homeVisits: false,
+    teleconsult: false,
+    address: '12 Market Ridge, Defense Colony, New Delhi',
+    phone: '+91 98765 43212',
+    offers: ['Buy 2 Get 1 Free Treats'],
+    badge: 'Closes 9 PM',
+    coordinates: { lat: 28.6039, lng: 77.2000 },
+    logoBg: 'bg-[#FEF3C7] text-[#F59E0B]',
+    icon: '🥩',
+    images: [
+      '/assets/petshop.png',
+      'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=600&q=80'
+    ],
+    doctors: ['Nutrition Specialist Vikram'],
+    availableServices: [
+      { name: 'Custom Diet Planning', price: 'Free', duration: '15 mins' },
+      { name: 'Express Home Delivery', price: 'Free > ₹500', duration: '30 mins' }
+    ],
+    reviews: [
+      { id: 1, author: 'Deepak Kumar', avatar: '👨‍🦱', rating: 5, date: 'Yesterday', comment: 'Great collection of organic kibble and cat toys. Delivered in 25 mins!' }
+    ],
+    excerpt: 'One-stop pet store with organic grain-free food, orthopedic beds, cat towers, and prescription veterinary diets.'
+  },
+  {
+    id: 4,
+    name: 'City Trauma Emergency Hospital 24/7',
+    category: 'emergency',
+    type: '24/7 Emergency Hospital',
+    distance: 5.2,
+    rating: 4.9,
+    reviewsCount: 512,
+    price: '₹999',
+    priceDetail: 'Triage Fee',
+    openNow: true,
+    homeVisits: true,
+    teleconsult: true,
+    address: '400 Ring Road Junction, Lajpat Nagar, New Delhi',
+    phone: '+91 98765 43213',
+    offers: ['24/7 Ambulance Service'],
+    badge: '24/7 Emergency',
+    coordinates: { lat: 28.6439, lng: 77.1890 },
+    logoBg: 'bg-[#FEE2E2] text-[#EF4444]',
+    icon: '🚑',
+    images: [
+      'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80'
+    ],
+    doctors: ['Dr. Vikram Rao (ICU Chief)', 'Dr. Priya Mehta (Trauma)'],
+    availableServices: [
+      { name: 'Emergency ICU Triage', price: '₹999', duration: 'Immediate' },
+      { name: 'Pet Ambulance Pickup', price: '₹499', duration: '15 mins' }
+    ],
+    reviews: [
+      { id: 1, author: 'Sneha Kapur', avatar: '👩', rating: 5, date: '5 days ago', comment: 'Available at 3 AM when my cat swallowed a string. Saved her life!' }
+    ],
+    excerpt: 'Fully equipped 24-hour veterinary hospital with ICU, digital X-Ray, ultrasound, and dedicated pet ambulance service.'
+  }
+];
+
 export const GROOMING_SERVICES_MOCK = [
   {
     id: 1,
@@ -85,30 +248,6 @@ export const GROOMING_SERVICES_MOCK = [
     icon: '🪮',
     desc: 'Reduces loose undercoat fur up to 90%.',
     badge: 'Best Value'
-  },
-  {
-    id: 3,
-    title: 'Nail Trimming & Paw Polish',
-    duration: '20 mins',
-    price: '₹299',
-    rawPrice: 299,
-    rating: 4.9,
-    reviews: 210,
-    icon: '✂️',
-    desc: 'Gentle claw trimming & soothing organic paw butter.',
-    badge: 'Quick Care'
-  },
-  {
-    id: 4,
-    title: 'Medicated Coat Bath & Rinse',
-    duration: '50 mins',
-    price: '₹749',
-    rawPrice: 749,
-    rating: 4.9,
-    reviews: 64,
-    icon: '🧴',
-    desc: 'Soothes itchy skin & protects against allergens.',
-    badge: 'Vet Recommended'
   }
 ];
 
@@ -125,77 +264,28 @@ export const SUPPLIES_MOCK = [
     subscriptionAvailable: true,
     icon: '🥩',
     imageBg: 'bg-[#EBF8EE] text-[#7BD389]'
-  },
-  {
-    id: 102,
-    name: 'Interactive Squeaky Chew Toy',
-    category: 'toys',
-    price: '₹349',
-    rawPrice: 349,
-    rating: 4.8,
-    inStock: true,
-    previouslyBought: false,
-    subscriptionAvailable: false,
-    icon: '🎾',
-    imageBg: 'bg-[#FFF0F5] text-[#FF85A1]'
-  },
-  {
-    id: 103,
-    name: 'Lavender Coat Shine Spray (250ml)',
-    category: 'grooming',
-    price: '₹449',
-    rawPrice: 449,
-    rating: 4.9,
-    inStock: true,
-    previouslyBought: true,
-    subscriptionAvailable: true,
-    icon: '🧴',
-    imageBg: 'bg-[#F0E6FF] text-[#9D72FF]'
-  },
-  {
-    id: 104,
-    name: 'Bravecto Flea & Tick Chew (Single)',
-    category: 'meds',
-    price: '₹999',
-    rawPrice: 999,
-    rating: 4.9,
-    inStock: false,
-    previouslyBought: true,
-    subscriptionAvailable: true,
-    icon: '💊',
-    imageBg: 'bg-[#FFE8E8] text-[#E63946]'
-  },
-  {
-    id: 105,
-    name: 'Ultra Soft Plush Calming Bed',
-    category: 'toys',
-    price: '₹1,299',
-    rawPrice: 1299,
-    rating: 4.9,
-    inStock: true,
-    previouslyBought: false,
-    subscriptionAvailable: false,
-    icon: '🛏️',
-    imageBg: 'bg-[#E0F2FE] text-[#4EA8DE]'
-  },
-  {
-    id: 106,
-    name: 'Organic Timothy Hay Bundle (1kg)',
-    category: 'food',
-    price: '₹399',
-    rawPrice: 399,
-    rating: 4.8,
-    inStock: true,
-    previouslyBought: true,
-    subscriptionAvailable: true,
-    icon: '🌾',
-    imageBg: 'bg-[#EBF8EE] text-[#7BD389]'
   }
 ];
 
 export const COUPONS_MOCK = [
   { code: 'PAWS20', discountText: '20% OFF on all Spa Services', discountAmount: 180 },
   { code: 'FIRSTPET', discountText: '₹150 OFF on Supplies Order', discountAmount: 150 },
+];
+
+export const FEEDING_HISTORY_MOCK = [
+  {
+    id: 1,
+    title: 'Morning Organic Kibble',
+    timestamp: '8:12 AM Today',
+    amount: '150g Dry Kibble + Water',
+    loggedBy: 'Owner (Alex)',
+    icon: '🥣',
+    bg: 'bg-[#EBF8EE]'
+  }
+];
+
+export const FEEDING_SCHEDULE_MOCK = [
+  { id: 1, time: '8:00 AM', title: 'Morning Kibble', detail: '150g Dry Kibble • Daily' }
 ];
 
 export const HEALTH_RECORDS_MOCK = [
@@ -209,17 +299,6 @@ export const HEALTH_RECORDS_MOCK = [
     notes: 'Administered right rear limb. No adverse reactions observed.',
     pdfUrl: '/sample_vet_report.pdf',
     badge: 'Active Immunity'
-  },
-  {
-    id: 2,
-    type: 'Surgery',
-    title: 'Spay Procedure & Microchip Tag',
-    date: 'Jan 10, 2026',
-    clinic: 'Central City Pet Hospital',
-    doctor: 'Dr. Rahul Patel',
-    notes: 'Routine spay. Microchip #985140029381 installed between shoulder blades.',
-    pdfUrl: '/sample_vet_report.pdf',
-    badge: 'Completed'
   }
 ];
 
@@ -252,96 +331,13 @@ export const APPOINTMENTS_MOCK = [
   }
 ];
 
-export const SERVICES_MOCK = [
-  {
-    id: 1,
-    name: 'Paws & Care Vet Clinic',
-    category: 'vet',
-    type: 'Veterinary Clinic',
-    distance: 2.1,
-    rating: 4.9,
-    reviewsCount: 128,
-    price: '₹499',
-    priceDetail: 'Consultation Fee',
-    badge: 'Open Now',
-    badgeType: 'green',
-    phone: '+91 98765 43210',
-    coordinates: { lat: 28.6139, lng: 77.2090 },
-    logoBg: 'bg-[#EBF8EE] text-[#7BD389]',
-    iconPlaceholder: 'icon_placeholder_vet.svg'
-  },
-  {
-    id: 2,
-    name: 'Fluffy Bubbles Grooming',
-    category: 'groomer',
-    type: 'Pet Spa & Grooming',
-    distance: 3.4,
-    rating: 4.8,
-    reviewsCount: 85,
-    price: '₹899',
-    priceDetail: 'Basic Spa Package',
-    badge: 'Walk-ins OK',
-    badgeType: 'blue',
-    phone: '+91 98765 43211',
-    coordinates: { lat: 28.6239, lng: 77.2190 },
-    logoBg: 'bg-[#E0F2FE] text-[#38BDF8]',
-    iconPlaceholder: 'icon_placeholder_groomer.svg'
-  },
-  {
-    id: 3,
-    name: 'Happy Tails Pet Store',
-    category: 'store',
-    type: 'Premium Supplies',
-    distance: 1.5,
-    rating: 4.7,
-    reviewsCount: 342,
-    price: '₹299+',
-    priceDetail: 'Food & Toys',
-    badge: 'Closes 9PM',
-    badgeType: 'gray',
-    phone: '+91 98765 43212',
-    coordinates: { lat: 28.6039, lng: 77.2000 },
-    logoBg: 'bg-[#FEF3C7] text-[#F59E0B]',
-    iconPlaceholder: 'icon_placeholder_store.svg'
-  },
-  {
-    id: 4,
-    name: 'City Emergency Vet 24/7',
-    category: 'emergency',
-    type: 'Emergency Hospital',
-    distance: 5.2,
-    rating: 4.9,
-    reviewsCount: 512,
-    price: '₹999',
-    priceDetail: 'Triage Fee',
-    badge: '24/7 Open',
-    badgeType: 'red',
-    phone: '+91 98765 43213',
-    coordinates: { lat: 28.6439, lng: 77.1890 },
-    logoBg: 'bg-[#FEE2E2] text-[#EF4444]',
-    iconPlaceholder: 'icon_placeholder_emergency.svg'
-  }
-];
-
-export const FEEDING_HISTORY_MOCK = [
-  {
-    id: 1,
-    title: 'Morning Organic Kibble',
-    timestamp: '8:12 AM Today',
-    amount: '150g Dry Kibble + Water',
-    loggedBy: 'Owner (Alex)',
-    icon: '🥣',
-    bg: 'bg-[#EBF8EE]'
-  }
-];
-
-export const FEEDING_SCHEDULE_MOCK = [
-  { id: 1, time: '8:00 AM', title: 'Morning Kibble', detail: '150g Dry Kibble • Daily' }
-];
-
 export const FAQS_MOCK = [
   {
     question: "How do I book a vet or grooming appointment?",
-    answer: "Browse local service providers on the Services tab or Grooming page, select your preferred date & time slot, and tap 'Confirm Booking'. You will instantly receive an SMS and email confirmation."
+    answer: "Browse local service providers on the Services tab, select your preferred date & time slot, and tap 'Confirm Booking'. You will instantly receive an SMS and email confirmation."
+  },
+  {
+    question: "Is teleconsultation supported for cats and dogs?",
+    answer: "Yes! Selected clinics offer live 1-on-1 video teleconsultations with certified veterinarians directly through the app."
   }
 ];

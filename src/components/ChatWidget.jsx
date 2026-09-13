@@ -1,77 +1,142 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
-export default function ChatWidget() {
+export default function ChatWidget({ onSendMessage }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { text: "Hello! How can I assist you with your pet care today?", isAgent: true }
+    { id: 1, sender: 'bot', text: 'Hello! How can we assist you with your pet today? 🐾', time: 'Just now' }
   ]);
-  const [inputText, setInputText] = useState("");
+  const [inputMsg, setInputMsg] = useState('');
 
-  const handleSend = (e) => {
-    e.preventDefault();
-    if (!inputText.trim()) return;
-    setMessages((prev) => [...prev, { text: inputText, isAgent: false }]);
-    const userMsg = inputText;
-    setInputText("");
+  const handleSend = (textToSend) => {
+    const text = textToSend || inputMsg;
+    if (!text.trim()) return;
+
+    const userMsg = { id: Date.now(), sender: 'user', text, time: 'Just now' };
+    setMessages((prev) => [...prev, userMsg]);
+    setInputMsg('');
+
+    if (onSendMessage) onSendMessage(text);
+
+    // Simulated Bot Reply
     setTimeout(() => {
-      setMessages((prev) => [...prev, { text: `Thanks! Our vet team is reviewing your message: "${userMsg}".`, isAgent: true }]);
-    }, 600);
+      const botReply = {
+        id: Date.now() + 1,
+        sender: 'bot',
+        text: `Thanks for messaging! Our care team usually replies within 5 minutes. We will notify your phone via SMS.`,
+        time: 'Just now'
+      };
+      setMessages((prev) => [...prev, botReply]);
+    }, 1000);
   };
 
   return (
     <div className="fixed bottom-20 lg:bottom-6 right-6 z-40">
-      {isOpen ? (
-        <div
-          className="w-80 sm:w-96 rounded-md shadow-warm-lg overflow-hidden flex flex-col h-96 animate-fadeIn"
-          style={{ backgroundColor: 'var(--paper)', border: '2px solid var(--wood-dark)' }}
+      
+      {/* FLOATING TOGGLE BUTTON */}
+      {!isOpen && (
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setIsOpen(true)}
+          className="bg-[#7BD389] hover:bg-[#5BB369] text-white p-3.5 rounded-full shadow-soft-lg flex items-center gap-2 border-2 border-white focus:outline-none focus:ring-2 focus:ring-[#7BD389]"
+          aria-label="Open support chat"
+        >
+          <span className="text-xl">💬</span>
+          <span className="font-extrabold text-xs hidden sm:inline">Ask PetCare</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping" />
+        </motion.button>
+      )}
+
+      {/* CHAT WINDOW POPUP */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          className="w-[320px] sm:w-[360px] bg-white border border-[#DCEBE0] rounded-card shadow-soft-lg overflow-hidden flex flex-col h-[450px]"
         >
           {/* Header */}
-          <div className="p-3.5 flex items-center justify-between font-extrabold text-sm font-nunito"
-            style={{ backgroundColor: 'var(--pine-dark)', color: 'var(--cream)', borderBottom: '3px solid var(--brass-dark)' }}>
-            <span className="flex items-center gap-2"><span>🐾</span> PetCare Support</span>
-            <button onClick={() => setIsOpen(false)}
-              className="text-lg min-h-[44px] min-w-[44px] flex items-center justify-center transition"
-              style={{ color: 'var(--cream)', opacity: 0.8 }}>✕</button>
+          <div className="bg-[#7BD389] text-white p-3.5 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-lg font-bold">
+                🐾
+              </div>
+              <div>
+                <h4 className="font-extrabold text-sm leading-tight">PetCare Live Assist</h4>
+                <span className="text-[10px] text-white/90 font-medium">⚡ Replies in ~5 mins</span>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="text-white hover:text-white/80 text-lg font-bold min-h-[36px] min-w-[36px]"
+            >
+              ✕
+            </button>
           </div>
 
-          {/* Messages */}
-          <div className="flex-1 p-3 overflow-y-auto space-y-2 text-xs" style={{ backgroundColor: 'var(--paper)' }}>
-            {messages.map((m, idx) => (
-              <div key={idx} className={`flex ${m.isAgent ? 'justify-start' : 'justify-end'}`}>
+          {/* Messages Log Body */}
+          <div className="flex-1 p-3.5 overflow-y-auto space-y-3 bg-[#FAF9F6] text-xs">
+            {messages.map((m) => (
+              <div
+                key={m.id}
+                className={`flex flex-col ${m.sender === 'user' ? 'items-end' : 'items-start'}`}
+              >
                 <div
-                  className="max-w-[80%] p-2.5 rounded-lg font-nunito"
-                  style={m.isAgent
-                    ? { backgroundColor: 'var(--paper-dark)', border: '1px solid var(--wood-light)', color: 'var(--ink)' }
-                    : { backgroundColor: 'var(--awning)', color: '#fff' }
-                  }
-                >{m.text}</div>
+                  className={`max-w-[80%] p-3 rounded-2xl ${
+                    m.sender === 'user'
+                      ? 'bg-[#7BD389] text-white rounded-br-none'
+                      : 'bg-white border border-[#DCEBE0] text-[#111827] rounded-bl-none shadow-soft-sm'
+                  }`}
+                >
+                  <p className="leading-relaxed">{m.text}</p>
+                </div>
+                <span className="text-[9px] text-[#8E9890] mt-1 font-semibold">{m.time}</span>
               </div>
             ))}
           </div>
 
-          {/* Input */}
-          <form onSubmit={handleSend} className="p-2 flex gap-2" style={{ borderTop: '1px solid var(--paper-dark)', backgroundColor: 'var(--paper-dark)' }}>
+          {/* Quick Reply Chips */}
+          <div className="p-2 bg-white border-t border-[#DCEBE0] flex gap-1.5 overflow-x-auto text-[10px] font-bold text-[#525C54] whitespace-nowrap">
+            {[
+              "🚑 Emergency Vet Info",
+              "🛁 Spa Package Rates",
+              "🏠 Home Pickup Service"
+            ].map((chip, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleSend(chip)}
+                className="bg-[#FAF9F6] hover:bg-[#EBF8EE] border border-[#DCEBE0] text-[#111827] px-2.5 py-1 rounded-pill"
+              >
+                {chip}
+              </button>
+            ))}
+          </div>
+
+          {/* Input Form */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSend();
+            }}
+            className="p-2.5 bg-white border-t border-[#DCEBE0] flex items-center gap-2"
+          >
             <input
               type="text"
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-              placeholder="Ask a question…"
-              className="flex-1 px-3 py-2 rounded-md text-xs focus:outline-none font-nunito"
-              style={{ backgroundColor: '#fff', border: '1.5px solid var(--wood)', color: 'var(--ink)' }}
+              value={inputMsg}
+              onChange={(e) => setInputMsg(e.target.value)}
+              placeholder="Type your message..."
+              className="flex-1 bg-[#FAF9F6] border border-[#DCEBE0] rounded-pill px-3 py-2 text-xs font-semibold text-[#111827] focus:outline-none focus:border-[#7BD389]"
             />
-            <button type="submit" className="press-btn text-xs font-bold px-3 py-2 rounded-md min-h-[44px]" style={{ fontSize: '12px', padding: '8px 14px' }}>
-              Send
+            <button
+              type="submit"
+              className="bg-[#7BD389] hover:bg-[#5BB369] text-white w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
+            >
+              ➔
             </button>
           </form>
-        </div>
-      ) : (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="press-btn w-14 h-14 rounded-full flex items-center justify-center text-2xl hover:scale-105 transition min-h-[44px] min-w-[44px]"
-          style={{ borderRadius: '50%', padding: 0 }}
-          aria-label="Open Live Support Chat"
-        >🐾</button>
+        </motion.div>
       )}
+
     </div>
   );
 }

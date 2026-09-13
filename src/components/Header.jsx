@@ -68,6 +68,7 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
                   className="appearance-none rounded-md px-4 py-2 pr-8 text-xs font-bold focus:outline-none cursor-pointer border"
                   style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(200,155,60,0.4)', color: 'var(--cream)' }}
                 >
+                  <option value="silver">🐱 Silver (Tabby Cat)</option>
                   <option value="luna">🐱 Luna (Ragdoll)</option>
                   <option value="milo">🐶 Milo (Golden)</option>
                   <option value="coco">🐰 Coco (Lop)</option>
@@ -133,6 +134,7 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
                 className="w-full rounded-md px-3 py-2 text-sm font-bold focus:outline-none border"
                 style={{ backgroundColor: 'rgba(255,255,255,0.08)', borderColor: 'rgba(200,155,60,0.35)', color: 'var(--cream)' }}
               >
+                <option value="silver">🐱 Silver (Silver Tabby Cat)</option>
                 <option value="luna">🐱 Luna (Ragdoll Cat)</option>
                 <option value="milo">🐶 Milo (Golden Puppy)</option>
                 <option value="coco">🐰 Coco (Lop Bunny)</option>
