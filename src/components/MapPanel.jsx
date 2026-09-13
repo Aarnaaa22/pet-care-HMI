@@ -1,134 +1,136 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import MarkerClusterGroup from 'react-leaflet-cluster';
+// src/components/MapPanel.jsx
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { motion } from 'framer-motion';
+import 'leaflet/dist/leaflet.css';
 
-// Custom Leaflet DivIcon for Soft Green Paw Pins
-const createCustomIcon = (isEmergency = false) => {
-  const colorClass = isEmergency ? '#EF4444' : '#7BD389';
+// Custom SVG Icons for clean rendering without missing asset warnings
+const createCustomIcon = (color, emoji) => {
   return L.divIcon({
-    className: 'custom-paw-pin',
-    html: `<div style="
-      background-color: ${colorClass};
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 3px solid white;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: white;
-      cursor: pointer;
-    ">🐾</div>`,
-    iconSize: [40, 40],
-    iconAnchor: [20, 20],
-    popupAnchor: [0, -20],
+    className: 'custom-map-marker',
+    html: `
+      <div style="
+        background-color: ${color};
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        border: 2px solid white;
+        font-size: 16px;
+      ">
+        ${emoji}
+      </div>
+    `,
+    iconSize: [34, 34],
+    iconAnchor: [17, 17],
+    popupAnchor: [0, -17],
   });
 };
 
-export default function MapPanel({ services = [], onBook, onViewDetail, className = "" }) {
-  // Center map around New Delhi default coordinates (28.6139, 77.2090)
-  const defaultCenter = [28.6139, 77.2090];
+const startIcon = createCustomIcon('#7BD389', '🏁');
+const endIcon = createCustomIcon('#EF4444', '🛑');
+const currentIcon = createCustomIcon('#9D72FF', '🐱');
+
+// Component to dynamically auto-fit map view to route coordinates
+function MapAutoRecenter({ coords }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!coords || coords.length === 0) return;
+    if (coords.length === 1) {
+      map.setView(coords[0], 16);
+    } else {
+      const bounds = L.latLngBounds(coords);
+      map.fitBounds(bounds, { padding: [40, 40] });
+    }
+  }, [coords, map]);
+
+  return null;
+}
+
+export default function MapPanel({
+  coords = [],
+  height = '320px',
+  mapboxToken = '',
+  interactive = true,
+  currentMarkerPosition = null,
+  showControls = true
+}) {
+  const defaultCenter = coords.length ? coords[coords.length - 1] : [19.0760, 72.8777];
+  
+  // Tile URL setup: Mapbox if token provided, otherwise standard OpenStreetMap
+  const tileUrl = mapboxToken
+    ? `https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=${mapboxToken}`
+    : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+
+  const tileAttribution = mapboxToken
+    ? '© <a href="https://www.mapbox.com/">Mapbox</a>'
+    : '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
   return (
-    <div className={`relative w-full h-full min-h-[440px] rounded-card overflow-hidden border border-[#DCEBE0] bg-[#FAF9F6] shadow-soft-sm ${className}`}>
-      
-      {/* REACT-LEAFLET MAP CONTAINER WITH OPENSTREETMAP TILES */}
+    <div className="w-full rounded-2xl overflow-hidden shadow-warm-md border border-ww-paper-dark relative z-0" style={{ height }}>
       <MapContainer
         center={defaultCenter}
-        zoom={12}
-        scrollWheelZoom={false}
-        className="w-full h-full min-h-[440px] z-0"
+        zoom={15}
+        scrollWheelZoom={interactive}
+        dragging={interactive}
+        zoomControl={showControls}
+        style={{ height: '100%', width: '100%' }}
       >
-        {/* OpenStreetMap TileLayer */}
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <TileLayer url={tileUrl} attribution={tileAttribution} />
+        
+        {/* Dynamic Route Auto-center */}
+        <MapAutoRecenter coords={coords} />
 
-        {/* REACT-LEAFLET-CLUSTER GROUP (Modern cluster library compatible with React 18 & react-leaflet v4) */}
-        <MarkerClusterGroup
-          chunkedLoading
-          maxClusterRadius={50}
-          iconCreateFunction={(cluster) => {
-            const count = cluster.getChildCount();
-            return L.divIcon({
-              html: `<div style="
-                background-color: #7BD389;
-                color: white;
-                width: 44px;
-                height: 44px;
-                border-radius: 50%;
-                border: 3px solid white;
-                box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: 800;
-                font-size: 14px;
-              ">🐾 ${count}</div>`,
-              className: 'custom-cluster-marker',
-              iconSize: [44, 44],
-            });
-          }}
-        >
-          {services.map((item) => {
-            const lat = item.coordinates?.lat || (28.6139 + (item.id * 0.01));
-            const lng = item.coordinates?.lng || (77.2090 + (item.id * 0.01));
-            const isEmergency = item.category === 'emergency';
+        {/* Route Polyline */}
+        {coords.length > 1 && (
+          <Polyline
+            positions={coords}
+            pathOptions={{
+              color: '#7BD389',
+              weight: 5,
+              opacity: 0.9,
+              lineCap: 'round',
+              lineJoin: 'round'
+            }}
+          />
+        )}
 
-            return (
-              <Marker
-                key={item.id}
-                position={[lat, lng]}
-                icon={createCustomIcon(isEmergency)}
-              >
-                {/* POPUP MINI-CARD */}
-                <Popup className="custom-leaflet-popup">
-                  <div className="p-2 space-y-2 min-w-[220px] font-sans">
-                    <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 rounded-xl bg-[#EBF8EE] border border-[#7BD389] text-[#7BD389] text-lg flex items-center justify-center font-bold flex-shrink-0">
-                        {item.icon || '🐾'}
-                      </div>
-                      <div>
-                        <h4 className="font-extrabold text-xs text-[#111827] leading-tight">{item.name}</h4>
-                        <div className="flex items-center gap-1 text-[11px] mt-0.5">
-                          <span className="text-amber-400 font-bold">★ {item.rating}</span>
-                          <span className="text-[#7BD389] font-bold">• {item.distance} km</span>
-                        </div>
-                      </div>
-                    </div>
+        {/* Start Marker */}
+        {coords.length > 0 && (
+          <Marker position={coords[0]} icon={startIcon}>
+            <Popup>
+              <div className="font-sans text-xs font-bold text-gray-800">
+                🏁 Route Start Point
+              </div>
+            </Popup>
+          </Marker>
+        )}
 
-                    <p className="text-[11px] text-[#525C54] line-clamp-2">{item.excerpt}</p>
+        {/* End Marker (if route finished and not actively tracking) */}
+        {coords.length > 1 && !currentMarkerPosition && (
+          <Marker position={coords[coords.length - 1]} icon={endIcon}>
+            <Popup>
+              <div className="font-sans text-xs font-bold text-gray-800">
+                🛑 Route End Point
+              </div>
+            </Popup>
+          </Marker>
+        )}
 
-                    <div className="pt-2 border-t border-[#EBF8EE] flex items-center justify-between gap-1">
-                      <span className="font-extrabold text-xs text-[#111827]">{item.price}</span>
-                      <button
-                        onClick={() => {
-                          if (onBook) onBook(item);
-                        }}
-                        className="bg-[#7BD389] hover:bg-[#5BB369] text-white font-extrabold text-[11px] px-3 py-1.5 rounded-pill shadow-soft-sm"
-                      >
-                        Book Now
-                      </button>
-                    </div>
-                  </div>
-                </Popup>
-              </Marker>
-            );
-          })}
-        </MarkerClusterGroup>
+        {/* Current Animated Position Marker */}
+        {currentMarkerPosition && (
+          <Marker position={currentMarkerPosition} icon={currentIcon}>
+            <Popup>
+              <div className="font-sans text-xs font-bold text-gray-800">
+                🐱 Silver's Current Position
+              </div>
+            </Popup>
+          </Marker>
+        )}
       </MapContainer>
-
-      {/* MAP LEGEND OVERLAY BADGE */}
-      <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur-sm border border-[#DCEBE0] px-3.5 py-1.5 rounded-pill shadow-soft-sm text-xs font-extrabold text-[#111827] flex items-center gap-2 pointer-events-none">
-        <span className="w-2 h-2 rounded-full bg-[#7BD389] animate-pulse"></span>
-        <span>OpenStreetMap Live ({services.length} Markers)</span>
-      </div>
-
     </div>
   );
 }

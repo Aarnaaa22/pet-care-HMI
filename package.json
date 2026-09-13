@@ -27,6 +27,7 @@
     "react-toastify": "^11.1.0",
     "recharts": "^3.10.1",
     "supercluster": "^8.0.1",
+    "togpx": "^0.5.4",
     "web-push": "^3.6.7",
     "workbox-window": "^7.4.1"
   },
