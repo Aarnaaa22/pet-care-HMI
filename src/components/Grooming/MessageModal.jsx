@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import Modal from "react-modal";
-import { toast } from "react-toastify";
 
 export default function MessageModal({ isOpen, onClose, groomer, pet }) {
   const currentPetName = pet?.name || "Silver";
@@ -77,7 +76,8 @@ export default function MessageModal({ isOpen, onClose, groomer, pet }) {
       isOpen={isOpen}
       onRequestClose={onClose}
       ariaHideApp={false}
-      className="max-w-md mx-auto mt-12 sm:mt-16 bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[520px] outline-none z-50 border border-gray-200"
+      overlayClassName="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-[99999]"
+      className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col h-[540px] outline-none relative z-[100000] border border-gray-200"
     >
       {/* Header */}
       <div className="bg-green-600 text-white p-4 flex items-center justify-between shadow-md">

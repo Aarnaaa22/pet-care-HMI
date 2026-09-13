@@ -311,8 +311,8 @@ export default function GroomersPage({ pet }) {
 
       {/* Mobile Drawer / Modal */}
       {selected && (
-        <div className="lg:hidden fixed inset-0 bg-black/50 z-40 p-4 flex items-end sm:items-center justify-center">
-          <div className="bg-white rounded-2xl max-h-[90vh] overflow-y-auto w-full max-w-lg p-2 relative">
+        <div className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[99999] p-4 flex items-end sm:items-center justify-center">
+          <div className="bg-white rounded-2xl max-h-[90vh] overflow-y-auto w-full max-w-lg p-2 relative z-[100000]">
             <button
               className="m-2 text-xs font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg flex items-center gap-1"
               onClick={() => setSelected(null)}
