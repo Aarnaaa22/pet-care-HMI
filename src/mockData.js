@@ -269,6 +269,57 @@ export const SERVICES_MOCK = [
     coordinates: { lat: 28.6139, lng: 77.2090 },
     logoBg: 'bg-[#EBF8EE] text-[#7BD389]',
     iconPlaceholder: 'icon_placeholder_vet.svg'
+  },
+  {
+    id: 2,
+    name: 'Fluffy Bubbles Grooming',
+    category: 'groomer',
+    type: 'Pet Spa & Grooming',
+    distance: 3.4,
+    rating: 4.8,
+    reviewsCount: 85,
+    price: '₹899',
+    priceDetail: 'Basic Spa Package',
+    badge: 'Walk-ins OK',
+    badgeType: 'blue',
+    phone: '+91 98765 43211',
+    coordinates: { lat: 28.6239, lng: 77.2190 },
+    logoBg: 'bg-[#E0F2FE] text-[#38BDF8]',
+    iconPlaceholder: 'icon_placeholder_groomer.svg'
+  },
+  {
+    id: 3,
+    name: 'Happy Tails Pet Store',
+    category: 'store',
+    type: 'Premium Supplies',
+    distance: 1.5,
+    rating: 4.7,
+    reviewsCount: 342,
+    price: '₹299+',
+    priceDetail: 'Food & Toys',
+    badge: 'Closes 9PM',
+    badgeType: 'gray',
+    phone: '+91 98765 43212',
+    coordinates: { lat: 28.6039, lng: 77.2000 },
+    logoBg: 'bg-[#FEF3C7] text-[#F59E0B]',
+    iconPlaceholder: 'icon_placeholder_store.svg'
+  },
+  {
+    id: 4,
+    name: 'City Emergency Vet 24/7',
+    category: 'emergency',
+    type: 'Emergency Hospital',
+    distance: 5.2,
+    rating: 4.9,
+    reviewsCount: 512,
+    price: '₹999',
+    priceDetail: 'Triage Fee',
+    badge: '24/7 Open',
+    badgeType: 'red',
+    phone: '+91 98765 43213',
+    coordinates: { lat: 28.6439, lng: 77.1890 },
+    logoBg: 'bg-[#FEE2E2] text-[#EF4444]',
+    iconPlaceholder: 'icon_placeholder_emergency.svg'
   }
 ];
 

@@ -158,24 +158,24 @@ export default function HealthPage({ pet }) {
       
       {/* Toast Notification Banner */}
       {toastMessage && (
-        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-[#2A2F2B] text-white px-6 py-3 rounded-pill text-xs font-extrabold shadow-soft-lg z-50 flex items-center gap-2 animate-bounce">
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-ww-pine-dark text-white px-6 py-3 rounded-md text-xs font-extrabold shadow-warm-lg z-50 flex items-center gap-2 animate-bounce">
           <span>🩺</span>
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* HEADER: PET HEALTH CARD */}
-      <div className="bg-gradient-to-r from-[#EBF8EE] via-[#FFF0F5] to-[#E0F2FE] border border-[#DCEBE0] rounded-card p-5 shadow-soft-md flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="bg-ww-paper border border-ww-paper-dark rounded-md p-5 shadow-warm-md flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <img src={pet.avatar} alt={pet.name} className="w-16 h-16 rounded-full object-cover border-2 border-[#7BD389] shadow-soft-sm" />
+          <img src={pet.avatar} alt={pet.name} className="w-16 h-16 rounded-full object-cover border-2 border-ww-wood shadow-warm-sm" />
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="font-extrabold text-xl text-[#2A2F2B]">{pet.name}'s Health Passport</h1>
-              <span className="text-xs font-bold text-[#525C54] bg-white px-2.5 py-0.5 rounded-pill shadow-soft-sm">{pet.species}</span>
+              <h1 className="font-extrabold text-xl text-ww-ink">{pet.name}'s Health Passport</h1>
+              <span className="text-xs font-bold text-ww-wood-dark bg-ww-paper px-2.5 py-0.5 rounded-md shadow-warm-sm">{pet.species}</span>
             </div>
-            <p className="text-xs font-semibold text-[#525C54] mt-1 flex items-center gap-1.5">
+            <p className="text-xs font-semibold text-ww-wood-dark mt-1 flex items-center gap-1.5">
               <span>🩺 Next Vaccine Due:</span>
-              <span className="bg-[#7BD389] text-white px-2.5 py-0.5 rounded-pill font-extrabold text-[11px] shadow-soft-sm">
+              <span className="bg-ww-awning text-white px-2.5 py-0.5 rounded-md font-extrabold text-[11px] shadow-warm-sm">
                 {pet.nextVaccine || 'Oct 15 (Deworming Check)'}
               </span>
             </p>
@@ -185,18 +185,18 @@ export default function HealthPage({ pet }) {
         {/* Demo Trigger for Push Notification Modal */}
         <button
           onClick={() => setSamplePushModalOpen(true)}
-          className="bg-white hover:bg-[#FFF0F5] border border-[#DCEBE0] text-[#FF85A1] px-3.5 py-2 rounded-pill font-extrabold text-xs shadow-soft-sm flex items-center gap-1.5 min-h-[44px]"
+          className="bg-ww-paper hover:bg-ww-paper-dark border border-ww-paper-dark text-ww-awning px-3.5 py-2 rounded-md font-extrabold text-xs shadow-warm-sm flex items-center gap-1.5 min-h-[44px]"
         >
           <span>🔔 Test Med Alarm</span>
         </button>
       </div>
 
       {/* TOP SUBTABS BAR: RECORDS | MEDS | APPOINTMENTS */}
-      <div className="bg-white p-1.5 rounded-pill border border-[#DCEBE0] shadow-soft-sm flex items-center gap-1">
+      <div className="bg-ww-paper p-1.5 rounded-md border border-ww-paper-dark shadow-warm-sm flex items-center gap-1">
         <button
           onClick={() => setActiveTab('records')}
-          className={`flex-1 py-2.5 rounded-pill font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 min-h-[44px] ${
-            activeTab === 'records' ? 'bg-[#7BD389] text-white shadow-soft-sm' : 'text-[#525C54] hover:text-[#7BD389]'
+          className={`flex-1 py-2.5 rounded-md font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 min-h-[44px] ${
+            activeTab === 'records' ? 'bg-ww-awning text-white shadow-warm-sm' : 'text-ww-wood-dark hover:text-ww-brass'
           }`}
         >
           <span>📄</span> Records
@@ -204,8 +204,8 @@ export default function HealthPage({ pet }) {
 
         <button
           onClick={() => setActiveTab('meds')}
-          className={`flex-1 py-2.5 rounded-pill font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 min-h-[44px] ${
-            activeTab === 'meds' ? 'bg-[#7BD389] text-white shadow-soft-sm' : 'text-[#525C54] hover:text-[#7BD389]'
+          className={`flex-1 py-2.5 rounded-md font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 min-h-[44px] ${
+            activeTab === 'meds' ? 'bg-ww-awning text-white shadow-warm-sm' : 'text-ww-wood-dark hover:text-ww-brass'
           }`}
         >
           <span>💊</span> Meds
@@ -213,8 +213,8 @@ export default function HealthPage({ pet }) {
 
         <button
           onClick={() => setActiveTab('appointments')}
-          className={`flex-1 py-2.5 rounded-pill font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 min-h-[44px] ${
-            activeTab === 'appointments' ? 'bg-[#7BD389] text-white shadow-soft-sm' : 'text-[#525C54] hover:text-[#7BD389]'
+          className={`flex-1 py-2.5 rounded-md font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 min-h-[44px] ${
+            activeTab === 'appointments' ? 'bg-ww-awning text-white shadow-warm-sm' : 'text-ww-wood-dark hover:text-ww-brass'
           }`}
         >
           <span>🩺</span> Appointments
@@ -226,12 +226,12 @@ export default function HealthPage({ pet }) {
         <div className="space-y-6 animate-fadeIn">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-extrabold text-base text-[#2A2F2B]">Medical History Timeline</h3>
-              <p className="text-xs text-[#8E9890]">Vaccinations, surgeries, and allergy records</p>
+              <h3 className="font-kalam text-lg text-ww-ink">Medical History Timeline</h3>
+              <p className="text-xs text-ww-wood">Vaccinations, surgeries, and allergy records</p>
             </div>
             <button
               onClick={() => setAddRecordModalOpen(true)}
-              className="bg-[#7BD389] hover:bg-[#5BB369] text-white px-4 py-2 rounded-pill font-extrabold text-xs shadow-soft-sm flex items-center gap-1.5 min-h-[44px]"
+              className="bg-ww-awning hover:bg-ww-awning-dark text-white px-4 py-2 rounded-md font-extrabold text-xs shadow-warm-sm flex items-center gap-1.5 min-h-[44px]"
             >
               <span>+ Add Record</span>
             </button>
@@ -242,19 +242,19 @@ export default function HealthPage({ pet }) {
             {recordsList.map((rec) => (
               <div key={rec.id} className="relative pl-12">
                 {/* Timeline Dot Icon */}
-                <div className="absolute left-3 top-2 -translate-x-1/2 w-7 h-7 rounded-full bg-white border-2 border-[#7BD389] text-xs flex items-center justify-center shadow-soft-sm">
+                <div className="absolute left-3 top-2 -translate-x-1/2 w-7 h-7 rounded-full bg-ww-paper border-2 border-ww-wood text-xs flex items-center justify-center shadow-warm-sm">
                   {rec.type === 'Vaccination' ? '💉' : rec.type === 'Surgery' ? '🩺' : '📋'}
                 </div>
 
-                <div className="bg-white border border-[#DCEBE0] rounded-card p-4 sm:p-5 shadow-soft-md hover:shadow-soft-lg transition">
+                <div className="bg-ww-paper border border-ww-paper-dark rounded-md p-4 sm:p-5 shadow-warm-md hover:shadow-warm-lg transition">
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-extrabold text-sm text-[#2A2F2B]">{rec.title}</h4>
-                        <span className="text-[10px] font-extrabold bg-[#EBF8EE] text-[#7BD389] px-2 py-0.5 rounded-pill">{rec.badge}</span>
+                        <h4 className="font-extrabold text-sm text-ww-ink">{rec.title}</h4>
+                        <span className="text-[10px] font-extrabold bg-ww-paper-dark text-ww-brass px-2 py-0.5 rounded-md">{rec.badge}</span>
                       </div>
-                      <p className="text-xs font-semibold text-[#8E9890] mt-0.5">
-                        {rec.date} • <strong className="text-[#525C54]">{rec.clinic}</strong> ({rec.doctor})
+                      <p className="text-xs font-semibold text-ww-wood mt-0.5">
+                        {rec.date} • <strong className="text-ww-wood-dark">{rec.clinic}</strong> ({rec.doctor})
                       </p>
                     </div>
 
@@ -262,7 +262,7 @@ export default function HealthPage({ pet }) {
                     <a
                       href={rec.pdfUrl}
                       download="sample_vet_report.pdf"
-                      className="bg-[#FAF9F6] hover:bg-[#EBF8EE] border border-[#DCEBE0] hover:border-[#7BD389] text-[#7BD389] p-2.5 rounded-xl flex items-center gap-1.5 text-xs font-bold transition min-h-[44px]"
+                      className="bg-ww-paper hover:bg-ww-paper-dark border border-ww-paper-dark hover:border-ww-wood text-ww-brass p-2.5 rounded-md flex items-center gap-1.5 text-xs font-bold transition min-h-[44px]"
                       title="Download PDF Vet Report"
                     >
                       <span>📄</span>
@@ -270,7 +270,7 @@ export default function HealthPage({ pet }) {
                     </a>
                   </div>
 
-                  <p className="text-xs text-[#525C54] bg-[#FAF9F6] p-3 rounded-xl border border-[#EBF8EE] leading-relaxed">
+                  <p className="text-xs text-ww-wood-dark bg-ww-paper p-3 rounded-md border border-ww-paper-dark leading-relaxed">
                     {rec.notes}
                   </p>
                 </div>
@@ -285,12 +285,12 @@ export default function HealthPage({ pet }) {
         <div className="space-y-6 animate-fadeIn">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-extrabold text-base text-[#2A2F2B]">Active Medication Plan</h3>
-              <p className="text-xs text-[#8E9890]">Daily prescriptions, dosage reminders, and history</p>
+              <h3 className="font-kalam text-lg text-ww-ink">Active Medication Plan</h3>
+              <p className="text-xs text-ww-wood">Daily prescriptions, dosage reminders, and history</p>
             </div>
             <button
               onClick={() => setAddMedModalOpen(true)}
-              className="bg-[#7BD389] hover:bg-[#5BB369] text-white px-4 py-2 rounded-pill font-extrabold text-xs shadow-soft-sm flex items-center gap-1.5 min-h-[44px]"
+              className="bg-ww-awning hover:bg-ww-awning-dark text-white px-4 py-2 rounded-md font-extrabold text-xs shadow-warm-sm flex items-center gap-1.5 min-h-[44px]"
             >
               <span>+ Add Medication</span>
             </button>
@@ -299,23 +299,23 @@ export default function HealthPage({ pet }) {
           {/* Active Medication Pill Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {medsList.map((med) => (
-              <div key={med.id} className="bg-white border border-[#DCEBE0] rounded-card p-5 shadow-soft-md flex flex-col justify-between space-y-4">
+              <div key={med.id} className="bg-ww-paper border border-ww-paper-dark rounded-md p-5 shadow-warm-md flex flex-col justify-between space-y-4">
                 <div>
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div className="flex items-center gap-3">
-                      <div className="w-11 h-11 rounded-2xl bg-[#FFF0F5] text-[#FF85A1] text-xl flex items-center justify-center shadow-soft-sm">
+                      <div className="w-11 h-11 rounded-md bg-ww-paper-dark text-ww-awning text-xl flex items-center justify-center shadow-warm-sm">
                         {med.icon}
                       </div>
                       <div>
-                        <h4 className="font-extrabold text-sm text-[#2A2F2B]">{med.name}</h4>
-                        <span className="text-xs font-semibold text-[#7BD389]">{med.dosage} • {med.frequency}</span>
+                        <h4 className="font-extrabold text-sm text-ww-ink">{med.name}</h4>
+                        <span className="text-xs font-semibold text-ww-brass">{med.dosage} • {med.frequency}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* DYNAMIC MISSED DOSE RISK WARNING (>12H) */}
                   {med.missedHours > 12 ? (
-                    <div className="bg-[#FEF2F2] border border-[#FCA5A5] rounded-xl p-2.5 text-xs font-bold text-[#991B1B] space-y-1 mb-2 animate-shake">
+                    <div className="bg-[#FEF2F2] border border-[#FCA5A5] rounded-md p-2.5 text-xs font-bold text-[#991B1B] space-y-1 mb-2 animate-shake">
                       <div className="flex items-center gap-1.5">
                         <span>⚠️ Risk Badge: Missed &gt;12h</span>
                       </div>
@@ -324,29 +324,29 @@ export default function HealthPage({ pet }) {
                       </p>
                       <button
                         onClick={() => alert('Initiating call to Dr. Sarah Smith...')}
-                        className="text-[10px] bg-[#991B1B] text-white px-2.5 py-1 rounded-pill font-extrabold mt-1 inline-block"
+                        className="text-[10px] bg-[#991B1B] text-white px-2.5 py-1 rounded-md font-extrabold mt-1 inline-block"
                       >
                         📞 Contact Vet Now
                       </button>
                     </div>
                   ) : (
-                    <div className="bg-[#FAF9F6] p-2.5 rounded-xl border border-[#EBF8EE] text-xs font-semibold text-[#525C54] mb-2">
-                      Next dose: <strong className="text-[#2A2F2B]">{med.nextDoseTime}</strong>
+                    <div className="bg-ww-paper p-2.5 rounded-md border border-ww-paper-dark text-xs font-semibold text-ww-wood-dark mb-2">
+                      Next dose: <strong className="text-ww-ink">{med.nextDoseTime}</strong>
                     </div>
                   )}
                 </div>
 
                 {/* Mark as Taken & Snooze Action Buttons */}
-                <div className="flex items-center gap-2 pt-2 border-t border-[#EBF8EE]">
+                <div className="flex items-center gap-2 pt-2 border-t border-ww-paper-dark">
                   <button
                     onClick={() => handleMarkMedTaken(med.id, med.name)}
-                    className="flex-1 bg-[#7BD389] hover:bg-[#5BB369] text-white text-xs font-extrabold py-2.5 rounded-pill shadow-soft-sm transition min-h-[44px]"
+                    className="flex-1 bg-ww-awning hover:bg-ww-awning-dark text-white text-xs font-extrabold py-2.5 rounded-md shadow-warm-sm transition min-h-[44px]"
                   >
                     ✓ Mark as Taken
                   </button>
                   <button
                     onClick={() => handleSnoozeMed(med.name)}
-                    className="bg-[#FAF9F6] hover:bg-[#EBF8EE] border border-[#DCEBE0] text-[#525C54] px-3 py-2.5 rounded-pill text-xs font-bold transition min-h-[44px]"
+                    className="bg-ww-paper hover:bg-ww-paper-dark border border-ww-paper-dark text-ww-wood-dark px-3 py-2.5 rounded-md text-xs font-bold transition min-h-[44px]"
                   >
                     ⏰ Snooze 10m
                   </button>
@@ -356,13 +356,13 @@ export default function HealthPage({ pet }) {
           </div>
 
           {/* Medication History Log */}
-          <div className="bg-white border border-[#DCEBE0] rounded-card p-5 shadow-soft-md space-y-3">
-            <h4 className="font-extrabold text-sm text-[#2A2F2B]">Medication Administration Log</h4>
+          <div className="bg-ww-paper border border-ww-paper-dark rounded-md p-5 shadow-warm-md space-y-3">
+            <h4 className="font-extrabold text-sm text-ww-ink">Medication Administration Log</h4>
             <div className="space-y-2">
               {medHistory.map((h) => (
-                <div key={h.id} className="bg-[#FAF9F6] p-3 rounded-xl border border-[#EBF8EE] flex items-center justify-between text-xs">
-                  <span className="font-bold text-[#2A2F2B]">✓ {h.text}</span>
-                  <span className="text-[#8E9890]">{h.time}</span>
+                <div key={h.id} className="bg-ww-paper p-3 rounded-md border border-ww-paper-dark flex items-center justify-between text-xs">
+                  <span className="font-bold text-ww-ink">✓ {h.text}</span>
+                  <span className="text-ww-wood">{h.time}</span>
                 </div>
               ))}
             </div>
@@ -375,8 +375,8 @@ export default function HealthPage({ pet }) {
         <div className="space-y-6 animate-fadeIn">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-extrabold text-base text-[#2A2F2B]">Vet Appointments</h3>
-              <p className="text-xs text-[#8E9890]">Upcoming clinic visits & teleconsult video calls</p>
+              <h3 className="font-kalam text-lg text-ww-ink">Vet Appointments</h3>
+              <p className="text-xs text-ww-wood">Upcoming clinic visits & teleconsult video calls</p>
             </div>
             <div className="flex gap-2">
               <button
@@ -384,7 +384,7 @@ export default function HealthPage({ pet }) {
                   setBookServiceType('📹 Teleconsult 15-min Video Call');
                   setBookVetSheetOpen(true);
                 }}
-                className="bg-[#4EA8DE] hover:bg-[#3894C7] text-white px-3.5 py-2 rounded-pill font-extrabold text-xs shadow-soft-sm flex items-center gap-1 min-h-[44px]"
+                className="bg-[#4EA8DE] hover:bg-[#3894C7] text-white px-3.5 py-2 rounded-md font-extrabold text-xs shadow-warm-sm flex items-center gap-1 min-h-[44px]"
               >
                 <span>📹 Teleconsult</span>
               </button>
@@ -393,7 +393,7 @@ export default function HealthPage({ pet }) {
                   setBookServiceType('Vaccination & Wellness Check');
                   setBookVetSheetOpen(true);
                 }}
-                className="bg-[#7BD389] hover:bg-[#5BB369] text-white px-3.5 py-2 rounded-pill font-extrabold text-xs shadow-soft-sm flex items-center gap-1 min-h-[44px]"
+                className="bg-ww-awning hover:bg-ww-awning-dark text-white px-3.5 py-2 rounded-md font-extrabold text-xs shadow-warm-sm flex items-center gap-1 min-h-[44px]"
               >
                 <span>+ Book Vet</span>
               </button>
@@ -403,30 +403,30 @@ export default function HealthPage({ pet }) {
           {/* Upcoming Appointments List */}
           <div className="space-y-4">
             {appointmentsList.map((app) => (
-              <div key={app.id} className="bg-white border border-[#DCEBE0] rounded-card p-5 shadow-soft-md space-y-3">
+              <div key={app.id} className="bg-ww-paper border border-ww-paper-dark rounded-md p-5 shadow-warm-md space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <span className="text-[10px] font-extrabold uppercase bg-[#EBF8EE] text-[#7BD389] px-2.5 py-1 rounded-pill">{app.type}</span>
-                    <h4 className="font-extrabold text-base text-[#2A2F2B] mt-1">{app.title}</h4>
-                    <p className="text-xs font-semibold text-[#525C54] mt-0.5">
+                    <span className="text-[10px] font-extrabold uppercase bg-ww-paper-dark text-ww-brass px-2.5 py-1 rounded-md">{app.type}</span>
+                    <h4 className="font-extrabold text-base text-ww-ink mt-1">{app.title}</h4>
+                    <p className="text-xs font-semibold text-ww-wood-dark mt-0.5">
                       📅 <strong>{app.date} at {app.time}</strong> • {app.vetName}
                     </p>
-                    <p className="text-xs text-[#8E9890] mt-0.5">{app.location}</p>
+                    <p className="text-xs text-ww-wood mt-0.5">{app.location}</p>
                   </div>
-                  <span className="font-extrabold text-base text-[#7BD389]">{app.fee}</span>
+                  <span className="font-extrabold text-base text-ww-brass">{app.fee}</span>
                 </div>
 
                 {/* Reschedule & Cancel Actions */}
-                <div className="flex items-center gap-2 pt-3 border-t border-[#EBF8EE]">
+                <div className="flex items-center gap-2 pt-3 border-t border-ww-paper-dark">
                   <button
                     onClick={() => alert(`Rescheduling ${app.title}...`)}
-                    className="flex-1 bg-[#FAF9F6] hover:bg-[#EBF8EE] border border-[#DCEBE0] text-[#2A2F2B] font-extrabold text-xs py-2.5 rounded-pill transition min-h-[44px]"
+                    className="flex-1 bg-ww-paper hover:bg-ww-paper-dark border border-ww-paper-dark text-ww-ink font-extrabold text-xs py-2.5 rounded-md transition min-h-[44px]"
                   >
                     ✏️ Reschedule
                   </button>
                   <button
                     onClick={() => alert(`Cancelling ${app.title}...`)}
-                    className="bg-[#FFE8E8] text-[#E63946] font-extrabold text-xs px-4 py-2.5 rounded-pill hover:bg-[#E63946] hover:text-white transition min-h-[44px]"
+                    className="bg-ww-awning text-white font-extrabold text-xs px-4 py-2.5 rounded-md hover:bg-ww-awning-dark hover:text-white transition min-h-[44px]"
                   >
                     ✕ Cancel
                   </button>
@@ -441,7 +441,7 @@ export default function HealthPage({ pet }) {
       <div className="fixed bottom-16 lg:bottom-6 left-1/2 transform -translate-x-1/2 w-[calc(100%-2rem)] max-w-md z-30">
         <button
           onClick={() => alert('🚨 EMERGENCY HELPLINE INITIATED:\nCalling 24/7 Vet Hospital at 1800-PAWS-911...')}
-          className="w-full bg-[#E63946] hover:bg-[#D62828] text-white font-extrabold py-3.5 px-6 rounded-pill shadow-soft-lg flex items-center justify-center gap-2 min-h-[48px] animate-pulse"
+          className="w-full bg-[#E63946] hover:bg-[#D62828] text-white font-extrabold py-3.5 px-6 rounded-md shadow-warm-lg flex items-center justify-center gap-2 min-h-[48px] animate-pulse"
         >
           <span className="text-lg">🚨</span>
           <span>Emergency — Call Vet (1800-PAWS-911)</span>
@@ -450,71 +450,71 @@ export default function HealthPage({ pet }) {
 
       {/* ADD RECORD MODAL */}
       {addRecordModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[#2A2F2B]/40 backdrop-blur-sm p-0 sm:p-4">
-          <div className="w-full max-w-lg bg-white rounded-t-[28px] sm:rounded-card p-6 shadow-soft-lg border border-[#DCEBE0]">
-            <div className="flex items-center justify-between pb-3 border-b border-[#DCEBE0] mb-4">
-              <h3 className="font-extrabold text-base text-[#2A2F2B]">Add Health Record</h3>
-              <button onClick={() => setAddRecordModalOpen(false)} className="text-lg text-[#8E9890] min-h-[44px] min-w-[44px]">✕</button>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-ww-pine-dark/40 backdrop-blur-sm p-0 sm:p-4">
+          <div className="w-full max-w-lg bg-ww-paper rounded-t-[28px] sm:rounded-md p-6 shadow-warm-lg border border-ww-paper-dark">
+            <div className="flex items-center justify-between pb-3 border-b border-ww-paper-dark mb-4">
+              <h3 className="font-kalam text-lg text-ww-ink">Add Health Record</h3>
+              <button onClick={() => setAddRecordModalOpen(false)} className="text-lg text-ww-wood min-h-[44px] min-w-[44px]">✕</button>
             </div>
 
             <form onSubmit={handleAddRecordSubmit} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Record Title</label>
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Record Title</label>
                 <input
                   type="text"
                   value={recordTitle}
                   onChange={(e) => setRecordTitle(e.target.value)}
                   placeholder="e.g. Annual Vaccine, Dental X-Ray"
-                  className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-3 text-xs font-semibold"
+                  className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-3 text-xs font-semibold"
                   required
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Clinic Name</label>
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Clinic Name</label>
                 <input
                   type="text"
                   value={recordClinic}
                   onChange={(e) => setRecordClinic(e.target.value)}
                   placeholder="e.g. Paws & Care Vet Clinic"
-                  className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-3 text-xs font-semibold"
+                  className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-3 text-xs font-semibold"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Upload Report / Image (PDF, JPG)</label>
-                <div className="border-2 border-dashed border-[#7BD389] rounded-2xl p-4 text-center bg-[#EBF8EE]/50 cursor-pointer">
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Upload Report / Image (PDF, JPG)</label>
+                <div className="border-2 border-dashed border-ww-wood rounded-md p-4 text-center bg-ww-paper-dark/50 cursor-pointer">
                   <span className="text-2xl block mb-1">📄</span>
-                  <span className="text-xs font-bold text-[#7BD389]">Upload vet note or image (PDF, JPG)</span>
+                  <span className="text-xs font-bold text-ww-brass">Upload vet note or image (PDF, JPG)</span>
                 </div>
 
                 {isUploading && (
                   <div className="mt-3 space-y-1">
-                    <div className="flex justify-between text-[11px] font-bold text-[#525C54]">
+                    <div className="flex justify-between text-[11px] font-bold text-ww-wood-dark">
                       <span>Uploading...</span>
                       <span>{uploadProgress}%</span>
                     </div>
                     <div className="w-full h-2 bg-[#DCEBE0] rounded-full overflow-hidden">
-                      <div className="h-full bg-[#7BD389] transition-all duration-200" style={{ width: `${uploadProgress}%` }}></div>
+                      <div className="h-full bg-ww-awning transition-all duration-200" style={{ width: `${uploadProgress}%` }}></div>
                     </div>
                   </div>
                 )}
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Notes</label>
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Notes</label>
                 <textarea
                   value={recordNotes}
                   onChange={(e) => setRecordNotes(e.target.value)}
                   placeholder="e.g. Administered 1-yr booster vaccine"
-                  className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-3 text-xs font-semibold h-20"
+                  className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-3 text-xs font-semibold h-20"
                 ></textarea>
               </div>
 
               <button
                 type="submit"
                 disabled={isUploading}
-                className="w-full bg-[#7BD389] hover:bg-[#5BB369] text-white font-extrabold py-3.5 rounded-pill shadow-soft-md transition min-h-[44px]"
+                className="w-full bg-ww-awning hover:bg-ww-awning-dark text-white font-extrabold py-3.5 rounded-md shadow-warm-md transition min-h-[44px]"
               >
                 {isUploading ? 'Uploading Document...' : 'Save & Attach Record'}
               </button>
@@ -525,22 +525,22 @@ export default function HealthPage({ pet }) {
 
       {/* ADD MEDICATION MODAL */}
       {addMedModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[#2A2F2B]/40 backdrop-blur-sm p-0 sm:p-4">
-          <div className="w-full max-w-lg bg-white rounded-t-[28px] sm:rounded-card p-6 shadow-soft-lg border border-[#DCEBE0]">
-            <div className="flex items-center justify-between pb-3 border-b border-[#DCEBE0] mb-4">
-              <h3 className="font-extrabold text-base text-[#2A2F2B]">Add Active Medication</h3>
-              <button onClick={() => setAddMedModalOpen(false)} className="text-lg text-[#8E9890] min-h-[44px] min-w-[44px]">✕</button>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-ww-pine-dark/40 backdrop-blur-sm p-0 sm:p-4">
+          <div className="w-full max-w-lg bg-ww-paper rounded-t-[28px] sm:rounded-md p-6 shadow-warm-lg border border-ww-paper-dark">
+            <div className="flex items-center justify-between pb-3 border-b border-ww-paper-dark mb-4">
+              <h3 className="font-kalam text-lg text-ww-ink">Add Active Medication</h3>
+              <button onClick={() => setAddMedModalOpen(false)} className="text-lg text-ww-wood min-h-[44px] min-w-[44px]">✕</button>
             </div>
 
             <form onSubmit={handleAddMedSubmit} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Medication Name</label>
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Medication Name</label>
                 <input
                   type="text"
                   value={medName}
                   onChange={(e) => setMedName(e.target.value)}
                   placeholder="e.g. Amoxicillin 250mg, Eye Drops"
-                  className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-3 text-xs font-semibold mb-2"
+                  className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-3 text-xs font-semibold mb-2"
                   required
                 />
 
@@ -551,7 +551,7 @@ export default function HealthPage({ pet }) {
                       key={s}
                       type="button"
                       onClick={() => setMedName(s)}
-                      className="bg-[#FAF9F6] hover:bg-[#EBF8EE] border border-[#DCEBE0] text-[#525C54] px-2.5 py-1 rounded-pill text-[11px] font-bold whitespace-nowrap"
+                      className="bg-ww-paper hover:bg-ww-paper-dark border border-ww-paper-dark text-ww-wood-dark px-2.5 py-1 rounded-md text-[11px] font-bold whitespace-nowrap"
                     >
                       + {s}
                     </button>
@@ -560,22 +560,22 @@ export default function HealthPage({ pet }) {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Dosage</label>
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Dosage</label>
                 <input
                   type="text"
                   value={medDosage}
                   onChange={(e) => setMedDosage(e.target.value)}
                   placeholder="e.g. 1 Tablet, 2 Drops"
-                  className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-3 text-xs font-semibold"
+                  className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-3 text-xs font-semibold"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Times Per Day</label>
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Times Per Day</label>
                 <select
                   value={medTimes}
                   onChange={(e) => setMedTimes(e.target.value)}
-                  className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-3 text-xs font-bold"
+                  className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-3 text-xs font-bold"
                 >
                   <option value="1">Once Daily (q24h)</option>
                   <option value="2">Twice Daily (q12h)</option>
@@ -585,7 +585,7 @@ export default function HealthPage({ pet }) {
 
               <button
                 type="submit"
-                className="w-full bg-[#7BD389] hover:bg-[#5BB369] text-white font-extrabold py-3.5 rounded-pill shadow-soft-md transition min-h-[44px]"
+                className="w-full bg-ww-awning hover:bg-ww-awning-dark text-white font-extrabold py-3.5 rounded-md shadow-warm-md transition min-h-[44px]"
               >
                 Save Medication
               </button>
@@ -596,20 +596,20 @@ export default function HealthPage({ pet }) {
 
       {/* BOOK VET BOTTOM SHEET MODAL */}
       {bookVetSheetOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[#2A2F2B]/40 backdrop-blur-sm p-0 sm:p-4">
-          <div className="w-full max-w-lg bg-white rounded-t-[28px] sm:rounded-card p-6 shadow-soft-lg border border-[#DCEBE0]">
-            <div className="flex items-center justify-between pb-3 border-b border-[#DCEBE0] mb-4">
-              <h3 className="font-extrabold text-base text-[#2A2F2B]">Book Vet Appointment</h3>
-              <button onClick={() => setBookVetSheetOpen(false)} className="text-lg text-[#8E9890] min-h-[44px] min-w-[44px]">✕</button>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-ww-pine-dark/40 backdrop-blur-sm p-0 sm:p-4">
+          <div className="w-full max-w-lg bg-ww-paper rounded-t-[28px] sm:rounded-md p-6 shadow-warm-lg border border-ww-paper-dark">
+            <div className="flex items-center justify-between pb-3 border-b border-ww-paper-dark mb-4">
+              <h3 className="font-kalam text-lg text-ww-ink">Book Vet Appointment</h3>
+              <button onClick={() => setBookVetSheetOpen(false)} className="text-lg text-ww-wood min-h-[44px] min-w-[44px]">✕</button>
             </div>
 
             <form onSubmit={handleBookVetSubmit} className="space-y-4">
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Service Type</label>
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Service Type</label>
                 <select
                   value={bookServiceType}
                   onChange={(e) => setBookServiceType(e.target.value)}
-                  className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-3 text-xs font-bold"
+                  className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-3 text-xs font-bold"
                 >
                   <option value="Vaccination & Wellness Check">💉 Vaccination & Wellness Checkup (₹499)</option>
                   <option value="Symptom Inspection">🩺 Symptom Inspection (₹499)</option>
@@ -618,24 +618,24 @@ export default function HealthPage({ pet }) {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-[#525C54] block mb-1">Reason for Visit</label>
+                <label className="text-xs font-bold text-ww-wood-dark block mb-1">Reason for Visit</label>
                 <input
                   type="text"
                   value={bookReason}
                   onChange={(e) => setBookReason(e.target.value)}
                   placeholder="e.g. Annual rabies vaccine booster"
-                  className="w-full bg-[#FAF9F6] border border-[#DCEBE0] rounded-xl p-3 text-xs font-semibold"
+                  className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-3 text-xs font-semibold"
                 />
               </div>
 
-              <div className="bg-[#EBF8EE] p-3.5 rounded-2xl border border-[#7BD389]/30 flex justify-between items-center text-xs font-bold">
+              <div className="bg-ww-paper-dark p-3.5 rounded-md border border-ww-wood flex justify-between items-center text-xs font-bold">
                 <span>Estimated Consultation Fee</span>
-                <span className="text-[#7BD389] text-sm">₹499</span>
+                <span className="text-ww-brass text-sm">₹499</span>
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#7BD389] hover:bg-[#5BB369] text-white font-extrabold py-3.5 rounded-pill shadow-soft-md transition min-h-[44px]"
+                className="w-full bg-ww-awning hover:bg-ww-awning-dark text-white font-extrabold py-3.5 rounded-md shadow-warm-md transition min-h-[44px]"
               >
                 Confirm Appointment — ₹499
               </button>
@@ -646,15 +646,15 @@ export default function HealthPage({ pet }) {
 
       {/* SAMPLE PUSH NOTIFICATION ALARM MODAL */}
       {samplePushModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#2A2F2B]/50 backdrop-blur-sm p-4 animate-fadeIn">
-          <div className="w-full max-w-sm bg-white rounded-card p-6 shadow-soft-lg border border-[#DCEBE0] text-center space-y-4">
-            <div className="w-14 h-14 rounded-full bg-[#FFF0F5] text-[#FF85A1] text-3xl flex items-center justify-center mx-auto shadow-soft-sm animate-bounce">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ww-pine-dark/50 backdrop-blur-sm p-4 animate-fadeIn">
+          <div className="w-full max-w-sm bg-ww-paper rounded-md p-6 shadow-warm-lg border border-ww-paper-dark text-center space-y-4">
+            <div className="w-14 h-14 rounded-full bg-ww-paper-dark text-ww-awning text-3xl flex items-center justify-center mx-auto shadow-warm-sm animate-bounce">
               ⏰
             </div>
             <div>
-              <span className="text-[10px] font-extrabold text-[#7BD389] uppercase tracking-wider">Medication Reminder</span>
-              <h4 className="font-extrabold text-base text-[#2A2F2B] mt-0.5">Time for {pet.name}'s Amoxicillin 250mg!</h4>
-              <p className="text-xs text-[#525C54] mt-1">Twice Daily Dose • Take with morning meal</p>
+              <span className="text-[10px] font-extrabold text-ww-brass uppercase tracking-wider">Medication Reminder</span>
+              <h4 className="font-extrabold text-base text-ww-ink mt-0.5">Time for {pet.name}'s Amoxicillin 250mg!</h4>
+              <p className="text-xs text-ww-wood-dark mt-1">Twice Daily Dose • Take with morning meal</p>
             </div>
 
             <div className="flex gap-2 pt-2">
@@ -663,7 +663,7 @@ export default function HealthPage({ pet }) {
                   handleMarkMedTaken(1, 'Amoxicillin 250mg');
                   setSamplePushModalOpen(false);
                 }}
-                className="flex-1 bg-[#7BD389] text-white font-extrabold py-2.5 rounded-pill text-xs shadow-soft-sm min-h-[44px]"
+                className="flex-1 bg-ww-awning text-white font-extrabold py-2.5 rounded-md text-xs shadow-warm-sm min-h-[44px]"
               >
                 ✓ Mark as Given
               </button>
@@ -672,7 +672,7 @@ export default function HealthPage({ pet }) {
                   handleSnoozeMed('Amoxicillin 250mg');
                   setSamplePushModalOpen(false);
                 }}
-                className="bg-[#FAF9F6] border border-[#DCEBE0] text-[#525C54] font-bold py-2.5 px-4 rounded-pill text-xs min-h-[44px]"
+                className="bg-ww-paper border border-ww-paper-dark text-ww-wood-dark font-bold py-2.5 px-4 rounded-md text-xs min-h-[44px]"
               >
                 Snooze 10m
               </button>

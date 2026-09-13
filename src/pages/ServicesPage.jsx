@@ -12,15 +12,14 @@ export default function ServicesPage({ searchQuery, onBookService, pet }) {
   const [selectedService, setSelectedService] = useState(null);
 
   const categories = [
-    { id: 'all', label: 'All Services' },
-    { id: 'vet', label: '🩺 Vets' },
-    { id: 'groomer', label: '🛁 Groomers' },
-    { id: 'store', label: '🛍️ Pet Stores' },
+    { id: 'all',       label: 'All Services' },
+    { id: 'vet',       label: '🩺 Vets' },
+    { id: 'groomer',   label: '🛁 Groomers' },
+    { id: 'store',     label: '🛍️ Pet Stores' },
     { id: 'emergency', label: '🚨 Emergency' },
-    { id: 'ondemand', label: '⚡ On-Demand' },
+    { id: 'ondemand',  label: '⚡ On-Demand' },
   ];
 
-  // Filter services by category and search query
   const filteredServices = SERVICES_MOCK.filter((s) => {
     const matchesCat = activeCategory === 'all' || s.category === activeCategory;
     const matchesSearch = !searchQuery || s.name.toLowerCase().includes(searchQuery.toLowerCase()) || s.type.toLowerCase().includes(searchQuery.toLowerCase());
@@ -29,70 +28,62 @@ export default function ServicesPage({ searchQuery, onBookService, pet }) {
 
   return (
     <div className="space-y-6 animate-fadeIn">
-      
-      {/* Hero Lead Banner */}
-      <section className="bg-gradient-to-r from-[#EBF8EE] via-[#FFF0F5] to-[#E0F2FE] border border-[#DCEBE0] rounded-card p-6 sm:p-8 shadow-soft-sm">
+
+      {/* Hero Banner */}
+      <section
+        className="rounded-md p-6 sm:p-8 shadow-warm-sm"
+        style={{ background: 'linear-gradient(135deg, var(--paper) 0%, var(--paper-dark) 100%)', border: '1.5px solid var(--wood-light)', borderLeft: '6px solid var(--awning)' }}
+      >
         <div className="max-w-2xl">
-          <span className="text-xs font-extrabold uppercase text-[#7BD389] tracking-wider mb-1 block">Local Care Network</span>
-          <h1 className="font-extrabold text-2xl sm:text-3xl text-[#2A2F2B] mb-2 leading-tight">
-            Find & Book Local Vets, Groomers, and Stores
+          <span className="room-label mb-2">Local Care Network</span>
+          <h1 className="font-kalam text-3xl sm:text-4xl mb-2 leading-tight" style={{ color: 'var(--ink)' }}>
+            Find &amp; Book Local Vets, Groomers, and Stores
           </h1>
-          <p className="text-xs sm:text-sm text-[#525C54] leading-relaxed">
-            Verified local care professionals for <strong className="text-[#2A2F2B]">{pet.name}</strong>. Real-time availability, instant online booking, and emergency assistance.
+          <p className="text-xs sm:text-sm leading-relaxed font-nunito" style={{ color: 'var(--wood-dark)' }}>
+            Verified local care professionals for <strong style={{ color: 'var(--ink)' }}>{pet.name}</strong>. Real-time availability, instant online booking, and emergency assistance.
           </p>
         </div>
       </section>
 
-      {/* Hero Filter Chips & View Controls */}
+      {/* Filter Chips & Map Toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        {/* Horizontal Chips */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0">
           {categories.map((c) => (
             <button
               key={c.id}
               onClick={() => setActiveCategory(c.id)}
-              className={`px-4 py-2 rounded-pill text-xs font-extrabold whitespace-nowrap transition border min-h-[44px] ${
-                activeCategory === c.id
-                  ? 'bg-[#7BD389] text-white border-[#7BD389] shadow-soft-sm'
-                  : 'bg-white text-[#525C54] border-[#DCEBE0] hover:border-[#7BD389]'
-              }`}
-            >
-              {c.label}
-            </button>
+              className="px-4 py-2 rounded-md text-xs font-extrabold whitespace-nowrap transition border min-h-[44px] font-nunito"
+              style={activeCategory === c.id
+                ? { backgroundColor: 'var(--awning)', color: '#fff', borderColor: 'var(--awning-dark)', boxShadow: '0 4px 0 var(--awning-dark)' }
+                : { backgroundColor: 'var(--paper)', color: 'var(--ink)', borderColor: 'var(--wood)' }
+              }
+            >{c.label}</button>
           ))}
         </div>
 
-        {/* Mobile Map Toggle Button (lg:hidden) */}
         <button
           onClick={() => setMobileMapOpen(true)}
-          className="lg:hidden w-full sm:w-auto bg-[#2A2F2B] text-white px-4 py-2.5 rounded-pill font-extrabold text-xs flex items-center justify-center gap-2 shadow-soft-sm min-h-[44px]"
+          className="press-btn lg:hidden w-full sm:w-auto px-4 py-2.5 rounded-md font-extrabold text-xs flex items-center justify-center gap-2 min-h-[44px]"
         >
-          <span>🗺️ Open Interactive Map ({filteredServices.length})</span>
+          🗺️ Open Interactive Map ({filteredServices.length})
         </button>
       </div>
 
-      {/* RESPONSIVE LAYOUT RULE DEMO:
-          - Desktop (lg): Two-column layout (Services List 2/3, Persistent Map 1/3)
-          - Tablet (md): Stacked or Split view
-          - Mobile (sm): Single column list + Mobile Map Bottom Sheet
-      */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        {/* Left Column (2/3 width on Desktop `lg`) - Service Cards Grid */}
+        {/* Service Cards */}
         <div className="lg:col-span-2 space-y-6">
           {filteredServices.length === 0 ? (
-            <div className="bg-white border border-dashed border-[#DCEBE0] rounded-card p-12 text-center space-y-3">
+            <div className="rounded-md p-12 text-center space-y-3" style={{ backgroundColor: 'var(--paper)', border: '1.5px dashed var(--wood)' }}>
               <div className="text-4xl">🔍</div>
-              <h3 className="font-extrabold text-base text-[#2A2F2B]">No results near you</h3>
-              <p className="text-xs text-[#8E9890] max-w-sm mx-auto">
-                No pet services matched your current filters. Try widening the search query or resetting filters.
+              <h3 className="font-kalam text-xl" style={{ color: 'var(--ink)' }}>No results near you</h3>
+              <p className="text-xs font-nunito max-w-sm mx-auto" style={{ color: 'var(--wood-dark)' }}>
+                No pet services matched your current filters. Try widening the search or resetting filters.
               </p>
               <button
                 onClick={() => setActiveCategory('all')}
-                className="px-4 py-2 bg-[#FAF9F6] border border-[#DCEBE0] rounded-pill text-xs font-bold text-[#2A2F2B] min-h-[44px]"
-              >
-                Reset Filters
-              </button>
+                className="px-4 py-2 rounded-md text-xs font-bold min-h-[44px] font-nunito"
+                style={{ backgroundColor: 'var(--paper-dark)', border: '1px solid var(--wood)', color: 'var(--ink)' }}
+              >Reset Filters</button>
             </div>
           ) : (
             <ResponsiveGrid cols={{ sm: 1, md: 2, lg: 2 }}>
@@ -102,17 +93,14 @@ export default function ServicesPage({ searchQuery, onBookService, pet }) {
                   service={srv}
                   onBook={(s) => onBookService(s)}
                   onCall={(s) => alert(`Calling ${s.name} at ${s.phone}...`)}
-                  onDirections={(s) => {
-                    setSelectedService(s);
-                    setMobileMapOpen(true);
-                  }}
+                  onDirections={(s) => { setSelectedService(s); setMobileMapOpen(true); }}
                 />
               ))}
             </ResponsiveGrid>
           )}
         </div>
 
-        {/* Right Column (1/3 width on Desktop `lg`) - Persistent Map Panel Column */}
+        {/* Persistent Map Panel (Desktop) */}
         <div className="hidden lg:block lg:col-span-1">
           <div className="sticky top-24">
             <MapPanel
@@ -122,22 +110,14 @@ export default function ServicesPage({ searchQuery, onBookService, pet }) {
             />
           </div>
         </div>
-
       </div>
 
       {/* Mobile Map Bottom Sheet */}
-      <BottomSheet
-        isOpen={mobileMapOpen}
-        onClose={() => setMobileMapOpen(false)}
-        title="Interactive Nearby Map"
-      >
+      <BottomSheet isOpen={mobileMapOpen} onClose={() => setMobileMapOpen(false)} title="Interactive Nearby Map">
         <MapPanel
           services={filteredServices}
           selectedService={selectedService}
-          onSelectService={(s) => {
-            setMobileMapOpen(false);
-            onBookService(s);
-          }}
+          onSelectService={(s) => { setMobileMapOpen(false); onBookService(s); }}
           isMobileSheet={true}
         />
       </BottomSheet>

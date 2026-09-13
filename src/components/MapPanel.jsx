@@ -9,22 +9,22 @@ export default function MapPanel({ services, selectedService, onSelectService, i
   };
 
   return (
-    <div className={`relative w-full h-full min-h-[400px] lg:min-h-[600px] bg-[#E8F5E9] border border-[#DCEBE0] rounded-card overflow-hidden shadow-soft-md ${isMobileSheet ? 'h-[360px]' : ''}`}>
+    <div className={`relative w-full h-full min-h-[400px] lg:min-h-[600px] bg-ww-paper-dark border border-ww-paper-dark rounded-md overflow-hidden shadow-warm-md ${isMobileSheet ? 'h-[360px]' : ''}`}>
       
       {/* Pastel Grid Road Map Background Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#C8E6C9_1.5px,transparent_1.5px)] [background-size:24px_24px]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(rgba(169,113,59,0.15)_1.5px,transparent_1.5px)] [background-size:24px_24px]"></div>
       
       {/* Decorative Road Markings */}
       <div className="absolute top-[35%] -left-[10%] w-[120%] h-6 bg-white transform -rotate-12 opacity-80 pointer-events-none"></div>
       <div className="absolute -top-[10%] left-[55%] w-6 h-[120%] bg-white transform rotate-12 opacity-80 pointer-events-none"></div>
 
       {/* Header Info Banner */}
-      <div className="absolute top-3 left-3 right-3 bg-white/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-[#DCEBE0] flex items-center justify-between text-xs font-bold shadow-soft-sm z-10">
-        <span className="flex items-center gap-1.5 text-[#2A2F2B]">
-          <span className="w-2 h-2 rounded-full bg-[#7BD389] animate-pulse"></span>
+      <div className="absolute top-3 left-3 right-3 backdrop-blur-md px-3.5 py-2 rounded-md border flex items-center justify-between text-xs font-bold shadow-warm-sm z-10">
+        <span className="flex items-center gap-1.5 text-ww-ink">
+          <span className="w-2 h-2 rounded-full animate-pulse"></span>
           <span>Interactive Map • {services.length} Nearby Pins</span>
         </span>
-        <span className="text-[#8E9890] text-[10px]">Tap pins to inspect</span>
+        <span className="text-ww-wood text-[10px]">Tap pins to inspect</span>
       </div>
 
       {/* Map Pins (Soft Green `#7BD389` & Pastel Pink `#F7C6D7`) */}
@@ -52,7 +52,7 @@ export default function MapPanel({ services, selectedService, onSelectService, i
               aria-label={`View ${srv.name} on map`}
             >
               <div
-                className={`w-11 h-11 rounded-full rounded-br-none transform -rotate-45 flex items-center justify-center shadow-soft-md ${
+                className={`w-11 h-11 rounded-full rounded-br-none transform -rotate-45 flex items-center justify-center shadow-warm-md ${
                   srv.category === 'emergency' ? 'bg-[#E63946] text-white' :
                   srv.category === 'groomer' ? 'bg-[#F7C6D7] text-[#9F1239]' :
                   'bg-[#7BD389] text-white'
@@ -74,16 +74,16 @@ export default function MapPanel({ services, selectedService, onSelectService, i
 
       {/* Selected Business Preview Popup Card */}
       {activePin && (
-        <div className="absolute bottom-3 left-3 right-3 bg-white p-3.5 rounded-2xl shadow-soft-lg border border-[#DCEBE0] flex items-center justify-between gap-3 animate-fadeIn z-20">
+        <div className="absolute bottom-3 left-3 right-3 bg-white p-3.5 rounded-2xl shadow-soft-lg border border-ww-paper-dark flex items-center justify-between gap-3 animate-fadeIn z-20">
           <div className="min-w-0">
-            <h4 className="font-extrabold text-sm text-[#2A2F2B] truncate">{activePin.name}</h4>
+            <h4 className="font-extrabold text-sm text-ww-ink truncate">{activePin.name}</h4>
             <p className="text-xs text-[#525C54] font-semibold">
               <span className="text-[#7BD389]">{activePin.distance} km away</span> • ★ {activePin.rating}
             </p>
           </div>
           <button
             onClick={() => onSelectService && onSelectService(activePin)}
-            className="px-4 py-2 bg-[#7BD389] hover:bg-[#5BB369] text-white text-xs font-extrabold rounded-pill shadow-soft-sm whitespace-nowrap min-h-[44px]"
+            className="px-4 py-2 bg-[#7BD389] hover:bg-[#5BB369] text-white text-xs font-extrabold rounded-pill shadow-warm-sm whitespace-nowrap min-h-[44px]"
           >
             Select — {activePin.price}
           </button>

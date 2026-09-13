@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Container from './components/Container';
@@ -6,6 +6,7 @@ import ResponsiveDemoTester from './components/ResponsiveDemoTester';
 import BookingModal from './components/BookingModal';
 import FAQAccordion from './components/FAQAccordion';
 import ChatWidget from './components/ChatWidget';
+import ShopDoorIntro from './components/ShopDoorIntro';
 
 import ServicesPage from './pages/ServicesPage';
 import FeedingPage from './pages/FeedingPage';
@@ -26,6 +27,13 @@ export default function App() {
   
   const [bookingService, setBookingService] = useState(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
+
+  // Lock body scroll while door intro is showing
+  useEffect(() => {
+    document.body.style.overflow = showIntro ? 'hidden' : 'auto';
+    return () => { document.body.style.overflow = 'auto'; };
+  }, [showIntro]);
 
   const activePet = pets[activePetKey] || pets.luna;
 
@@ -42,8 +50,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF9F6] text-[#2A2F2B] font-sans selection:bg-[#7BD389] selection:text-white">
-      
+    <div
+      className="min-h-screen flex flex-col font-nunito selection:bg-ww-brass selection:text-white relative overflow-x-hidden"
+      style={{ backgroundColor: 'var(--pine-dark)', color: 'var(--ink)' }}
+    >
+      {/* Shop Door Intro — shown once on load, hides when door is opened */}
+      {showIntro && <ShopDoorIntro onEnter={() => setShowIntro(false)} />}
+
+      {/* Subtle wood-plank floor texture (fixed, behind content) */}
+      <div className="floor-planks" aria-hidden="true" />
+
       {/* Header */}
       <Header
         activeRoute={activeRoute}
@@ -61,15 +77,16 @@ export default function App() {
         onModeChange={setViewportMode}
       />
 
-      {/* Main Content Viewport Wrapper (Adapts to Mobile 375, Tablet 768, Desktop 1440, or Fluid 100%) */}
-      <main className="flex-1 py-6 sm:py-8">
+      {/* Main Content Viewport Wrapper */}
+      <main className="flex-1 py-6 sm:py-8 relative z-10">
         <div
           className={`mx-auto transition-all duration-300 ${
-            viewportMode === 'mobile' ? 'max-w-[375px] border-4 border-[#222B24] rounded-[40px] overflow-hidden p-4 shadow-soft-lg bg-[#FAF9F6]' :
-            viewportMode === 'tablet' ? 'max-w-[768px] border-4 border-[#222B24] rounded-[32px] overflow-hidden p-6 shadow-soft-lg bg-[#FAF9F6]' :
+            viewportMode === 'mobile'  ? 'max-w-[375px] border-4 border-ww-wood-dark rounded-[40px] overflow-hidden p-4 shadow-warm-lg' :
+            viewportMode === 'tablet'  ? 'max-w-[768px] border-4 border-ww-wood-dark rounded-[32px] overflow-hidden p-6 shadow-warm-lg' :
             viewportMode === 'desktop' ? 'max-w-[1440px] px-8' :
             'w-full'
           }`}
+          style={viewportMode === 'mobile' || viewportMode === 'tablet' ? { backgroundColor: 'var(--paper)' } : {}}
         >
           <Container>
             {activeRoute === 'services' && (
@@ -128,3 +145,4 @@ export default function App() {
     </div>
   );
 }
+
