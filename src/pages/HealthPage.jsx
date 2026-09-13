@@ -155,6 +155,7 @@ export default function HealthPage({ pet }) {
           pet={currentPet}
           appointments={appointments}
           onAddAppointment={handleAddAppointment}
+          onJoinTeleconsult={() => setActiveTab('teleconsult')}
         />
       )}
 

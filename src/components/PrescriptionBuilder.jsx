@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { generateEPrescriptionPDF } from '../utils/pdf';
+import { scheduleReminder } from '../utils/notify';
 
 export default function PrescriptionBuilder({ isOpen, onClose, pet, initialNotes = '', onSavePrescription }) {
   if (!isOpen) return null;
@@ -77,13 +78,20 @@ export default function PrescriptionBuilder({ isOpen, onClose, pet, initialNotes
 
     const doc = generateEPrescriptionPDF(rxData, signatureDataUrl);
 
+    // Schedule automated refill reminder notification demo
+    scheduleReminder(
+      10 * 1000,
+      `Refill Reminder: ${medName}`,
+      `Time to order refill for ${pet?.name || 'Silver'}'s ${medName} prescription!`
+    );
+
     if (onSavePrescription) {
       onSavePrescription({
         title: `Prescription: ${medName}`,
         date: new Date().toISOString().slice(0, 10),
         provider: 'Dr. Sarah Jenkins, DVM (E-Signed)',
         type: 'vaccine',
-        notes: `E-Prescription issued for ${medName} (${dosage}).`,
+        notes: `E-Prescription issued for ${medName} (${dosage}). Refill reminder scheduled!`,
         attachments: [
           {
             id: `att_rx_${Date.now()}`,
@@ -207,7 +215,7 @@ export default function PrescriptionBuilder({ isOpen, onClose, pet, initialNotes
               onClick={handleGeneratePdf}
               className="px-5 py-2.5 bg-gradient-to-r from-ww-brass to-emerald-500 text-white font-extrabold text-xs rounded-xl shadow hover:brightness-105 transition flex items-center gap-1.5"
             >
-              <span>📄 Generate &amp; Attach Signed PDF</span>
+              <span>📄 Generate Signed PDF &amp; Push Refill Reminder</span>
             </button>
           </div>
         </motion.div>

@@ -11,6 +11,7 @@ export const INITIAL_APPOINTMENTS = [
     doctor: 'Dr. Sarah Jenkins, DVM',
     location: 'Pawsome Care Pet Clinic',
     type: 'In-Clinic',
+    durationMinutes: 30,
     date: '2026-09-18T10:00:00.000Z',
     status: 'Confirmed'
   },
@@ -21,16 +22,19 @@ export const INITIAL_APPOINTMENTS = [
     doctor: 'Dr. Michael Chang',
     location: 'PetCare Video Room',
     type: 'Teleconsult',
+    durationMinutes: 15,
     date: '2026-09-25T14:30:00.000Z',
     status: 'Scheduled'
   }
 ];
 
-export default function Appointments({ pet, appointments = [], onAddAppointment }) {
+export default function Appointments({ pet, appointments = [], onAddAppointment, onJoinTeleconsult }) {
   const currentAppointments = appointments.length ? appointments : INITIAL_APPOINTMENTS;
   const [selectedDate, setSelectedDate] = useState('2026-09-20');
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const [slotDuration, setSlotDuration] = useState(30); // 15 | 30 | 60 mins
   const [isBookSheetOpen, setIsBookSheetOpen] = useState(false);
+  const [showPaymentStep, setShowPaymentStep] = useState(false);
   const [aptType, setAptType] = useState('Teleconsult');
   const [doctor, setDoctor] = useState('Dr. Sarah Jenkins, DVM');
 
@@ -38,25 +42,31 @@ export default function Appointments({ pet, appointments = [], onAddAppointment 
     '09:00 AM', '10:30 AM', '11:15 AM', '02:00 PM', '03:45 PM', '05:00 PM'
   ];
 
-  const handleConfirmBooking = () => {
+  const handleStartBookingProcess = () => {
     if (!selectedSlot) return alert("Please select a time slot.");
+    setShowPaymentStep(true);
+  };
 
+  const handleConfirmBooking = (paid = true) => {
     const newApt = {
       id: `apt_${Date.now()}`,
       petName: pet?.name || 'Silver',
-      title: `${aptType} with ${doctor.split(',')[0]}`,
+      title: `${aptType} (${slotDuration} min) with ${doctor.split(',')[0]}`,
       doctor,
       location: aptType === 'Teleconsult' ? 'PetCare Video Room' : 'Pawsome Care Pet Clinic',
       type: aptType,
+      durationMinutes: slotDuration,
       date: `${selectedDate}T${selectedSlot.includes('PM') ? '14' : '10'}:00:00.000Z`,
-      status: 'Confirmed'
+      status: 'Confirmed',
+      paid
     };
 
     onAddAppointment && onAddAppointment(newApt);
     exportAppointmentICS(newApt);
     setIsBookSheetOpen(false);
+    setShowPaymentStep(false);
     setSelectedSlot(null);
-    alert("🎉 Appointment Booked! ICS Calendar invitation downloaded.");
+    alert(`🎉 Appointment Booked! ${paid ? 'Payment Confirmed ($' + (slotDuration === 15 ? '25' : slotDuration === 30 ? '45' : '80') + ').' : ''} ICS Calendar file downloaded.`);
   };
 
   return (
@@ -69,7 +79,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment 
           </div>
           <div>
             <h2 className="font-extrabold text-base text-ww-ink">Veterinary Appointments &amp; Calendar</h2>
-            <p className="text-xs text-ww-wood-dark">Book in-clinic vet visits or instant video teleconsultations.</p>
+            <p className="text-xs text-ww-wood-dark">Book 15/30/60min in-clinic vet visits or instant video teleconsultations.</p>
           </div>
         </div>
 
@@ -105,7 +115,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment 
                       ? 'bg-sky-50 text-sky-700 border-sky-200'
                       : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                   }`}>
-                    {apt.type}
+                    {apt.type} • {apt.durationMinutes || 30} min
                   </span>
                 </div>
 
@@ -117,6 +127,15 @@ export default function Appointments({ pet, appointments = [], onAddAppointment 
             </div>
 
             <div className="flex items-center gap-2">
+              {apt.type === 'Teleconsult' && onJoinTeleconsult && (
+                <button
+                  onClick={onJoinTeleconsult}
+                  className="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs rounded-xl shadow transition flex items-center gap-1"
+                >
+                  📹 Join Video Room
+                </button>
+              )}
+
               <button
                 onClick={() => exportAppointmentICS(apt)}
                 className="px-3 py-1.5 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-ink text-xs font-bold rounded-xl transition flex items-center gap-1"
@@ -139,91 +158,157 @@ export default function Appointments({ pet, appointments = [], onAddAppointment 
               exit={{ y: 50, opacity: 0 }}
               className="bg-ww-paper border-2 border-ww-brass rounded-3xl p-6 shadow-warm-lg max-w-md w-full space-y-4"
             >
-              <div className="flex items-center justify-between pb-3 border-b border-ww-paper-dark">
-                <h3 className="font-extrabold text-base text-ww-ink">Book Appointment for {pet?.name || 'Silver'}</h3>
-                <button onClick={() => setIsBookSheetOpen(false)} className="font-bold text-ww-wood">✕</button>
-              </div>
-
-              <div className="space-y-3">
-                <div>
-                  <label className="block text-xs font-bold text-ww-ink mb-1">Appointment Type</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setAptType('Teleconsult')}
-                      className={`py-2 rounded-xl text-xs font-bold border transition ${
-                        aptType === 'Teleconsult' ? 'bg-sky-600 text-white border-sky-600' : 'bg-ww-paper-dark text-ww-ink'
-                      }`}
-                    >
-                      📹 Video Teleconsult
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setAptType('In-Clinic Visit')}
-                      className={`py-2 rounded-xl text-xs font-bold border transition ${
-                        aptType === 'In-Clinic Visit' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-ww-paper-dark text-ww-ink'
-                      }`}
-                    >
-                      🏥 In-Clinic Visit
-                    </button>
+              {!showPaymentStep ? (
+                /* Step 1: Appointment Slot Details */
+                <>
+                  <div className="flex items-center justify-between pb-3 border-b border-ww-paper-dark">
+                    <h3 className="font-extrabold text-base text-ww-ink">Book Appointment for {pet?.name || 'Silver'}</h3>
+                    <button onClick={() => setIsBookSheetOpen(false)} className="font-bold text-ww-wood">✕</button>
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-ww-ink mb-1">Select Veterinarian</label>
-                  <select
-                    value={doctor}
-                    onChange={e => setDoctor(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-bold"
-                  >
-                    <option value="Dr. Sarah Jenkins, DVM">Dr. Sarah Jenkins, DVM (Feline Specialist)</option>
-                    <option value="Dr. Michael Chang, DVM">Dr. Michael Chang, DVM (General Vet)</option>
-                    <option value="Dr. Elena Rostova, DVM">Dr. Elena Rostova, DVM (Dermatology)</option>
-                  </select>
-                </div>
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-bold text-ww-ink mb-1">Appointment Type</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setAptType('Teleconsult')}
+                          className={`py-2 rounded-xl text-xs font-bold border transition ${
+                            aptType === 'Teleconsult' ? 'bg-sky-600 text-white border-sky-600' : 'bg-ww-paper-dark text-ww-ink'
+                          }`}
+                        >
+                          📹 Video Teleconsult
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setAptType('In-Clinic Visit')}
+                          className={`py-2 rounded-xl text-xs font-bold border transition ${
+                            aptType === 'In-Clinic Visit' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-ww-paper-dark text-ww-ink'
+                          }`}
+                        >
+                          🏥 In-Clinic Visit
+                        </button>
+                      </div>
+                    </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-ww-ink mb-1">Select Date</label>
-                  <input
-                    type="date"
-                    value={selectedDate}
-                    onChange={e => setSelectedDate(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold"
-                  />
-                </div>
+                    <div>
+                      <label className="block text-xs font-bold text-ww-ink mb-1">Select Consultation Duration</label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[15, 30, 60].map(mins => (
+                          <button
+                            key={mins}
+                            type="button"
+                            onClick={() => setSlotDuration(mins)}
+                            className={`py-2 rounded-xl text-xs font-extrabold border transition ${
+                              slotDuration === mins
+                                ? 'bg-ww-brass text-white border-ww-brass shadow-sm'
+                                : 'bg-ww-paper-dark text-ww-ink hover:bg-ww-wood-light'
+                            }`}
+                          >
+                            {mins} mins (${mins === 15 ? '25' : mins === 30 ? '45' : '80'})
+                          </button>
+                        ))}
+                      </div>
+                    </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-ww-ink mb-1">Available Slots</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {AVAILABLE_SLOTS.map(slot => (
-                      <button
-                        key={slot}
-                        type="button"
-                        onClick={() => setSelectedSlot(slot)}
-                        className={`py-2 rounded-xl text-xs font-extrabold border transition ${
-                          selectedSlot === slot
-                            ? 'bg-ww-brass text-white border-ww-brass'
-                            : 'bg-ww-paper-dark/60 text-ww-ink hover:bg-ww-wood-light'
-                        }`}
+                    <div>
+                      <label className="block text-xs font-bold text-ww-ink mb-1">Select Veterinarian</label>
+                      <select
+                        value={doctor}
+                        onChange={e => setDoctor(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-bold"
                       >
-                        {slot}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                        <option value="Dr. Sarah Jenkins, DVM">Dr. Sarah Jenkins, DVM (Feline Specialist)</option>
+                        <option value="Dr. Michael Chang, DVM">Dr. Michael Chang, DVM (General Vet)</option>
+                        <option value="Dr. Elena Rostova, DVM">Dr. Elena Rostova, DVM (Dermatology)</option>
+                      </select>
+                    </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-ww-paper-dark">
-                <button onClick={() => setIsBookSheetOpen(false)} className="px-4 py-2 text-xs font-bold text-ww-wood">
-                  Cancel
-                </button>
-                <button
-                  onClick={handleConfirmBooking}
-                  className="px-5 py-2 bg-ww-brass text-white font-extrabold text-xs rounded-xl shadow hover:brightness-105 transition"
-                >
-                  Confirm &amp; Export ICS
-                </button>
-              </div>
+                    <div>
+                      <label className="block text-xs font-bold text-ww-ink mb-1">Select Date</label>
+                      <input
+                        type="date"
+                        value={selectedDate}
+                        onChange={e => setSelectedDate(e.target.value)}
+                        className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-ww-ink mb-1">Available Time Slots</label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {AVAILABLE_SLOTS.map(slot => (
+                          <button
+                            key={slot}
+                            type="button"
+                            onClick={() => setSelectedSlot(slot)}
+                            className={`py-2 rounded-xl text-xs font-extrabold border transition ${
+                              selectedSlot === slot
+                                ? 'bg-ww-brass text-white border-ww-brass'
+                                : 'bg-ww-paper-dark/60 text-ww-ink hover:bg-ww-wood-light'
+                            }`}
+                          >
+                            {slot}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end gap-2 pt-3 border-t border-ww-paper-dark">
+                    <button onClick={() => setIsBookSheetOpen(false)} className="px-4 py-2 text-xs font-bold text-ww-wood">
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleStartBookingProcess}
+                      className="px-5 py-2 bg-ww-brass text-white font-extrabold text-xs rounded-xl shadow hover:brightness-105 transition"
+                    >
+                      Proceed to Checkout ($ {slotDuration === 15 ? '25' : slotDuration === 30 ? '45' : '80'}) →
+                    </button>
+                  </div>
+                </>
+              ) : (
+                /* Step 2: Payment Checkout Modal UI */
+                <>
+                  <div className="flex items-center justify-between pb-3 border-b border-ww-paper-dark">
+                    <h3 className="font-extrabold text-base text-ww-ink">Confirm &amp; Checkout</h3>
+                    <button onClick={() => setShowPaymentStep(false)} className="font-bold text-ww-wood">✕</button>
+                  </div>
+
+                  <div className="p-4 bg-ww-paper-dark/60 rounded-2xl space-y-2 border border-ww-paper-dark">
+                    <div className="flex justify-between text-xs font-bold text-ww-ink">
+                      <span>{aptType} ({slotDuration} mins)</span>
+                      <span>${slotDuration === 15 ? '25.00' : slotDuration === 30 ? '45.00' : '80.00'}</span>
+                    </div>
+                    <div className="text-[10px] font-semibold text-ww-wood">
+                      {doctor} • {selectedDate} at {selectedSlot}
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-xs font-bold text-ww-ink">Payment Method (Demo Placeholder)</label>
+                    <div className="p-3 border border-ww-wood-light rounded-xl bg-white flex items-center justify-between text-xs font-bold text-ww-ink">
+                      <span>💳 Apple Pay / Visa ending 4242</span>
+                      <span className="text-emerald-600 font-extrabold">✓ Ready</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between gap-2 pt-3 border-t border-ww-paper-dark">
+                    <button
+                      onClick={() => handleConfirmBooking(false)}
+                      className="px-3 py-2 text-xs font-bold text-ww-wood hover:underline"
+                    >
+                      Skip Payment (Demo Mode)
+                    </button>
+                    <button
+                      onClick={() => handleConfirmBooking(true)}
+                      className="px-5 py-2.5 bg-gradient-to-r from-ww-brass to-emerald-500 text-white font-extrabold text-xs rounded-xl shadow hover:brightness-105 transition"
+                    >
+                      Pay &amp; Confirm Booking
+                    </button>
+                  </div>
+                </>
+              )}
             </motion.div>
           </div>
         )}

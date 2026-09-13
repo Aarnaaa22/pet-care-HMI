@@ -67,6 +67,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
   const [activeFilter, setActiveFilter] = useState('all');
   const [encryptionEnabled, setEncryptionEnabled] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
 
   // Form State
   const [newType, setNewType] = useState('vaccine');
@@ -75,6 +76,17 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
   const [newDate, setNewDate] = useState(new Date().toISOString().slice(0, 10));
   const [newNotes, setNewNotes] = useState('');
   const [newAttachments, setNewAttachments] = useState([]);
+
+  const showToast = (msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
+
+  const handleShareRecord = (data) => {
+    const shareUrl = `https://petcare.app/medical-record/${data.id}?access=sec_link_984`;
+    navigator.clipboard.writeText(shareUrl);
+    showToast(`📋 Record link for "${data.title}" copied to clipboard!`);
+  };
 
   const filtered = (records.length ? records : INITIAL_MOCK_RECORDS).filter(rec => {
     if (activeFilter === 'all') return true;
@@ -97,6 +109,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
 
     const finalRecord = encryptionEnabled ? encryptHealthRecord(rawPayload) : rawPayload;
     onAddRecord && onAddRecord(finalRecord);
+    showToast("🎉 Medical record added to timeline!");
 
     // Reset Form
     setNewTitle('');
@@ -128,6 +141,21 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
 
   return (
     <div className="space-y-4">
+      {/* Toast Alert */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed top-20 right-6 z-50 bg-ww-ink text-white font-extrabold text-xs px-4 py-3 rounded-2xl shadow-warm-lg flex items-center gap-2 border border-ww-brass"
+          >
+            <span>✨</span>
+            <span>{toastMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Header Toolbar & Controls */}
       <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
@@ -221,11 +249,20 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                     </p>
                   </div>
 
-                  {rec.encrypted && (
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                      🔒 Encrypted Record
-                    </span>
-                  )}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleShareRecord(data)}
+                      className="px-3 py-1 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-ink text-xs font-bold rounded-xl transition flex items-center gap-1"
+                      title="Share Record Link"
+                    >
+                      🔗 Share
+                    </button>
+                    {rec.encrypted && (
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                        🔒 Encrypted Record
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {data.notes && (

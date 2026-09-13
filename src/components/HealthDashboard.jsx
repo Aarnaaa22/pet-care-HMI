@@ -1,10 +1,9 @@
 // src/components/HealthDashboard.jsx
 import React from 'react';
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, BarChart, Bar } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { generatePatientPackPDF } from '../utils/pdf';
 
 export default function HealthDashboard({ pet, records = [], meds = [] }) {
-  const nextVaccineDate = '2026-11-15';
   const adherencePct = 96;
   const missedDosesCount = 1;
 
@@ -33,9 +32,9 @@ export default function HealthDashboard({ pet, records = [], meds = [] }) {
           <div>
             <span className="text-[10px] uppercase font-bold text-ww-wood block">Next Vaccine Due</span>
             <span className="text-xl font-black text-emerald-600 font-mono mt-0.5 block">
-              {nextVaccineDate}
+              In 10 Days
             </span>
-            <span className="text-[10px] text-ww-wood-dark font-semibold">FVRCP Annual Booster</span>
+            <span className="text-[10px] text-ww-wood-dark font-semibold">FVRCP Annual Booster (Sep 24)</span>
           </div>
           <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-2xl font-bold shadow-inner">
             💉
