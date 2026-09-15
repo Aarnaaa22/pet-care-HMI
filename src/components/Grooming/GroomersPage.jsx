@@ -88,14 +88,14 @@ export default function GroomersPage({ pet }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50/60 pb-12">
+    <div className="space-y-6 animate-fadeIn max-w-5xl mx-auto pb-12">
       <ToastContainer position="bottom-right" autoClose={3000} />
 
       {/* Header Banner */}
-      <div className="bg-gradient-to-r from-green-700 via-green-600 to-emerald-700 text-white py-8 px-4 sm:px-8 mb-6 shadow-sm">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-[#8A5A9E] via-[#A070B5] to-[#B388CC] text-white py-8 px-4 sm:px-8 shadow-sm rounded-card relative overflow-hidden">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-bold text-green-100 mb-2 backdrop-blur-xs">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-bold text-[#F3E8FF] mb-2 backdrop-blur-xs">
               <span>✂️ Grooming &amp; Spa Care</span>
               <span>•</span>
               <span>For {currentPet.name} ({currentPet.breed || "Silver Tabby"})</span>
@@ -119,7 +119,7 @@ export default function GroomersPage({ pet }) {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div>
 
         {/* Upcoming Confirmed Bookings Banner */}
         {userBookings.length > 0 && (
@@ -132,7 +132,7 @@ export default function GroomersPage({ pet }) {
             </h3>
             <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
               {userBookings.map((bk) => (
-                <div key={bk.id} className="bg-white border border-emerald-200 p-3 rounded-xl flex items-center justify-between gap-3 shadow-2xs">
+                <div key={bk.id} className="bg-[#F4EBF7] border border-[#D4B6D6] p-3 rounded-xl flex items-center justify-between gap-3 shadow-2xs">
                   <div>
                     <h4 className="font-bold text-xs text-gray-900">{bk.serviceName}</h4>
                     <p className="text-xs text-gray-600 mt-0.5">
@@ -155,11 +155,11 @@ export default function GroomersPage({ pet }) {
         )}
 
         {/* Search & Filter Toolbar */}
-        <div className="bg-white rounded-2xl p-4 shadow-xs border border-gray-200 mb-6 space-y-4">
+        <div className="bg-[#F4EBF7] rounded-2xl p-4 shadow-xs border border-[#D4B6D6] mb-6 space-y-4">
           
           {/* Top Bar: Search input & Sort dropdown */}
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="relative flex-1 min-w-[260px]">
+            <div className="relative flex-1 min-w-[200px] sm:min-w-[260px]">
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -242,11 +242,33 @@ export default function GroomersPage({ pet }) {
           </div>
         </div>
 
-        {/* Main 2-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        {/* Main Layout: Stacked vertically */}
+        <div className="flex flex-col gap-6 items-stretch">
           
-          {/* Left Column: Groomer Cards */}
-          <div className="lg:col-span-2 space-y-4">
+          {/* Top Section: Profile Drawer (Desktop) */}
+          <aside className="hidden lg:block">
+            {selected ? (
+              <GroomerProfile
+                groomer={selected}
+                onClose={() => setSelected(null)}
+                onConfirmBooking={handleConfirmBooking}
+                pet={currentPet}
+              />
+            ) : (
+              <div className="p-6 bg-[#F4EBF7] rounded-2xl shadow-xs border border-[#D4B6D6] text-center">
+                <div className="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto text-xl mb-3">
+                  ✂️
+                </div>
+                <h3 className="font-bold text-base text-gray-900">Pick a groomer profile</h3>
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                  Click any groomer card below to view detailed portfolio, before &amp; after transformations, services &amp; pricing.
+                </p>
+              </div>
+            )}
+          </aside>
+
+          {/* Bottom Section: Groomer Cards */}
+          <div className="space-y-4 w-full">
             <div className="flex items-center justify-between text-sm text-gray-600 font-medium px-1">
               <span>Showing <strong>{filtered.length}</strong> pet groomers nearby</span>
               {filtered.length > 0 && <span className="text-xs text-green-700">● Open for bookings today</span>}
@@ -264,7 +286,7 @@ export default function GroomersPage({ pet }) {
               ))}
 
               {filtered.length === 0 && (
-                <div className="p-8 bg-white rounded-2xl shadow-xs border border-gray-200 text-center">
+                <div className="p-8 bg-[#F4EBF7] rounded-2xl shadow-xs border border-[#D4B6D6] text-center">
                   <div className="text-3xl mb-2">🐾</div>
                   <h3 className="text-base font-bold text-gray-900">No groomers found</h3>
                   <p className="text-xs text-gray-500 mt-1">Try clearing filters or searching for another term like "Bath" or "Mobile".</p>
@@ -283,28 +305,6 @@ export default function GroomersPage({ pet }) {
               )}
             </div>
           </div>
-
-          {/* Right Column: Profile Drawer (Desktop) */}
-          <aside className="hidden lg:block sticky top-6">
-            {selected ? (
-              <GroomerProfile
-                groomer={selected}
-                onClose={() => setSelected(null)}
-                onConfirmBooking={handleConfirmBooking}
-                pet={currentPet}
-              />
-            ) : (
-              <div className="p-6 bg-white rounded-2xl shadow-xs border border-gray-200 text-center">
-                <div className="w-12 h-12 rounded-full bg-green-100 text-green-700 flex items-center justify-center mx-auto text-xl mb-3">
-                  ✂️
-                </div>
-                <h3 className="font-bold text-base text-gray-900">Pick a groomer profile</h3>
-                <p className="text-xs text-gray-500 mt-1 leading-relaxed">
-                  Click any groomer card on the left to view detailed portfolio, before &amp; after transformations, services &amp; pricing.
-                </p>
-              </div>
-            )}
-          </aside>
         </div>
 
       </div>
@@ -312,7 +312,7 @@ export default function GroomersPage({ pet }) {
       {/* Mobile Drawer / Modal */}
       {selected && (
         <div className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-[99999] p-4 flex items-end sm:items-center justify-center">
-          <div className="bg-white rounded-2xl max-h-[90vh] overflow-y-auto w-full max-w-lg p-2 relative z-[100000]">
+          <div className="bg-[#F4EBF7] rounded-2xl max-h-[90vh] overflow-y-auto w-full max-w-lg p-2 relative z-[100000] border border-[#D4B6D6]">
             <button
               className="m-2 text-xs font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg flex items-center gap-1"
               onClick={() => setSelected(null)}

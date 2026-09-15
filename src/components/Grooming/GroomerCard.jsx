@@ -9,8 +9,7 @@ export default function GroomerCard({ groomer, onView, onBook, onMessage }) {
     <motion.div
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ scale: 1.01 }}
-      className="bg-white rounded-2xl shadow-sm border border-gray-200 p-4 sm:p-5 flex flex-col sm:flex-row gap-4 items-start hover:shadow-md transition"
+      className="bg-[#F4EBF7] rounded-2xl shadow-sm border border-[#D4B6D6] p-4 sm:p-5 flex flex-col sm:flex-row gap-4 items-start hover:shadow-md transition"
     >
       <img
         src={groomer.hero}

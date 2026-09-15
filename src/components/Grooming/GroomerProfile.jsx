@@ -14,7 +14,7 @@ export default function GroomerProfile({ groomer, onClose, onConfirmBooking, pet
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-[#F4EBF7] rounded-2xl shadow-sm border border-[#D4B6D6] overflow-hidden">
       <div className="rounded-t-2xl overflow-hidden shadow-xs relative">
         {onClose && (
           <button

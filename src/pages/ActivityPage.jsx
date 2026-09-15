@@ -8,7 +8,7 @@ import Playback from '../components/Playback';
 import ActivitySummaryModal from '../components/ActivitySummaryModal';
 import { fetchActivities, logActivity, removeActivity } from '../api/activityApi';
 import { formatDistance, formatDuration } from '../utils/geo';
-import { exportActivitiesCSV } from '../utils/export';
+import { exportActivitiesPDF } from '../utils/export';
 
 export default function ActivityPage({ pet }) {
   const currentPet = pet || {
@@ -202,20 +202,20 @@ export default function ActivityPage({ pet }) {
       </div>
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-ww-paper-dark pb-1 overflow-x-auto">
+      <div className="flex flex-wrap items-center gap-2 border-b border-ww-paper-dark pb-3">
         {[
-          { id: 'tracker', label: '📡 Live Route Tracker', icon: '🛰️' },
-          { id: 'history', label: '📜 Activity History', count: activities.length },
-          { id: 'playback', label: '🎬 Route Playback' },
-          { id: 'analytics', label: '📊 Analytics & Insights' }
+          { id: 'tracker', label: '📡 Live Route' },
+          { id: 'history', label: '📜 History', count: activities.length },
+          { id: 'playback', label: '🎬 Playback' },
+          { id: 'analytics', label: '📊 Analytics' }
         ].map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition whitespace-nowrap flex items-center gap-2 ${
+            className={`px-3 py-2 sm:px-4 sm:py-2.5 rounded-2xl text-[11px] sm:text-xs font-extrabold transition flex items-center gap-1.5 flex-auto justify-center sm:flex-none ${
               activeTab === tab.id
                 ? 'bg-ww-brass text-white shadow-warm-sm'
-                : 'text-ww-wood-dark hover:bg-ww-paper-dark'
+                : 'bg-ww-paper border border-ww-paper-dark text-ww-wood-dark hover:bg-ww-paper-dark'
             }`}
           >
             <span>{tab.label}</span>
@@ -302,10 +302,10 @@ export default function ActivityPage({ pet }) {
                 <p className="text-xs text-ww-wood-dark font-medium">Daily cumulative exercise breakdown for {currentPet.name}.</p>
               </div>
               <button
-                onClick={() => exportActivitiesCSV(activities)}
+                onClick={() => exportActivitiesPDF(activities)}
                 className="px-3 py-1.5 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-ink text-xs font-bold rounded-xl transition"
               >
-                📥 Export CSV
+                📥 Export PDF
               </button>
             </div>
 

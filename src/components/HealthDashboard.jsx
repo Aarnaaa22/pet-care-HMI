@@ -28,7 +28,7 @@ export default function HealthDashboard({ pet, records = [], meds = [] }) {
     <div className="space-y-6">
       {/* Top Health KPI Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md flex items-center justify-between">
+        <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md flex items-center justify-between">
           <div>
             <span className="text-[10px] uppercase font-bold text-ww-wood block">Next Vaccine Due</span>
             <span className="text-xl font-black text-emerald-600 font-mono mt-0.5 block">
@@ -41,7 +41,7 @@ export default function HealthDashboard({ pet, records = [], meds = [] }) {
           </div>
         </div>
 
-        <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md flex items-center justify-between">
+        <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md flex items-center justify-between">
           <div>
             <span className="text-[10px] uppercase font-bold text-ww-wood block">Med Adherence Rate</span>
             <span className="text-xl font-black text-ww-brass font-mono mt-0.5 block">
@@ -54,7 +54,7 @@ export default function HealthDashboard({ pet, records = [], meds = [] }) {
           </div>
         </div>
 
-        <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md flex items-center justify-between">
+        <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md flex items-center justify-between">
           <div>
             <span className="text-[10px] uppercase font-bold text-ww-wood block">Missed Doses (30 Days)</span>
             <span className="text-xl font-black text-ww-ink font-mono mt-0.5 block">
@@ -69,7 +69,7 @@ export default function HealthDashboard({ pet, records = [], meds = [] }) {
       </div>
 
       {/* Recharts Analytics Card */}
-      <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-6 shadow-warm-md space-y-4">
+      <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-6 shadow-warm-md space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 className="font-extrabold text-base text-ww-ink">Monthly Medication Compliance &amp; Health Timeline</h3>

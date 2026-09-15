@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MapPanel from './MapPanel';
 import { formatDistance, formatDuration } from '../utils/geo';
-import { exportActivityGPX, exportActivitiesCSV } from '../utils/export';
+import { exportActivityGPX, exportActivitiesPDF } from '../utils/export';
 
 export default function ActivityHistory({
   activities = [],
@@ -25,11 +25,11 @@ export default function ActivityHistory({
     <div className="space-y-4">
       {/* Search & Export Toolbar */}
       <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2 flex-1 min-w-[220px]">
+        <div className="flex items-center gap-2 flex-1 min-w-[140px] sm:min-w-[220px]">
           <span className="text-sm">🔍</span>
           <input
             type="text"
-            placeholder="Search activities by title, notes, or pet..."
+            placeholder="Search activities..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
             className="w-full px-3 py-2 text-xs rounded-xl border border-ww-wood-light bg-ww-paper focus:outline-none focus:ring-2 focus:ring-ww-brass"
@@ -38,10 +38,10 @@ export default function ActivityHistory({
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => exportActivitiesCSV(filtered)}
+            onClick={() => exportActivitiesPDF(filtered)}
             className="px-4 py-2 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-ink font-bold text-xs rounded-xl transition flex items-center gap-1.5"
           >
-            <span>📊 Export All CSV</span>
+            <span>📄 Export as PDF</span>
           </button>
         </div>
       </div>

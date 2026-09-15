@@ -67,3 +67,57 @@ export function exportActivitiesCSV(activities = []) {
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
   saveAs(blob, `activity-history-${new Date().toISOString().slice(0, 10)}.csv`);
 }
+
+import { jsPDF } from 'jspdf';
+
+/**
+ * Exports activities list into a downloadable PDF file
+ * @param {Array} activities - List of activity objects
+ */
+export function exportActivitiesPDF(activities = []) {
+  if (!activities || activities.length === 0) {
+    alert("No activity data to export.");
+    return;
+  }
+
+  const doc = new jsPDF();
+  
+  // Title
+  doc.setFontSize(20);
+  doc.setFont("helvetica", "bold");
+  doc.text(`Activity History`, 14, 20);
+  
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  const dateStr = new Date().toISOString().slice(0, 10);
+  doc.text(`Generated on: ${dateStr}`, 14, 28);
+  
+  // Content
+  let yPos = 40;
+  
+  activities.forEach((act, index) => {
+    if (yPos > 270) {
+      doc.addPage();
+      yPos = 20;
+    }
+    
+    doc.setFont("helvetica", "bold");
+    doc.text(`Activity ${index + 1}: ${act.title || 'Outdoor Stroll'}`, 14, yPos);
+    yPos += 6;
+    
+    doc.setFont("helvetica", "normal");
+    const distanceKm = (act.distanceMeters / 1000).toFixed(2);
+    doc.text(`Distance: ${distanceKm} km | Duration: ${Math.floor(act.durationSec / 60)} mins`, 14, yPos);
+    yPos += 6;
+    doc.text(`Calories Burned: ${act.calories || 0} kcal | Avg Speed: ${act.avgSpeedKmph || 0} km/h`, 14, yPos);
+    yPos += 6;
+    if (act.notes) {
+      doc.text(`Notes: ${act.notes}`, 14, yPos);
+      yPos += 6;
+    }
+    
+    yPos += 6; // extra space
+  });
+
+  doc.save(`activity-history-${dateStr}.pdf`);
+}

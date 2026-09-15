@@ -31,17 +31,17 @@ export default function ScheduleManager({ schedules = [], onToggleSchedule, onAd
   };
 
   return (
-    <div className="bg-white border border-[#DCEBE0] rounded-card p-5 shadow-soft-sm space-y-4">
+    <div className="bg-[#FFE5CC] border border-[#A65B33]/30 rounded-card p-5 shadow-soft-sm space-y-4">
       
       {/* Top Header */}
       <div className="flex items-center justify-between pb-3 border-b border-[#DCEBE0]">
         <div>
-          <span className="text-xs font-bold text-[#7BD389] uppercase tracking-wider block">Automated Timelines</span>
-          <h3 className="font-extrabold text-base text-[#111827]">Feeding Schedules for {pet.name}</h3>
+          <h4 className="font-extrabold text-[#A65B33] text-xs uppercase tracking-wider mb-1">Automated Timelines</h4>
+          <h2 className="font-black text-xl text-[#111827] italic">Feeding Schedules for {pet.name}</h2>
         </div>
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="bg-[#EBF8EE] text-[#7BD389] hover:bg-[#7BD389] hover:text-white font-extrabold text-xs px-3.5 py-2 rounded-pill border border-[#7BD389]/30 transition min-h-[38px]"
+          className="px-4 py-2 rounded-pill bg-transparent border border-[#A65B33] text-[#A65B33] hover:bg-[#A65B33] hover:text-white font-extrabold text-xs transition min-h-[38px]"
         >
           {showAddForm ? '✕ Close' : '+ Add Schedule'}
         </button>
@@ -53,25 +53,25 @@ export default function ScheduleManager({ schedules = [], onToggleSchedule, onAd
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           onSubmit={handleCreate}
-          className="bg-[#FAF9F6] border border-[#EBF8EE] p-4 rounded-2xl space-y-3 text-xs font-semibold"
+          className="bg-[#FFFBF2] border border-[#A65B33]/30 p-4 rounded-2xl space-y-3 text-xs font-semibold"
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="font-bold text-[#525C54] block mb-1">Time</label>
+              <label className="font-bold text-[#A65B33] block mb-1">Time</label>
               <input
                 type="text"
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
                 placeholder="e.g. 08:00 AM"
-                className="w-full bg-white border border-[#DCEBE0] rounded-xl p-2.5 font-bold text-[#111827]"
+                className="w-full bg-[#FFFBF2] border border-[#A65B33]/30 rounded-xl p-2.5 font-bold text-[#111827] placeholder-black/50"
               />
             </div>
             <div>
-              <label className="font-bold text-[#525C54] block mb-1">Repeat Cycle</label>
+              <label className="font-bold text-[#A65B33] block mb-1">Repeat Cycle</label>
               <select
                 value={repeat}
                 onChange={(e) => setRepeat(e.target.value)}
-                className="w-full bg-white border border-[#DCEBE0] rounded-xl p-2.5 font-bold text-[#111827]"
+                className="w-full bg-[#FFFBF2] border border-[#A65B33]/30 rounded-xl p-2.5 font-bold text-[#111827]"
               >
                 <option value="Daily">Daily</option>
                 <option value="Weekdays">Weekdays (Mon - Fri)</option>
@@ -82,28 +82,30 @@ export default function ScheduleManager({ schedules = [], onToggleSchedule, onAd
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="font-bold text-[#525C54] block mb-1">Portion (g)</label>
+              <label className="font-bold text-[#A65B33] block mb-1">Portion (g)</label>
               <input
                 type="number"
                 value={portion}
-                onChange={(e) => setPortion(Number(e.target.value))}
-                className="w-full bg-white border border-[#DCEBE0] rounded-xl p-2.5 font-bold text-[#111827]"
+                onChange={(e) => setPortion(e.target.value)}
+                placeholder="e.g. 50"
+                className="w-full bg-[#FFFBF2] border border-[#A65B33]/30 rounded-xl p-2.5 font-bold text-[#111827] placeholder-black/50"
               />
             </div>
             <div>
-              <label className="font-bold text-[#525C54] block mb-1">Food Type</label>
+              <label className="font-bold text-[#A65B33] block mb-1">Food Type</label>
               <input
                 type="text"
                 value={foodType}
                 onChange={(e) => setFoodType(e.target.value)}
-                className="w-full bg-white border border-[#DCEBE0] rounded-xl p-2.5 font-bold text-[#111827]"
+                placeholder="e.g. Organic Salmon Kibble"
+                className="w-full bg-[#FFFBF2] border border-[#A65B33]/30 rounded-xl p-2.5 font-bold text-[#111827] placeholder-black/50"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-[#7BD389] hover:bg-[#5BB369] text-white font-extrabold text-xs py-3 rounded-pill shadow-soft-sm"
+            className="w-full bg-[#A65B33] hover:bg-[#8B4C2A] text-white font-extrabold text-xs py-3 rounded-pill shadow-soft-sm transition"
           >
             Save & Enable Schedule
           </button>
@@ -115,16 +117,16 @@ export default function ScheduleManager({ schedules = [], onToggleSchedule, onAd
         {schedules.map((sch) => (
           <div
             key={sch.id}
-            className="bg-[#FAF9F6] border border-[#EBF8EE] p-3.5 rounded-2xl flex items-center justify-between text-xs"
+            className="bg-[#FFFBF2] border border-[#A65B33]/30 p-3.5 rounded-2xl flex items-center justify-between text-xs transition hover:border-[#A65B33]"
           >
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#EBF8EE] border border-[#7BD389]/30 text-[#7BD389] text-lg flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-xl bg-[#FFFBF2] border border-[#A65B33]/30 text-[#A65B33] text-lg flex items-center justify-center font-bold">
                 ⏰
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <h4 className="font-extrabold text-sm text-[#111827]">{sch.time}</h4>
-                  <span className="bg-white border border-[#DCEBE0] text-[10px] font-extrabold text-[#7BD389] px-2 py-0.5 rounded-pill">
+                  <span className="bg-[#FFFBF2] border border-[#A65B33]/30 text-[10px] font-extrabold text-[#A65B33] px-2 py-0.5 rounded-pill">
                     {sch.repeat}
                   </span>
                 </div>

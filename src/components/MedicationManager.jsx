@@ -131,7 +131,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
   return (
     <div className="space-y-4">
       {/* Header Toolbar */}
-      <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
             💊
@@ -145,7 +145,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
         <div className="flex items-center gap-2">
           <button
             onClick={() => requestPermission()}
-            className="px-3.5 py-1.5 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-ink font-bold text-xs rounded-xl transition flex items-center gap-1.5"
+            className="px-3.5 py-1.5 bg-[#EBF8EE]-dark hover:bg-ww-wood-light text-ww-ink font-bold text-xs rounded-xl transition flex items-center gap-1.5"
           >
             🔔 Enable Med Notifications
           </button>
@@ -168,7 +168,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
               key={med.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`bg-ww-paper border-2 rounded-2xl p-5 shadow-warm-md relative overflow-hidden transition ${
+              className={`bg-[#EBF8EE] border-2 rounded-2xl p-5 shadow-warm-md relative overflow-hidden transition ${
                 isLowSupply ? 'border-amber-400 bg-amber-50/20' : 'border-ww-paper-dark hover:border-ww-brass'
               }`}
             >
@@ -190,7 +190,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
               </div>
 
               {med.notes && (
-                <p className="text-xs text-ww-wood-dark font-medium bg-ww-paper-dark/40 p-2.5 rounded-xl border border-ww-paper-dark my-2">
+                <p className="text-xs text-ww-wood-dark font-medium bg-[#EBF8EE]-dark/40 p-2.5 rounded-xl border border-ww-paper-dark my-2">
                   "{med.notes}"
                 </p>
               )}
@@ -201,7 +201,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
                   <span>Supply Remaining</span>
                   <span>{med.remainingDoses} / {med.totalDoses} doses</span>
                 </div>
-                <div className="w-full bg-ww-paper-dark rounded-full h-2 overflow-hidden">
+                <div className="w-full bg-[#EBF8EE]-dark rounded-full h-2 overflow-hidden">
                   <div
                     className={`h-2 rounded-full transition-all duration-300 ${
                       isLowSupply ? 'bg-amber-500' : 'bg-ww-brass'
@@ -220,7 +220,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
                 <div className="flex items-center gap-2">
                   <button
                     onClick={() => handleSnooze(med.name)}
-                    className="px-2.5 py-1.5 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-wood-dark text-xs font-bold rounded-xl transition"
+                    className="px-2.5 py-1.5 bg-[#EBF8EE]-dark hover:bg-ww-wood-light text-ww-wood-dark text-xs font-bold rounded-xl transition"
                     title="Snooze reminder for 15 minutes"
                   >
                     ⏰ Snooze 15m
@@ -246,7 +246,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-ww-paper border-2 border-ww-brass rounded-3xl p-6 shadow-warm-lg max-w-md w-full max-h-[90vh] overflow-y-auto space-y-4"
+              className="bg-[#EBF8EE] border-2 border-ww-brass rounded-3xl p-6 shadow-warm-lg max-w-md w-full max-h-[90vh] overflow-y-auto space-y-4"
             >
               <div className="flex items-center justify-between pb-3 border-b border-ww-paper-dark">
                 <div className="flex items-center gap-2">
@@ -283,7 +283,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
                     placeholder="e.g. Amoxicillin Trihydrate"
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold focus:ring-2 focus:ring-ww-brass"
+                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-semibold focus:ring-2 focus:ring-ww-brass"
                   />
                 </div>
 
@@ -296,7 +296,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
                       placeholder="e.g. 50mg"
                       value={dosage}
                       onChange={e => setDosage(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold"
+                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-semibold"
                     />
                   </div>
                   <div>
@@ -304,7 +304,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
                     <select
                       value={frequency}
                       onChange={e => setFrequency(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-bold"
+                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-bold"
                     >
                       <option value="Once Daily">Once Daily</option>
                       <option value="Twice Daily">Twice Daily</option>
@@ -321,7 +321,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
                       type="number"
                       value={totalDoses}
                       onChange={e => setTotalDoses(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold"
+                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-semibold"
                     />
                   </div>
                   <div>
@@ -330,7 +330,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
                       type="number"
                       value={refillThreshold}
                       onChange={e => setRefillThreshold(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold"
+                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-semibold"
                     />
                   </div>
                 </div>
@@ -342,7 +342,7 @@ export default function MedicationManager({ pet, meds = [], onAddMed, onUpdateMe
                     placeholder="Administer with meals..."
                     value={notes}
                     onChange={e => setNotes(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-medium resize-none"
+                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-medium resize-none"
                   />
                 </div>
 

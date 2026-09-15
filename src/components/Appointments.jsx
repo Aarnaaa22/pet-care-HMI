@@ -72,7 +72,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
   return (
     <div className="space-y-4">
       {/* Header & Quick Action */}
-      <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl font-bold">
             📅
@@ -98,7 +98,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
         {currentAppointments.map(apt => (
           <div
             key={apt.id}
-            className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md hover:border-ww-brass transition flex flex-wrap items-center justify-between gap-4"
+            className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md hover:border-ww-brass transition flex flex-wrap items-center justify-between gap-4"
           >
             <div className="flex items-start gap-3">
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl shrink-0 ${
@@ -138,7 +138,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
 
               <button
                 onClick={() => exportAppointmentICS(apt)}
-                className="px-3 py-1.5 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-ink text-xs font-bold rounded-xl transition flex items-center gap-1"
+                className="px-3 py-1.5 bg-[#EBF8EE]-dark hover:bg-ww-wood-light text-ww-ink text-xs font-bold rounded-xl transition flex items-center gap-1"
                 title="Download .ICS for Apple/Google/Outlook Calendar"
               >
                 📆 Add to Calendar
@@ -156,7 +156,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 50, opacity: 0 }}
-              className="bg-ww-paper border-2 border-ww-brass rounded-3xl p-6 shadow-warm-lg max-w-md w-full space-y-4"
+              className="bg-[#EBF8EE] border-2 border-ww-brass rounded-3xl p-6 shadow-warm-lg max-w-md w-full space-y-4"
             >
               {!showPaymentStep ? (
                 /* Step 1: Appointment Slot Details */
@@ -174,7 +174,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
                           type="button"
                           onClick={() => setAptType('Teleconsult')}
                           className={`py-2 rounded-xl text-xs font-bold border transition ${
-                            aptType === 'Teleconsult' ? 'bg-sky-600 text-white border-sky-600' : 'bg-ww-paper-dark text-ww-ink'
+                            aptType === 'Teleconsult' ? 'bg-sky-600 text-white border-sky-600' : 'bg-[#EBF8EE]-dark text-ww-ink'
                           }`}
                         >
                           📹 Video Teleconsult
@@ -183,7 +183,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
                           type="button"
                           onClick={() => setAptType('In-Clinic Visit')}
                           className={`py-2 rounded-xl text-xs font-bold border transition ${
-                            aptType === 'In-Clinic Visit' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-ww-paper-dark text-ww-ink'
+                            aptType === 'In-Clinic Visit' ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-[#EBF8EE]-dark text-ww-ink'
                           }`}
                         >
                           🏥 In-Clinic Visit
@@ -202,7 +202,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
                             className={`py-2 rounded-xl text-xs font-extrabold border transition ${
                               slotDuration === mins
                                 ? 'bg-ww-brass text-white border-ww-brass shadow-sm'
-                                : 'bg-ww-paper-dark text-ww-ink hover:bg-ww-wood-light'
+                                : 'bg-[#EBF8EE]-dark text-ww-ink hover:bg-ww-wood-light'
                             }`}
                           >
                             {mins} mins (${mins === 15 ? '25' : mins === 30 ? '45' : '80'})
@@ -216,7 +216,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
                       <select
                         value={doctor}
                         onChange={e => setDoctor(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-bold"
+                        className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-bold"
                       >
                         <option value="Dr. Sarah Jenkins, DVM">Dr. Sarah Jenkins, DVM (Feline Specialist)</option>
                         <option value="Dr. Michael Chang, DVM">Dr. Michael Chang, DVM (General Vet)</option>
@@ -230,7 +230,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
                         type="date"
                         value={selectedDate}
                         onChange={e => setSelectedDate(e.target.value)}
-                        className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold"
+                        className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-semibold"
                       />
                     </div>
 
@@ -245,7 +245,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
                             className={`py-2 rounded-xl text-xs font-extrabold border transition ${
                               selectedSlot === slot
                                 ? 'bg-ww-brass text-white border-ww-brass'
-                                : 'bg-ww-paper-dark/60 text-ww-ink hover:bg-ww-wood-light'
+                                : 'bg-[#EBF8EE]-dark/60 text-ww-ink hover:bg-ww-wood-light'
                             }`}
                           >
                             {slot}
@@ -275,7 +275,7 @@ export default function Appointments({ pet, appointments = [], onAddAppointment,
                     <button onClick={() => setShowPaymentStep(false)} className="font-bold text-ww-wood">✕</button>
                   </div>
 
-                  <div className="p-4 bg-ww-paper-dark/60 rounded-2xl space-y-2 border border-ww-paper-dark">
+                  <div className="p-4 bg-[#EBF8EE]-dark/60 rounded-2xl space-y-2 border border-ww-paper-dark">
                     <div className="flex justify-between text-xs font-bold text-ww-ink">
                       <span>{aptType} ({slotDuration} mins)</span>
                       <span>${slotDuration === 15 ? '25.00' : slotDuration === 30 ? '45.00' : '80.00'}</span>

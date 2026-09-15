@@ -125,7 +125,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
       case 'lab': return 'bg-sky-100 text-sky-800 border-sky-200';
       case 'surgery': return 'bg-purple-100 text-purple-800 border-purple-200';
       case 'allergy': return 'bg-amber-100 text-amber-800 border-amber-200';
-      default: return 'bg-ww-paper-dark text-ww-wood-dark border-ww-paper-dark';
+      default: return 'bg-[#EBF8EE]-dark text-ww-wood-dark border-ww-paper-dark';
     }
   };
 
@@ -157,7 +157,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
       </AnimatePresence>
 
       {/* Header Toolbar & Controls */}
-      <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
           {[
             { id: 'all', label: 'All Records' },
@@ -172,7 +172,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                 activeFilter === tab.id
                   ? 'bg-ww-brass text-white shadow-sm'
-                  : 'bg-ww-paper-dark/60 text-ww-wood-dark hover:bg-ww-wood-light'
+                  : 'bg-[#EBF8EE]-dark/60 text-ww-wood-dark hover:bg-ww-wood-light'
               }`}
             >
               {tab.label}
@@ -187,7 +187,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition border flex items-center gap-1.5 ${
               encryptionEnabled
                 ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
-                : 'bg-ww-paper-dark text-ww-wood border-ww-paper-dark'
+                : 'bg-[#EBF8EE]-dark text-ww-wood border-ww-paper-dark'
             }`}
           >
             <span>{encryptionEnabled ? '🔒 AES Encrypted' : '🔓 Unencrypted'}</span>
@@ -206,14 +206,14 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
       {isLoading ? (
         <div className="space-y-4">
           {[1, 2, 3].map(i => (
-            <div key={i} className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-5 shadow-warm-sm animate-pulse space-y-3">
-              <div className="w-44 h-4 bg-ww-paper-dark rounded" />
-              <div className="w-full h-12 bg-ww-paper-dark rounded-xl" />
+            <div key={i} className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-5 shadow-warm-sm animate-pulse space-y-3">
+              <div className="w-44 h-4 bg-[#EBF8EE]-dark rounded" />
+              <div className="w-full h-12 bg-[#EBF8EE]-dark rounded-xl" />
             </div>
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-10 text-center shadow-warm-sm">
+        <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-10 text-center shadow-warm-sm">
           <span className="text-3xl">📋</span>
           <p className="text-xs font-extrabold text-ww-ink mt-2">No medical records in this category.</p>
         </div>
@@ -227,7 +227,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                 key={rec.id}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="relative bg-ww-paper border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md hover:border-ww-brass transition group"
+                className="relative bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md hover:border-ww-brass transition group"
               >
                 {/* Timeline Dot */}
                 <div className="absolute -left-[31px] top-6 w-4 h-4 rounded-full bg-ww-brass border-4 border-ww-paper shadow-sm" />
@@ -252,7 +252,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => handleShareRecord(data)}
-                      className="px-3 py-1 bg-ww-paper-dark hover:bg-ww-wood-light text-ww-ink text-xs font-bold rounded-xl transition flex items-center gap-1"
+                      className="px-3 py-1 bg-[#EBF8EE]-dark hover:bg-ww-wood-light text-ww-ink text-xs font-bold rounded-xl transition flex items-center gap-1"
                       title="Share Record Link"
                     >
                       🔗 Share
@@ -266,7 +266,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                 </div>
 
                 {data.notes && (
-                  <p className="text-xs text-ww-wood-dark font-medium bg-ww-paper-dark/40 p-3 rounded-xl border border-ww-paper-dark mb-3">
+                  <p className="text-xs text-ww-wood-dark font-medium bg-[#EBF8EE]-dark/40 p-3 rounded-xl border border-ww-paper-dark mb-3">
                     "{data.notes}"
                   </p>
                 )}
@@ -294,7 +294,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-ww-paper border-2 border-ww-brass rounded-3xl p-6 shadow-warm-lg max-w-lg w-full max-h-[90vh] overflow-y-auto space-y-4"
+              className="bg-[#EBF8EE] border-2 border-ww-brass rounded-3xl p-6 shadow-warm-lg max-w-lg w-full max-h-[90vh] overflow-y-auto space-y-4"
             >
               <div className="flex items-center justify-between pb-3 border-b border-ww-paper-dark">
                 <div className="flex items-center gap-2">
@@ -310,7 +310,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                   <select
                     value={newType}
                     onChange={e => setNewType(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-bold focus:ring-2 focus:ring-ww-brass"
+                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-bold focus:ring-2 focus:ring-ww-brass"
                   >
                     <option value="vaccine">💉 Vaccination</option>
                     <option value="lab">🔬 Lab Results / Blood Panel</option>
@@ -327,7 +327,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                     placeholder="e.g. Annual FVRCP Vaccine"
                     value={newTitle}
                     onChange={e => setNewTitle(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold focus:ring-2 focus:ring-ww-brass"
+                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-semibold focus:ring-2 focus:ring-ww-brass"
                   />
                 </div>
 
@@ -338,7 +338,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                       type="date"
                       value={newDate}
                       onChange={e => setNewDate(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold"
+                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-semibold"
                     />
                   </div>
                   <div>
@@ -348,7 +348,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                       placeholder="Dr. Jenkins / Pawsome Vet"
                       value={newProvider}
                       onChange={e => setNewProvider(e.target.value)}
-                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-semibold"
+                      className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-semibold"
                     />
                   </div>
                 </div>
@@ -360,7 +360,7 @@ export default function RecordsTimeline({ pet, records = [], onAddRecord, onDele
                     placeholder="Diagnosis details, instructions, or findings..."
                     value={newNotes}
                     onChange={e => setNewNotes(e.target.value)}
-                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-medium resize-none"
+                    className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-medium resize-none"
                   />
                 </div>
 

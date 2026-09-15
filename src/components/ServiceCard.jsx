@@ -34,12 +34,28 @@ export default function ServiceCard({
     }
   };
 
+  let bgClass = "bg-[#FFFBF2]";
+  let borderHoverClass = "hover:border-[#7BD389]";
+  if (service.category === 'vet') {
+    bgClass = "bg-[#EBF8EE]";
+    borderHoverClass = "hover:border-[#7BD389]";
+  } else if (service.category === 'spa') {
+    bgClass = "bg-[#F0E6FF]";
+    borderHoverClass = "hover:border-[#9D72FF]";
+  } else if (service.category === 'store') {
+    bgClass = "bg-[#E0F2FE]";
+    borderHoverClass = "hover:border-[#4EA8DE]";
+  } else if (service.category === 'emergency') {
+    bgClass = "bg-[#FFE8E8]";
+    borderHoverClass = "hover:border-[#EF4444]";
+  }
+
   return (
     <motion.div
       layout
       whileHover={{ y: -2 }}
       onClick={() => setExpanded(!expanded)}
-      className="bg-white border border-[#DCEBE0] hover:border-[#7BD389] rounded-card p-4 sm:p-5 shadow-soft-sm hover:shadow-soft-md transition-all cursor-pointer space-y-3 relative group"
+      className={`${bgClass} border border-white/50 ${borderHoverClass} rounded-card p-4 sm:p-5 shadow-soft-sm hover:shadow-soft-md transition-all cursor-pointer space-y-3 relative group`}
     >
       {/* Top Header Row */}
       <div className="flex items-start justify-between gap-3">
@@ -48,7 +64,7 @@ export default function ServiceCard({
         <div className="flex items-center gap-3.5 flex-1 min-w-0">
           
           {/* 60x60 Avatar Box with Fallback */}
-          <div className="w-14 h-14 sm:w-[60px] sm:h-[60px] rounded-2xl overflow-hidden flex-shrink-0 relative border border-[#DCEBE0] bg-[#EBF8EE] flex items-center justify-center">
+          <div className="w-14 h-14 sm:w-[60px] sm:h-[60px] rounded-2xl overflow-hidden flex-shrink-0 relative border border-white/60 bg-white/40 flex items-center justify-center">
             {service.images && service.images[0] && !imgError ? (
               <img
                 src={service.images[0]}
@@ -57,7 +73,7 @@ export default function ServiceCard({
                 onError={() => setImgError(true)}
               />
             ) : (
-              <div className={`w-full h-full flex items-center justify-center text-2xl font-bold ${service.logoBg || 'bg-[#EBF8EE] text-[#7BD389]'}`}>
+              <div className={`w-full h-full flex items-center justify-center text-2xl font-bold bg-white/40 text-[#7BD389]`}>
                 {service.icon || '🩺'}
               </div>
             )}

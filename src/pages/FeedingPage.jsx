@@ -6,7 +6,7 @@ import ScheduleManager from '../components/ScheduleManager';
 import HistoryTimeline from '../components/HistoryTimeline';
 import AnalyticsPanel from '../components/AnalyticsPanel';
 import { getFeedingLogs, logFeeding, deleteFeedingLog, getSchedules } from '../api/feedingApi';
-import { exportFeedCSV } from '../utils/exportCsv';
+import { exportFeedPDF } from '../utils/exportPdf';
 import { PETS_MOCK } from '../mockData';
 
 export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
@@ -81,10 +81,10 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
   const goalPercent = Math.min(100, Math.round((totalGramsToday / 200) * 100));
 
   return (
-    <div className="space-y-8 animate-fadeIn max-w-7xl mx-auto pb-24">
+    <div className="space-y-8 animate-fadeIn max-w-5xl mx-auto pb-24">
       
       {/* ================= 1. HEADER PET MINI-CARD & QUICK FEED CTAS ================= */}
-      <section className="bg-gradient-to-r from-[#EBF8EE] via-[#FFF0F5] to-[#FAF9F6] border border-[#DCEBE0] rounded-card p-6 sm:p-8 shadow-soft-sm relative overflow-hidden">
+      <section className="bg-gradient-to-r from-[#FFE5CC] via-[#FFDAB3] to-[#FFC999] border-none rounded-card p-6 sm:p-8 shadow-soft-sm relative overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           
           {/* Pet Mini Card Details (7 cols) */}
@@ -92,7 +92,7 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
             
             <div className="flex items-center gap-4">
               {/* Pet Avatar */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[#7BD389] shadow-soft-sm bg-white flex-shrink-0">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-[#7BD389] shadow-soft-sm bg-transparent flex-shrink-0">
                 <img
                   src={pet.avatar || 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=300&q=80'}
                   alt={pet.name}
@@ -103,7 +103,7 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
               <div>
                 <div className="flex items-center gap-2">
                   <h1 className="font-extrabold text-2xl sm:text-3xl text-[#111827]">{pet.name}'s Feeding Tracker</h1>
-                  <span className="bg-white border border-[#DCEBE0] text-[#7BD389] px-3 py-0.5 rounded-pill text-xs font-extrabold">
+                  <span className="bg-[#FFFBF2] border-none text-[#7BD389] px-3 py-0.5 rounded-pill text-xs font-extrabold">
                     {pet.species || 'Cat 🐱'}
                   </span>
                 </div>
@@ -115,25 +115,25 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
 
             {/* Quick Actions Row */}
             <div className="space-y-2 pt-2">
-              <span className="text-xs font-bold text-[#525C54] uppercase tracking-wider block">1-Tap Quick Feed Actions:</span>
+              <span className="text-xs font-bold text-[#A65B33] uppercase tracking-wider block">1-Tap Quick Feed Actions:</span>
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={() => handleQuickFeed(25, 'Small')}
-                  className="bg-white hover:bg-[#EBF8EE] border border-[#DCEBE0] hover:border-[#7BD389] text-[#111827] font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm transition min-h-[40px] flex items-center gap-1.5"
+                  className="bg-[#FFFBF2] hover:bg-[#FFE5CC] text-[#A65B33] font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm transition min-h-[40px] flex items-center gap-1.5"
                 >
                   <span>🥣 Small (25g)</span>
                 </button>
 
                 <button
                   onClick={() => handleQuickFeed(50, 'Medium')}
-                  className="bg-white hover:bg-[#EBF8EE] border border-[#DCEBE0] hover:border-[#7BD389] text-[#111827] font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm transition min-h-[40px] flex items-center gap-1.5"
+                  className="bg-[#FFFBF2] hover:bg-[#FFE5CC] text-[#A65B33] font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm transition min-h-[40px] flex items-center gap-1.5"
                 >
                   <span>🥩 Medium (50g)</span>
                 </button>
 
                 <button
                   onClick={() => handleQuickFeed(100, 'Large')}
-                  className="bg-white hover:bg-[#EBF8EE] border border-[#DCEBE0] hover:border-[#7BD389] text-[#111827] font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm transition min-h-[40px] flex items-center gap-1.5"
+                  className="bg-[#FFFBF2] hover:bg-[#FFE5CC] text-[#A65B33] font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm transition min-h-[40px] flex items-center gap-1.5"
                 >
                   <span>🍖 Large (100g)</span>
                 </button>
@@ -146,19 +146,19 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
           <div className="lg:col-span-5 flex flex-col items-center lg:items-end space-y-4">
             
             {/* Daily Goal Ring Widget */}
-            <div className="bg-white border border-[#DCEBE0] rounded-2xl p-4 shadow-soft-sm flex items-center gap-4 w-full max-w-xs">
+            <div className="bg-[#FFFBF2] border-none rounded-2xl p-4 shadow-soft-sm flex items-center gap-4 w-full max-w-xs">
               <div className="relative w-14 h-14 flex items-center justify-center flex-shrink-0">
                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                   <path
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke="#EBF8EE"
+                    stroke="#FFE5CC"
                     strokeWidth="4"
                   />
                   <path
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                     fill="none"
-                    stroke="#7BD389"
+                    stroke="#FF9B8A"
                     strokeWidth="4"
                     strokeDasharray={`${goalPercent}, 100`}
                   />
@@ -176,17 +176,17 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
             <div className="flex items-center gap-2 w-full max-w-xs">
               <button
                 onClick={() => setIsLogModalOpen(true)}
-                className="flex-1 bg-[#7BD389] hover:bg-[#5BB369] text-white font-extrabold text-xs py-3.5 rounded-pill shadow-soft-md transition min-h-[46px] flex items-center justify-center gap-2"
+                className="flex-1 bg-[#FF9B8A] hover:bg-[#E28073] text-white font-extrabold text-xs py-3.5 rounded-pill shadow-soft-md transition min-h-[46px] flex items-center justify-center gap-2"
               >
                 <span>Log Feeding +</span>
               </button>
 
               <button
-                onClick={() => exportFeedCSV(logs, pet.name)}
-                className="bg-white hover:bg-[#EBF8EE] border border-[#DCEBE0] text-[#111827] font-extrabold text-xs px-4 py-3.5 rounded-pill shadow-soft-sm transition min-h-[46px]"
-                title="Export CSV"
+                onClick={() => exportFeedPDF(logs, pet.name)}
+                className="bg-[#FFFBF2] hover:bg-[#FFDAB3] text-[#A65B33] font-extrabold text-xs px-4 py-3.5 rounded-pill shadow-soft-sm transition min-h-[46px]"
+                title="Export PDF"
               >
-                📊 CSV
+                📊 PDF
               </button>
             </div>
 
@@ -196,7 +196,7 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
       </section>
 
       {/* ================= 2. TABBED NAVIGATION ================= */}
-      <div className="flex border-b border-[#DCEBE0] bg-white rounded-card p-1 text-xs font-bold shadow-soft-sm">
+      <div className="flex bg-[#FFFBF2] border-none rounded-card p-1 text-xs font-bold shadow-soft-sm">
         {[
           { id: 'history', label: '📋 Meal History' },
           { id: 'schedules', label: '⏰ Timed Schedules' },
@@ -207,8 +207,8 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
             onClick={() => setActiveTab(tab.id)}
             className={`flex-1 py-3 text-center rounded-2xl transition ${
               activeTab === tab.id
-                ? 'bg-[#EBF8EE] text-[#7BD389] font-extrabold shadow-soft-sm'
-                : 'text-[#525C54] hover:text-[#111827]'
+                ? 'bg-[#FFDAB3] text-[#A65B33] font-extrabold shadow-soft-sm'
+                : 'text-[#A65B33]/70 hover:text-[#A65B33]'
             }`}
           >
             {tab.label}

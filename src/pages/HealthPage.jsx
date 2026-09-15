@@ -55,12 +55,7 @@ export default function HealthPage({ pet }) {
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Lead Pet Profile Header */}
       <section
-        className="rounded-3xl p-6 sm:p-8 shadow-warm-md relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, var(--paper) 0%, var(--paper-dark) 100%)',
-          border: '1.5px solid var(--wood-light)',
-          borderLeft: '8px solid var(--brass)'
-        }}
+        className="rounded-3xl p-6 sm:p-8 shadow-warm-md relative overflow-hidden bg-gradient-to-br from-[#EBF8EE] to-[#DCEBE0] border border-[#7BD389]/50 border-l-[8px] border-l-[#7BD389]"
       >
         <div className="flex flex-wrap items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-4">
@@ -71,7 +66,7 @@ export default function HealthPage({ pet }) {
             />
             <div>
               <div className="flex items-center gap-2">
-                <span className="room-label">Pet Health Care</span>
+                <span className="bg-[#EBF8EE] border border-[#7BD389]/50 text-[#23402E] px-3 py-1 rounded-full text-[10px] sm:text-xs font-extrabold uppercase tracking-wide shadow-sm">Pet Health Care</span>
                 <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
                   Fully Vaccinated
                 </span>
@@ -88,13 +83,13 @@ export default function HealthPage({ pet }) {
           <div className="flex items-center gap-2">
             <button
               onClick={() => handleOpenRxBuilder()}
-              className="px-4 py-2.5 bg-ww-paper border border-ww-paper-dark hover:bg-ww-wood-light text-ww-ink rounded-2xl text-xs font-extrabold shadow-sm transition flex items-center gap-1.5"
+              className="px-4 py-2.5 bg-[#EBF8EE] border border-[#7BD389]/50 hover:bg-[#7BD389] hover:text-white text-[#23402E] rounded-2xl text-xs font-extrabold shadow-sm transition flex items-center gap-1.5"
             >
               ✍️ Sign E-Prescription
             </button>
             <button
               onClick={() => generatePatientPackPDF(currentPet, records, meds)}
-              className="px-4 py-2.5 bg-gradient-to-r from-ww-brass to-emerald-500 text-white font-extrabold text-xs rounded-2xl shadow-warm-md hover:brightness-105 transition flex items-center gap-1.5"
+              className="px-4 py-2.5 bg-gradient-to-r from-[#7BD389] to-[#5BB369] text-white font-extrabold text-xs rounded-2xl shadow-warm-md hover:brightness-105 transition flex items-center gap-1.5"
             >
               📦 Patient Pack PDF
             </button>
@@ -116,14 +111,14 @@ export default function HealthPage({ pet }) {
             onClick={() => setActiveTab(tab.id)}
             className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition whitespace-nowrap flex items-center gap-2 ${
               activeTab === tab.id
-                ? 'bg-ww-brass text-white shadow-warm-sm'
-                : 'text-ww-wood-dark hover:bg-ww-paper-dark'
+                ? 'bg-[#7BD389] text-white shadow-warm-sm'
+                : 'text-[#DCEBE0] hover:text-white hover:bg-white/10'
             }`}
           >
             <span>{tab.label}</span>
             {tab.count !== undefined && (
               <span className={`px-2 py-0.5 rounded-full text-[10px] font-black ${
-                activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-ww-paper-dark text-ww-wood-dark'
+                activeTab === tab.id ? 'bg-white/20 text-white' : 'bg-white/20 text-[#DCEBE0]'
               }`}>
                 {tab.count}
               </span>

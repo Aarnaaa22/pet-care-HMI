@@ -97,7 +97,7 @@ export default function BookingModal({ isOpen, onClose, groomer, initialServiceI
       onRequestClose={onClose}
       ariaHideApp={false}
       overlayClassName="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-[99999]"
-      className="w-full max-w-lg bg-white rounded-2xl p-6 shadow-2xl relative outline-none z-[100000] max-h-[90vh] overflow-y-auto border border-gray-200"
+      className="w-full max-w-lg bg-[#F4EBF7] rounded-2xl p-6 shadow-2xl relative outline-none z-[100000] max-h-[90vh] overflow-y-auto border border-[#D4B6D6]"
     >
       <div className="flex items-center justify-between pb-3 border-b border-gray-100">
         <div>

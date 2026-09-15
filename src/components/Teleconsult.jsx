@@ -62,7 +62,7 @@ export default function Teleconsult({ pet, onOpenPrescriptionBuilder }) {
   return (
     <div className="space-y-4">
       {/* Header Bar */}
-      <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-4 shadow-warm-md flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl font-bold">
             📹
@@ -164,7 +164,7 @@ export default function Teleconsult({ pet, onOpenPrescriptionBuilder }) {
         </div>
       ) : callEnded ? (
         /* Post-Call Notes & E-Prescription Builder Trigger */
-        <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md space-y-3">
+        <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-5 shadow-warm-md space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-ww-paper-dark">
             <div className="flex items-center gap-2">
               <span className="text-xl">📝</span>
@@ -184,7 +184,7 @@ export default function Teleconsult({ pet, onOpenPrescriptionBuilder }) {
             placeholder="Veterinarian call notes, dietary recommendations, or follow-up instructions..."
             value={callNotes}
             onChange={e => setCallNotes(e.target.value)}
-            className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-ww-paper text-xs font-medium resize-none focus:ring-2 focus:ring-ww-brass"
+            className="w-full px-3 py-2 rounded-xl border border-ww-wood-light bg-[#EBF8EE] text-xs font-medium resize-none focus:ring-2 focus:ring-ww-brass"
           />
 
           <div className="flex justify-end gap-2 pt-2">
@@ -198,7 +198,7 @@ export default function Teleconsult({ pet, onOpenPrescriptionBuilder }) {
         </div>
       ) : (
         /* Idle Waiting Room Screen */
-        <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-8 text-center shadow-warm-sm space-y-3">
+        <div className="bg-[#EBF8EE] border border-ww-paper-dark rounded-2xl p-8 text-center shadow-warm-sm space-y-3">
           <span className="text-4xl block">📹</span>
           <h3 className="font-extrabold text-base text-ww-ink">Ready for Teleconsultation</h3>
           <p className="text-xs text-ww-wood-dark max-w-md mx-auto">

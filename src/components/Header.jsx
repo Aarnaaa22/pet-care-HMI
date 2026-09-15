@@ -38,9 +38,9 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
             {/* Brand */}
             <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => onNavigate('services')}>
               <span className="text-2xl select-none">🐾</span>
-              <div className="hidden sm:block">
+              <div>
                 <span className="font-kalam text-xl leading-none" style={{ color: 'var(--cream)' }}>PetCare</span>
-                <span className="block font-nunito font-bold text-[10px] tracking-widest uppercase" style={{ color: 'var(--brass)' }}>Paws &amp; Pals</span>
+                <span className="block font-nunito font-bold text-[10px] tracking-widest uppercase" style={{ color: 'var(--brass)' }}>Paws & Pals</span>
               </div>
             </div>
 

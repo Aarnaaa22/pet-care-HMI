@@ -84,7 +84,7 @@ export default function CheckoutPage({ cartItems, pet, onClearCart, onNavigate }
   };
 
   return (
-    <div className="space-y-6 animate-fadeIn max-w-4xl mx-auto pb-24">
+    <div className="space-y-6 animate-fadeIn max-w-5xl mx-auto pb-24">
       
       {/* Page Lead Banner */}
       <section className="bg-ww-paper border border-ww-paper-dark rounded-md p-6 sm:p-8 shadow-warm-sm">
@@ -233,12 +233,13 @@ export default function CheckoutPage({ cartItems, pet, onClearCart, onNavigate }
               </div>
 
               {/* Payment Method Selector Tabs */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                 {[
-                  { id: 'upi', label: '📱 Instant UPI', sub: 'GPay / PhonePe' },
-                  { id: 'card', label: '💳 Cards', sub: 'Visa / Mastercard' },
-                  { id: 'netbanking', label: '🏦 Net Banking', sub: 'All Indian Banks' },
-                  { id: 'cod', label: '💵 Pay on Delivery', sub: 'Cash / Scan QR' },
+                  { id: 'upi', label: '📱 Instant UPI', sub: 'GPay / PhonePe', bg: 'bg-[#EBF8EE]', border: 'border-[#7BD389]', text: 'text-[#23402E]' },
+                  { id: 'card', label: '💳 Cards', sub: 'Visa / Mastercard', bg: 'bg-[#F0E6FF]', border: 'border-[#9D72FF]', text: 'text-[#4A209E]' },
+                  { id: 'netbanking', label: '🏦 Net Banking', sub: 'All Indian Banks', bg: 'bg-[#E0F2FE]', border: 'border-[#4EA8DE]', text: 'text-[#0A4B75]' },
+                  { id: 'cod', label: '💵 Pay on Delivery', sub: 'Cash / Scan QR', bg: 'bg-[#FFE8E8]', border: 'border-[#EF4444]', text: 'text-[#7A1E1E]' },
+                  { id: 'wallets', label: '👛 Wallets', sub: 'Amazon / MobiKwik', bg: 'bg-[#FFF5D1]', border: 'border-[#F5B800]', text: 'text-[#7A5C00]' },
                 ].map((pm) => (
                   <button
                     key={pm.id}
@@ -246,12 +247,12 @@ export default function CheckoutPage({ cartItems, pet, onClearCart, onNavigate }
                     onClick={() => setPaymentMethod(pm.id)}
                     className={`p-3 rounded-md border text-left flex flex-col justify-between transition min-h-[64px] ${
                       paymentMethod === pm.id
-                        ? 'bg-ww-paper-dark border-ww-wood shadow-warm-sm'
-                        : 'bg-ww-paper border-ww-paper-dark hover:border-ww-wood'
+                        ? `${pm.bg} ${pm.border} ${pm.text} shadow-warm-sm`
+                        : `bg-ww-paper border-ww-paper-dark hover:${pm.border}`
                     }`}
                   >
-                    <span className="font-extrabold text-xs text-ww-ink">{pm.label}</span>
-                    <span className="text-[10px] font-semibold text-ww-wood">{pm.sub}</span>
+                    <span className={`font-extrabold text-xs ${paymentMethod === pm.id ? pm.text : 'text-ww-ink'}`}>{pm.label}</span>
+                    <span className={`text-[10px] font-semibold ${paymentMethod === pm.id ? pm.text : 'text-ww-wood'}`}>{pm.sub}</span>
                   </button>
                 ))}
               </div>
@@ -362,6 +363,21 @@ export default function CheckoutPage({ cartItems, pet, onClearCart, onNavigate }
                       <span>💵 Pay on Delivery / Home Pickup</span>
                     </div>
                     <p className="text-ww-wood-dark">Pay via Cash, UPI QR, or Card upon delivery of supplies or completion of groomer visit.</p>
+                  </div>
+                )}
+
+                {/* 5. WALLETS */}
+                {paymentMethod === 'wallets' && (
+                  <div className="space-y-3 animate-fadeIn text-xs">
+                    <label className="font-bold text-ww-wood-dark block">Select Your Wallet</label>
+                    <select
+                      className="w-full bg-ww-paper border border-ww-paper-dark rounded-md p-2.5 font-bold text-ww-ink"
+                    >
+                      <option value="amazon">Amazon Pay</option>
+                      <option value="mobikwik">MobiKwik</option>
+                      <option value="freecharge">Freecharge</option>
+                      <option value="jio">JioMoney</option>
+                    </select>
                   </div>
                 )}
 

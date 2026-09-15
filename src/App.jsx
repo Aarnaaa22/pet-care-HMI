@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Container from './components/Container';
-import ResponsiveDemoTester from './components/ResponsiveDemoTester';
+
 import BookingModal from './components/BookingModal';
 import FAQAccordion from './components/FAQAccordion';
 import ChatWidget from './components/ChatWidget';
@@ -11,6 +11,7 @@ import ShopDoorIntro from './components/ShopDoorIntro';
 import ServicesPage from './pages/ServicesPage';
 import FeedingPage from './pages/FeedingPage';
 import ActivityPage from './pages/ActivityPage';
+
 import HealthPage from './pages/HealthPage';
 import GroomingPage from './pages/GroomingPage';
 import CheckoutPage from './pages/CheckoutPage';
@@ -41,6 +42,11 @@ export default function App() {
     document.body.style.overflow = showIntro ? 'hidden' : 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [showIntro]);
+
+  // Scroll to top when changing routes (tabs)
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeRoute]);
 
   const activePet = pets[activePetKey] || pets.silver;
 
@@ -78,11 +84,7 @@ export default function App() {
         pets={pets}
       />
 
-      {/* Interactive Responsive Viewport Tester Bar */}
-      <ResponsiveDemoTester
-        currentMode={viewportMode}
-        onModeChange={setViewportMode}
-      />
+
 
       {/* Main Content Viewport Wrapper */}
       <main className="flex-1 py-6 sm:py-8 relative z-10">
