@@ -109,12 +109,13 @@ export default function PetHeroAnimation({
   // Preload all 20 quadruped gait animation frames
   useEffect(() => {
     let mounted = true;
+    const baseUrl = (import.meta.env.BASE_URL || './').replace(/\/$/, '') + '/';
 
     PET_GAIT_BREEDS.forEach((pet) => {
       loadedFramesRef.current[pet.id] = [];
       for (let f = 0; f < 4; f++) {
         const img = new Image();
-        img.src = `/png/real_pets/${pet.id}_frame_${f}.png`;
+        img.src = `${baseUrl}png/real_pets/${pet.id}_frame_${f}.png`;
         img.onload = () => {
           if (mounted && loadedFramesRef.current[pet.id]) {
             loadedFramesRef.current[pet.id][f] = img;
@@ -238,13 +239,14 @@ export default function PetHeroAnimation({
 
   // Reduced motion: Static fallback
   if (prefersReducedMotion) {
+    const baseUrl = (import.meta.env.BASE_URL || './').replace(/\/$/, '') + '/';
     return (
       <div 
         className={`relative w-full overflow-hidden pointer-events-none ${className}`}
         aria-label="PetShop hero static scene with real pets"
       >
         <img
-          src="/fallback/hero-static-with-tabby.png"
+          src={`${baseUrl}fallback/hero-static-with-tabby.png`}
           alt="Real running pets static fallback scene"
           className="w-full h-auto object-cover max-h-[360px] mx-auto rounded-2xl shadow-warm-md"
         />
