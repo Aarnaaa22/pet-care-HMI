@@ -3,7 +3,6 @@
 Production-ready, responsive, ultra-polished application for **PetCare ("PetShop — Local Care & Supplies")** featuring a Framer Motion Landing Page, OpenStreetMap React-Leaflet integration with `react-leaflet-cluster`, multi-screen dashboards, and a Dedicated Checkout Gateway.
 
 ---
-
 ## ⚠️ Important Dependency & Markercluster Note
 
 If a machine errors on `react-leaflet-markercluster`, **do NOT install it**; use `react-leaflet-cluster` or `supercluster` instead.
