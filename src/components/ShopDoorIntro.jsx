@@ -131,17 +131,17 @@ export default function ShopDoorIntro({ onEnter }) {
           </div>
 
           {/* Left Window */}
-          <div style={{ position: 'absolute', bottom: 'calc(12% + 8%)', left: 'calc(50% - 240px)', width: 'clamp(90px, 15vw, 110px)', height: 130, background: 'linear-gradient(180deg, #DCEEF0, #BFE0E3)', border: '8px solid #7C5028', borderRadius: 8, boxShadow: 'inset 0 0 0 3px #C68F52, 0 6px 14px rgba(0,0,0,.25)', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 5, background: '#C68F52', transform: 'translateY(-50%)' }} />
-            <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 5, background: '#C68F52', transform: 'translateX(-50%)' }} />
-            <div style={{ position: 'absolute', bottom: 8, left: 8, right: 8, height: '60%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 6, fontSize: 24 }}>🐾 <span>🦴</span></div>
+          <div style={{ position: 'absolute', bottom: 'calc(12% + 8%)', right: 'calc(50% + 85px)', width: 'clamp(50px, 12vw, 110px)', height: 'clamp(70px, 18vw, 130px)', background: 'linear-gradient(180deg, #DCEEF0, #BFE0E3)', border: 'clamp(4px, 1vw, 8px) solid #7C5028', borderRadius: 8, boxShadow: 'inset 0 0 0 3px #C68F52, 0 6px 14px rgba(0,0,0,.25)', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 4, background: '#C68F52', transform: 'translateY(-50%)' }} />
+            <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 4, background: '#C68F52', transform: 'translateX(-50%)' }} />
+            <div style={{ position: 'absolute', bottom: 8, left: 8, right: 8, height: '60%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '4px', fontSize: 'clamp(14px, 2.5vw, 24px)' }}>🐾 <span>🦴</span></div>
           </div>
 
           {/* Right Window */}
-          <div style={{ position: 'absolute', bottom: 'calc(12% + 8%)', right: 'calc(50% - 240px)', width: 'clamp(90px, 15vw, 110px)', height: 130, background: 'linear-gradient(180deg, #DCEEF0, #BFE0E3)', border: '8px solid #7C5028', borderRadius: 8, boxShadow: 'inset 0 0 0 3px #C68F52, 0 6px 14px rgba(0,0,0,.25)', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 5, background: '#C68F52', transform: 'translateY(-50%)' }} />
-            <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 5, background: '#C68F52', transform: 'translateX(-50%)' }} />
-            <div style={{ position: 'absolute', bottom: 8, left: 8, right: 8, height: '60%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: 6, fontSize: 24 }}>🐟 <span>🧸</span></div>
+          <div style={{ position: 'absolute', bottom: 'calc(12% + 8%)', left: 'calc(50% + 85px)', width: 'clamp(50px, 12vw, 110px)', height: 'clamp(70px, 18vw, 130px)', background: 'linear-gradient(180deg, #DCEEF0, #BFE0E3)', border: 'clamp(4px, 1vw, 8px) solid #7C5028', borderRadius: 8, boxShadow: 'inset 0 0 0 3px #C68F52, 0 6px 14px rgba(0,0,0,.25)', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: 4, background: '#C68F52', transform: 'translateY(-50%)' }} />
+            <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: 4, background: '#C68F52', transform: 'translateX(-50%)' }} />
+            <div style={{ position: 'absolute', bottom: 8, left: 8, right: 8, height: '60%', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', gap: '4px', fontSize: 'clamp(14px, 2.5vw, 24px)' }}>🐟 <span>🧸</span></div>
           </div>
 
           {/* Door Frame + Door */}
