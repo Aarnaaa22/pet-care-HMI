@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PetHeroAnimation from './PetHeroAnimation';
 
 /**
  * ShopDoorIntro — full-screen exterior shop scene with a Sign In form on the right.
@@ -102,7 +103,7 @@ export default function ShopDoorIntro({ onEnter }) {
             style={{ 
             position: 'relative', 
           perspective: '1400px',
-          transform: phase === 'opening' ? 'translateX(calc(50vw - 50%))' : 'translateX(0)',
+          transform: phase === 'opening' ? 'translateX(calc(50vw - 50%)) scale(1.05)' : 'translateX(0) scale(1)',
           transition: 'transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)'
         }}>
           
@@ -145,7 +146,7 @@ export default function ShopDoorIntro({ onEnter }) {
           </div>
 
           {/* Door Frame + Door */}
-          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: '12%', width: 140, height: 210, background: '#7C5028', borderRadius: '10px 10px 0 0', padding: 8, boxShadow: '0 10px 26px rgba(0,0,0,.35)', perspective: 1400 }}>
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: '12%', width: 140, height: 210, background: '#7C5028', borderRadius: '10px 10px 0 0', padding: 8, boxShadow: '0 10px 26px rgba(0,0,0,.35)', perspective: 1400, zIndex: 10 }}>
             {/* The Door */}
             <div style={{ width: '100%', height: '100%', background: 'linear-gradient(120deg, #C68F52, #A9713B 55%, #7C5028)', borderRadius: '6px 6px 0 0', position: 'relative', transformOrigin: 'left center', transformStyle: 'preserve-3d', transform: phase === 'opening' ? 'rotateY(-108deg)' : 'rotateY(0deg)', transition: 'transform 1.1s cubic-bezier(.6,-0.1,.35,1.2)', boxShadow: 'inset 0 0 0 6px #7C5028' }}>
               {/* OPEN sign */}
@@ -162,10 +163,15 @@ export default function ShopDoorIntro({ onEnter }) {
           </div>
 
           {/* Welcome Mat */}
-          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: 'calc(12% - 14px)', width: 160, height: 20, background: 'repeating-linear-gradient(90deg, #A63D2F 0 10px, #FBF3E1 10px 20px)', borderRadius: 4, boxShadow: '0 4px 8px rgba(0,0,0,.2)' }} />
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', bottom: 'calc(12% - 14px)', width: 160, height: 20, background: 'repeating-linear-gradient(90deg, #A63D2F 0 10px, #FBF3E1 10px 20px)', borderRadius: 4, boxShadow: '0 4px 8px rgba(0,0,0,.2)', zIndex: 12 }} />
+
+          {/* ── Foreground Animals Running Loop ── */}
+          <div style={{ position: 'absolute', left: 0, right: 0, bottom: '2%', zIndex: 20, pointerEvents: 'none' }}>
+            <PetHeroAnimation doorOpening={phase === 'opening'} lazyLoad={true} />
+          </div>
 
           {/* Paw trail */}
-          <div style={{ position: 'absolute', bottom: '13%', left: '50%', fontSize: 14, opacity: phase === 'opening' ? 0 : 0.55, transition: 'opacity 0.4s ease' }}>🐾&nbsp;&nbsp;🐾&nbsp;&nbsp;🐾</div>
+          <div style={{ position: 'absolute', bottom: '13%', left: '50%', fontSize: 14, opacity: phase === 'opening' ? 0 : 0.55, transition: 'opacity 0.4s ease', zIndex: 11 }}>🐾&nbsp;&nbsp;🐾&nbsp;&nbsp;🐾</div>
         </div>
 
         {/* ── Right Half: Sign In Form ── */}

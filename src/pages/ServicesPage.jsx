@@ -6,6 +6,7 @@ import FilterModal from '../components/FilterModal';
 import BookingSheet from '../components/BookingSheet';
 import BusinessDetail from '../components/BusinessDetail';
 import ChatWidget from '../components/ChatWidget';
+import PetHeroAnimation from '../components/PetHeroAnimation';
 import { SERVICES_MOCK, PETS_MOCK, COUPONS_MOCK } from '../mockData';
 
 export default function ServicesPage({ searchQuery = '', onBookService, pet = PETS_MOCK.silver }) {
@@ -106,7 +107,6 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = PE
       
       {/* ================= 1. SEARCH & LEAD HERO ================= */}
       <section className="bg-gradient-to-r from-[#FFE5CC] via-[#FFD6B3] to-[#FFC899] border-none rounded-card p-6 sm:p-8 shadow-warm-md relative overflow-hidden">
-        {/* Subtle background paw pattern could go here */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           
           {/* Left Text & Search Bar (7 cols) */}
@@ -212,6 +212,11 @@ export default function ServicesPage({ searchQuery = '', onBookService, pet = PE
             </div>
           </div>
 
+        </div>
+
+        {/* Foreground Running Animals Loop */}
+        <div className="mt-6 pt-2 border-t border-black/5">
+          <PetHeroAnimation lazyLoad={true} />
         </div>
       </section>
 
