@@ -85,10 +85,10 @@ export default function PetHeroAnimation({
   doorOpening = false,
   className = ''
 }) {
-  const [filterType, setFilterType] = useState('all'); // 'all' | 'cat' | 'dog'
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [speedMultiplier, setSpeedMultiplier] = useState(1);
-  const [hoveredPet, setHoveredPet] = useState(null);
+  const [filterType] = useState('all'); // 'all' | 'cat' | 'dog'
+  const [isPlaying] = useState(true);
+  const [speedMultiplier] = useState(1);
+  const [hoveredPet] = useState(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   const canvasRef = useRef(null);
@@ -263,89 +263,7 @@ export default function PetHeroAnimation({
         transition: 'transform 1.0s cubic-bezier(0.25, 1, 0.5, 1)'
       }}
     >
-      {/* ── Broadcast-Grade Studio Control Panel ── */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-8 mb-3 z-40 relative">
-        
-        {/* Category Pills */}
-        <div className="inline-flex items-center gap-1.5 bg-white/85 backdrop-blur-md border border-white/90 p-1.5 rounded-pill shadow-soft-sm text-xs font-extrabold">
-          <button
-            onClick={() => setFilterType('all')}
-            className={`px-3.5 py-1.5 rounded-pill transition-all ${
-              filterType === 'all'
-                ? 'bg-[#23402E] text-white shadow-sm'
-                : 'text-[#525C54] hover:bg-black/5'
-            }`}
-          >
-            All Running Pets 🐾 ({PET_GAIT_BREEDS.length})
-          </button>
-          <button
-            onClick={() => setFilterType('cat')}
-            className={`px-3.5 py-1.5 rounded-pill transition-all ${
-              filterType === 'cat'
-                ? 'bg-[#23402E] text-white shadow-sm'
-                : 'text-[#525C54] hover:bg-black/5'
-            }`}
-          >
-            Cats 🐱 (2)
-          </button>
-          <button
-            onClick={() => setFilterType('dog')}
-            className={`px-3.5 py-1.5 rounded-pill transition-all ${
-              filterType === 'dog'
-                ? 'bg-[#23402E] text-white shadow-sm'
-                : 'text-[#525C54] hover:bg-black/5'
-            }`}
-          >
-            Dogs 🐕 (3)
-          </button>
-        </div>
 
-        {/* Live FPS Indicator & Motion Controls */}
-        <div className="inline-flex items-center gap-2.5 bg-white/85 backdrop-blur-md border border-white/90 px-3.5 py-1.5 rounded-pill shadow-soft-sm text-xs font-bold text-[#23402E]">
-          <span className="flex items-center gap-1 text-[11px] text-emerald-600 font-mono font-extrabold">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> 60 FPS GAIT
-          </span>
-
-          <span className="text-black/20">|</span>
-
-          <button
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center gap-1.5 hover:text-[#7BD389] transition"
-          >
-            <span>{isPlaying ? '⏸️' : '▶️'}</span>
-            <span>{isPlaying ? 'Pause' : 'Play'}</span>
-          </button>
-
-          <span className="text-black/20">|</span>
-
-          <button
-            onClick={() => setSpeedMultiplier(speedMultiplier === 1 ? 1.5 : speedMultiplier === 1.5 ? 2 : 1)}
-            className="hover:text-[#7BD389] transition font-mono font-extrabold px-2 py-0.5 rounded bg-black/5"
-          >
-            {speedMultiplier}x Speed
-          </button>
-        </div>
-
-      </div>
-
-      {/* ── Active Breed Badges Bar ── */}
-      <div className="flex items-center gap-2 px-4 sm:px-8 mb-2 overflow-x-auto no-scrollbar z-40 relative">
-        {PET_GAIT_BREEDS.filter((p) => filterType === 'all' || p.type === filterType).map((pet) => (
-          <button
-            key={pet.id}
-            onMouseEnter={() => setHoveredPet(pet)}
-            onMouseLeave={() => setHoveredPet(null)}
-            className={`flex-shrink-0 inline-flex items-center gap-1.5 px-3 py-1 rounded-pill text-[11px] font-bold border transition ${
-              hoveredPet?.id === pet.id
-                ? 'bg-[#7BD389] text-[#111827] border-[#7BD389] scale-105 shadow-sm'
-                : 'bg-white/70 text-[#2A2F2B] border-white/90 hover:bg-white'
-            }`}
-          >
-            <span>{pet.icon}</span>
-            <span>{pet.name}</span>
-          </button>
-        ))}
-      </div>
 
       {/* ── Main Quadruped Canvas Arena ── */}
       <div className="relative w-full h-[260px] sm:h-[320px] overflow-hidden rounded-2xl bg-gradient-to-b from-transparent via-white/20 to-black/10 border border-white/40 shadow-inner">
