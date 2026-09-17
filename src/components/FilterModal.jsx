@@ -61,7 +61,7 @@ export default function FilterModal({ isOpen, onClose, filters, onApplyFilters, 
             {[
               { id: 'all', label: 'All Services 🐾' },
               { id: 'vet', label: 'Vet Clinics 🩺' },
-              { id: 'groomer', label: 'Pet Spas 🛁' },
+              { id: 'groomer', label: 'Pet Spas', isGrooming: true },
               { id: 'store', label: 'Supplies Stores 🥩' },
               { id: 'emergency', label: 'Emergency 24/7 🚑' },
             ].map((cat) => (
@@ -69,13 +69,16 @@ export default function FilterModal({ isOpen, onClose, filters, onApplyFilters, 
                 key={cat.id}
                 type="button"
                 onClick={() => setLocalFilters({ ...localFilters, category: cat.id })}
-                className={`px-3.5 py-2 rounded-pill text-xs font-bold border transition ${
+                className={`px-3.5 py-2 rounded-pill text-xs font-bold border transition inline-flex items-center gap-1.5 ${
                   localFilters.category === cat.id
                     ? 'bg-[#EBF8EE] border-[#7BD389] text-[#7BD389] shadow-soft-sm'
                     : 'bg-[#FAF9F6] border-[#DCEBE0] text-[#525C54] hover:border-[#7BD389]'
                 }`}
               >
-                {cat.label}
+                {cat.isGrooming && (
+                  <img src={`${(import.meta.env.BASE_URL || './').replace(/\/$/, '')}/grooming_icon.png`} alt="" className="w-4 h-4 object-contain rounded-xs" />
+                )}
+                <span>{cat.label}</span>
               </button>
             ))}
           </div>

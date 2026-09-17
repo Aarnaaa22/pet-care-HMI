@@ -12,12 +12,14 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const baseUrl = (import.meta.env.BASE_URL || './').replace(/\/$/, '') + '/';
+
   const navLinks = [
     { id: 'services',  label: 'Services',  icon: '🩺' },
     { id: 'feeding',   label: 'Feeding',   icon: '🥣' },
     { id: 'activity',  label: 'Activity',  icon: '🐾' },
     { id: 'health',    label: 'Health',    icon: '💊' },
-    { id: 'grooming',  label: 'Grooming',  icon: '🛁' },
+    { id: 'grooming',  label: 'Grooming',  icon: `${baseUrl}grooming_icon.png`, isImage: true },
     { id: 'checkout',  label: 'Checkout',  icon: '🛒' },
   ];
 
@@ -83,7 +85,11 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
                     onClick={() => onNavigate(link.id)}
                     className={`${navBase} ${activeRoute === link.id ? navActive : navIdle}`}
                   >
-                    <span>{link.icon}</span>
+                    {link.isImage ? (
+                      <img src={link.icon} alt={link.label} className="w-5 h-5 object-contain inline-block rounded-sm" />
+                    ) : (
+                      <span>{link.icon}</span>
+                    )}
                     <span>{link.label}</span>
                   </button>
                 ))}
@@ -152,7 +158,14 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
                     opacity: activeRoute === link.id ? 1 : 0.85,
                   }}
                 >
-                  <span className="flex items-center gap-3"><span className="text-lg">{link.icon}</span><span>{link.label}</span></span>
+                  <span className="flex items-center gap-3">
+                    {link.isImage ? (
+                      <img src={link.icon} alt={link.label} className="w-6 h-6 object-contain rounded-sm" />
+                    ) : (
+                      <span className="text-lg">{link.icon}</span>
+                    )}
+                    <span>{link.label}</span>
+                  </span>
                   <span style={{ color: activeRoute === link.id ? 'var(--ink)' : 'var(--brass)' }}>→</span>
                 </button>
               ))}
@@ -173,7 +186,11 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
             className="flex flex-col items-center gap-0.5 min-w-[48px] min-h-[44px] justify-center rounded-md transition"
             style={{ color: activeRoute === link.id ? 'var(--brass)' : 'var(--cream)', opacity: activeRoute === link.id ? 1 : 0.6 }}
           >
-            <span className="text-lg">{link.icon}</span>
+            {link.isImage ? (
+              <img src={link.icon} alt={link.label} className="w-5 h-5 object-contain mb-0.5 rounded-sm" />
+            ) : (
+              <span className="text-lg">{link.icon}</span>
+            )}
             <span className="text-[9px] font-bold">{link.label}</span>
           </button>
         ))}

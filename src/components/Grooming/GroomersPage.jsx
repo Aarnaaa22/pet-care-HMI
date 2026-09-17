@@ -96,7 +96,8 @@ export default function GroomersPage({ pet }) {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 rounded-full text-xs font-bold text-[#F3E8FF] mb-2 backdrop-blur-xs">
-              <span>✂️ Grooming &amp; Spa Care</span>
+              <img src={`${(import.meta.env.BASE_URL || './').replace(/\/$/, '')}/grooming_icon.png`} alt="Grooming" className="w-5 h-5 object-contain inline-block rounded-xs" />
+              <span>Grooming &amp; Spa Care</span>
               <span>•</span>
               <span>For {currentPet.name} ({currentPet.breed || "Silver Tabby"})</span>
             </div>
