@@ -15,9 +15,9 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
   const baseUrl = (import.meta.env.BASE_URL || './').replace(/\/$/, '') + '/';
 
   const navLinks = [
-    { id: 'services',  label: 'Services',  icon: '🩺' },
-    { id: 'feeding',   label: 'Feeding',   icon: '🥣' },
-    { id: 'activity',  label: 'Activity',  icon: '🐾' },
+    { id: 'services',  label: 'Services',  icon: `${baseUrl}services_icon.png`, isImage: true },
+    { id: 'feeding',   label: 'Feeding',   icon: `${baseUrl}feeding_icon.png`, isImage: true },
+    { id: 'activity',  label: 'Activity',  icon: `${baseUrl}activity_icon.png`, isImage: true },
     { id: 'health',    label: 'Health',    icon: '💊' },
     { id: 'grooming',  label: 'Grooming',  icon: `${baseUrl}grooming_icon.png`, isImage: true },
     { id: 'checkout',  label: 'Checkout',  icon: '🛒' },

@@ -68,7 +68,7 @@ export default function ActivityHistory({
       ) : filtered.length === 0 ? (
         /* Empty State */
         <div className="bg-ww-paper border border-ww-paper-dark rounded-2xl p-10 text-center shadow-warm-sm">
-          <span className="text-4xl">🐾</span>
+          <img src={`${(import.meta.env.BASE_URL || './').replace(/\/$/, '')}/activity_icon.png`} alt="Activity" className="w-12 h-12 object-contain mx-auto" />
           <h3 className="font-extrabold text-lg text-ww-ink mt-2">No Activities Found</h3>
           <p className="text-xs text-ww-wood-dark mt-1">
             {searchTerm ? 'No results matched your search term.' : 'Start a live walk session to record Silver\'s exercises!'}

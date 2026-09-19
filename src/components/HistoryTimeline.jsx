@@ -18,7 +18,7 @@ export default function HistoryTimeline({ logs = [], loading = false, onDeleteLo
   if (!logs || logs.length === 0) {
     return (
       <div className="bg-[#FFE5CC] border border-[#7BD389]/30 rounded-card p-8 text-center space-y-2 text-xs">
-        <span className="text-3xl block">🥣</span>
+        <img src={`${(import.meta.env.BASE_URL || './').replace(/\/$/, '')}/feeding_icon.png`} alt="Feeding" className="w-12 h-12 object-contain mx-auto opacity-70" />
         <h4 className="font-extrabold text-sm text-[#111827]">No Meal History Logged</h4>
         <p className="text-[#525C54]">Use Quick-Feed buttons or tap "Log Feeding" to track daily meal intake.</p>
       </div>

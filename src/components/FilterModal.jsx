@@ -59,7 +59,7 @@ export default function FilterModal({ isOpen, onClose, filters, onApplyFilters, 
           <label className="text-xs font-bold text-[#525C54] uppercase tracking-wider block mb-2">Service Type</label>
           <div className="flex flex-wrap gap-2">
             {[
-              { id: 'all', label: 'All Services 🐾' },
+              { id: 'all', label: 'All Services', isServices: true },
               { id: 'vet', label: 'Vet Clinics 🩺' },
               { id: 'groomer', label: 'Pet Spas', isGrooming: true },
               { id: 'store', label: 'Supplies Stores 🥩' },
@@ -75,6 +75,9 @@ export default function FilterModal({ isOpen, onClose, filters, onApplyFilters, 
                     : 'bg-[#FAF9F6] border-[#DCEBE0] text-[#525C54] hover:border-[#7BD389]'
                 }`}
               >
+                {cat.isServices && (
+                  <img src={`${(import.meta.env.BASE_URL || './').replace(/\/$/, '')}/services_icon.png`} alt="" className="w-4 h-4 object-contain rounded-xs" />
+                )}
                 {cat.isGrooming && (
                   <img src={`${(import.meta.env.BASE_URL || './').replace(/\/$/, '')}/grooming_icon.png`} alt="" className="w-4 h-4 object-contain rounded-xs" />
                 )}

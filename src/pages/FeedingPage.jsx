@@ -121,7 +121,8 @@ export default function FeedingPage({ pet = PETS_MOCK.silver, onUpdatePet }) {
                   onClick={() => handleQuickFeed(25, 'Small')}
                   className="bg-[#FFFBF2] hover:bg-[#FFE5CC] text-[#A65B33] font-extrabold text-xs px-4 py-2.5 rounded-pill shadow-soft-sm transition min-h-[40px] flex items-center gap-1.5"
                 >
-                  <span>🥣 Small (25g)</span>
+                  <img src={`${(import.meta.env.BASE_URL || './').replace(/\/$/, '')}/feeding_icon.png`} alt="" className="w-4 h-4 object-contain inline-block" />
+                  <span>Small (25g)</span>
                 </button>
 
                 <button

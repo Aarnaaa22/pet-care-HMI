@@ -69,7 +69,7 @@ export default function LogFeedingModal({ isOpen, onClose, onSave, pet = { name:
         {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-[#DCEBE0]">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🥣</span>
+            <img src={`${(import.meta.env.BASE_URL || './').replace(/\/$/, '')}/feeding_icon.png`} alt="Feeding" className="w-8 h-8 object-contain" />
             <div>
               <h3 className="font-extrabold text-lg text-[#111827]">Log Feeding for {pet.name}</h3>
               <span className="text-xs text-[#7BD389] font-bold">Track Nutrition & Daily Grams</span>
