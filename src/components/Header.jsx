@@ -15,11 +15,11 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
   const baseUrl = (import.meta.env.BASE_URL || './').replace(/\/$/, '') + '/';
 
   const navLinks = [
-    { id: 'services',  label: 'Services',  img: '/services.jpeg', icon: '🩺' },
-    { id: 'feeding',   label: 'Feeding',   img: '/meal.jpeg',     icon: '🥣' },
-    { id: 'activity',  label: 'Activity',  img: null,             icon: '🐾' },
-    { id: 'health',    label: 'Health',    img: '/health.jpeg',   icon: '💊' },
-    { id: 'grooming',  label: 'Grooming',  img: '/grooming.jpeg', icon: '🛁' },
+    { id: 'services',  label: 'Services',  img: '/services.png', icon: '🩺' },
+    { id: 'feeding',   label: 'Feeding',   img: '/feeding.png',  icon: '🥣' },
+    { id: 'activity',  label: 'Activity',  img: '/activity.png', icon: '🐾' },
+    { id: 'health',    label: 'Health',    img: '/health.png',   icon: '💊', imgClass: 'object-contain scale-[1.4]' },
+    { id: 'grooming',  label: 'Grooming',  img: '/grooming.png', icon: '🛁', imgClass: 'object-contain scale-[1.15]' },
     { id: 'checkout',  label: 'Checkout',  img: null,             icon: '🛒' },
   ];
 
@@ -85,7 +85,7 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
                     onClick={() => onNavigate(link.id)}
                     className={`${navBase} ${activeRoute === link.id ? navActive : navIdle}`}
                   >
-                    {link.img ? <img src={link.img} alt="" className="w-5 h-5 rounded-full object-cover shadow-sm" /> : <span>{link.icon}</span>}
+                    {link.img ? <div className="w-5 h-5 rounded-full bg-white shadow-sm overflow-hidden flex items-center justify-center"><img src={link.img} alt="" className={`w-full h-full ${link.imgClass || 'object-contain p-[2px]'}`} /></div> : <span>{link.icon}</span>}
                     <span>{link.label}</span>
                   </button>
                 ))}
@@ -155,7 +155,7 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
                   }}
                 >
                   <span className="flex items-center gap-3">
-                    {link.img ? <img src={link.img} alt="" className="w-6 h-6 rounded-full object-cover shadow-sm" /> : <span className="text-lg">{link.icon}</span>}
+                    {link.img ? <div className="w-6 h-6 rounded-full bg-white shadow-sm overflow-hidden flex items-center justify-center"><img src={link.img} alt="" className={`w-full h-full ${link.imgClass || 'object-contain p-[2px]'}`} /></div> : <span className="text-lg">{link.icon}</span>}
                     <span>{link.label}</span>
                   </span>
                   <span style={{ color: activeRoute === link.id ? 'var(--ink)' : 'var(--brass)' }}>→</span>
@@ -178,7 +178,7 @@ export default function Header({ activeRoute, onNavigate, searchQuery, onSearchC
             className="flex flex-col items-center gap-0.5 min-w-[48px] min-h-[44px] justify-center rounded-md transition"
             style={{ color: activeRoute === link.id ? 'var(--brass)' : 'var(--cream)', opacity: activeRoute === link.id ? 1 : 0.6 }}
           >
-            {link.img ? <img src={link.img} alt="" className="w-5 h-5 rounded-full object-cover mb-0.5 shadow-sm" /> : <span className="text-lg">{link.icon}</span>}
+            {link.img ? <div className="w-5 h-5 rounded-full bg-white mb-0.5 shadow-sm overflow-hidden flex items-center justify-center"><img src={link.img} alt="" className={`w-full h-full ${link.imgClass || 'object-contain p-[2px]'}`} /></div> : <span className="text-lg">{link.icon}</span>}
             <span className="text-[9px] font-bold">{link.label}</span>
           </button>
         ))}
